@@ -1,0 +1,28 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+
+ <div class="w12">
+    <div class="details-t">
+        <a href="javascript:void">当前位置：</a>
+        <a href="{:url('portal/case/index',['cid1'=>$info.cid1])}">{$info.cname1}</a>
+       
+        <notempty name="info.cname2">
+         	>>
+        	 <a href="{:url('portal/case/index',['cid1'=>$info.cid1,'cid2'=>$info.cid2])}">{$info.cname2}</a>
+        </notempty>
+        >><span>{$info.name}</span>
+    </div>
+   
+   <div class="video-box">
+     <img src="{:cmf_get_image_url($info.pic0)}" alt="" />
+   </div>
+   
+    <div class="video-t">详情</div>
+    <p class="video-detail">{$info.content}</p>
+
+</div>
+ <include file="public@footer" />

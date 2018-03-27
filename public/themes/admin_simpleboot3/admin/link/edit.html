@@ -1,0 +1,51 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('link/index')}">{:lang('ADMIN_LINK_INDEX')}</a></li>
+        <li><a href="{:url('link/add')}">{:lang('ADMIN_LINK_ADD')}</a></li>
+        <li class="active"><a>编辑友情链接</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('link/editPost')}">
+        <div class="form-group">
+            <label for="input-link_name" class="col-sm-2 control-label">名称<span class="form-required">*</span></label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-link_name" name="name" value="{$link.name}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-link_url" class="col-sm-2 control-label">链接地址<span class="form-required">*</span></label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-link_url" name="url" value="{$link.url}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-link_image" class="col-sm-2 control-label">图标(有图的显示为合作伙伴，无图的显示为友情链接)</label>
+            <div class="col-md-6 col-sm-10">
+                 <input id="photo-1"  class="form-control" value="{$link.image}" type="hidden" name="image">
+				<a href="javascript:uploadOneImage('图片上传','#photo-1');">上传</a>
+		 		<img id="photo-1-preview" src="{:cmf_get_image_url($link.image)}" style="width:300px;height:200px;">
+                
+            </div>
+        </div>
+         
+        <div class="form-group">
+            <label for="input-link_description" class="col-sm-2 control-label">描述</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" name="description"
+                          id="input-link_description">{$link.description}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="id" value="{$link.id}">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                <a class="btn btn-default" href="{:url('link/index')}">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

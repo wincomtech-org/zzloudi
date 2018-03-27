@@ -1,0 +1,68 @@
+<include file="public@head"/>  
+</head>
+<body>
+<div class="bg">
+    <div class="box">
+        <div class="box-l">
+            <img src="{:cmf_get_image_url($company.logo.dsc)}">
+            <p class="">智慧商业的引领者</p>
+            <p>公众号商城微站建设服务平台</p>
+            <p style="font-size:12px;">{$company.copyright.dsc}</p>
+        </div>
+        <div class="box-r">
+            <div class="login-box login-mt2">
+                <form action="" method="">
+                    <div class="login-in input2">
+                        <span>用户名称：</span>
+                        <input type="text" name="usename" placeholder="4-26位字符，仅支持字母、数字、中文">
+                    </div>
+                    <div class="login-in input2">
+                        <span>设置密码：</span>
+                        <input type="password" name="usename" placeholder="密码须大于6位，仅支持字母、数字">
+                    </div>
+                    <div class="login-in input2">
+                        <span>确认密码：</span>
+                        <input type="password" name="usename" placeholder="请重新输入密码，须与上方一致">
+                    </div>
+                    <div class="login-in input2">
+                        <span>常用邮箱：</span>
+                        <input type="text" name="usename" placeholder="请填写常用邮箱地址，用于找回账号">
+                    </div>
+                    <div class="login-in input2">
+                        <span>手机号码：</span>
+                        <input type="number" name="usename" placeholder="请填写常用手机号码，用于找回账号">
+                    </div>
+                    <div class="login-in input2">
+                        <span>验证码：</span>
+                        <input type="text" name="usename" placeholder="请输入验证码" class="login-code">
+                        <a href="javascript:void(0);" class="code" id="yzm">发送验证码</a>
+                    </div>
+                    <p class="login-cue">注册即表示同意并遵守<a href="#">《本站服务协议》</a></p>
+                    <div class="login-sub">
+                        <input type="submit" value="立即注册">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__TMPL__/public/assets/js/jquery-1.12.1.min.js"></script>
+<script type="text/javascript">
+    $("#yzm").click(function(){
+        var time=60;
+        if($("#yzm").hasClass("disabled")==false){
+            $("#yzm").addClass("disabled");
+            var t=setInterval(function(){
+                time--;alert()
+                $("#yzm").html(time+"秒");
+                if(time==0){
+                    clearInterval(t);                   
+                    $("#yzm").html("重新获取");
+                    $("#yzm").removeClass("disabled");
+                }
+            },1000)
+        }
+    })
+</script>
+</body>
+</html>

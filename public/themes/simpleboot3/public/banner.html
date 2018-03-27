@@ -1,0 +1,12 @@
+<div id="slider">
+    <ul class="slides clearfix">
+    <foreach name="banners" item="vo">
+    	<li><a href="{$vo.link}"><img class="responsive" src="{:cmf_get_image_url($vo.pic)}"></a></li>
+    </foreach>
+     	 
+    </ul>
+    <ul class="controls">
+        <li><img src="__TMPL__/public/assets/img/prev.png" alt="previous"></li>
+        <li><img src="__TMPL__/public/assets/img/next.png" alt="next"></li>
+    </ul>
+</div>

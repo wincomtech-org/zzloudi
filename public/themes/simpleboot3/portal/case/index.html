@@ -1,0 +1,61 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="w12" id="w12">
+    <ul class="case-type">
+        <li class="<if condition='$data.cid1 eq 0'>c_l1</if>"><a href="{:url('portal/case/index')}">全部</a></li>
+        <foreach name="cates1" item="vo">
+         	<li class="<if condition='$data.cid1 eq $vo.id'>c_l1</if>"><a href="{:url('portal/case/index',['cid1'=>$vo.id])}">{$vo.name}</a></li>
+        </foreach>
+        
+        <div class="clear"></div>
+    </ul>
+    <div class="case">
+        <div class="case-son">
+            <div class="type">
+                <a href="{:url('portal/case/index',['cid1'=>$data.cid1])}" class="<if condition='$data.cid2 eq 0'>c_l2</if>">全部</a>
+                 <foreach name="cates2" item="vo">
+		         	<a class="<if condition='$data.cid2 eq $vo.id'>c_l2</if>" href="{:url('portal/case/index',['cid1'=>$data.cid1,'cid2'=>$vo.id])}">{$vo.name}</a>
+		        </foreach>
+                
+            </div>
+            <ul class="case-list">
+            	 <foreach name="list" item="vo">
+	                <li>
+	                    <a href="{:url('portal/case/detail',['id'=>$vo.id])}"><img src="{:cmf_get_image_url($vo.pic)}"></a>
+	                    <a href="{:url('portal/case/detail',['id'=>$vo.id])}"><p>{$vo.name}</p></a>
+	                </li>
+                </foreach>
+                 
+                <div class="clear"></div>
+            </ul>
+        </div>
+    </div>
+       
+    <div class="fenye"> 
+        <ul class="pagination">
+          {$page}
+        </ul> 
+    </div>
+    
+</div>
+ 
+ <include file="public@footer" />
+<script>
+var ahref='#w12';
+$('.case-type a').each(function(){ 
+	this.href=this.href+ahref; 
+});
+$('.type a').each(function(){ 
+	this.href=this.href+ahref; 
+});
+$('.pagination li a').each(function(){ 
+	this.href=this.href+ahref; 
+});
+
+</script>
+ 

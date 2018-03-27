@@ -1,0 +1,103 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+
+<div class="main">
+    <div class="main1">
+        <div class="main_title w1">
+            <div class="mt1"></div>
+            <div class="mt2">{$types.about.index}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="main_arc">
+           {$about.content}
+        </div>
+    </div>
+     
+    <div class="main2 w12">
+        <div class="main_title w2">
+            <div class="mt1"></div>
+            <div class="mt2">{$types.about.help}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <ul class="main2_list">
+        <foreach name="helps" item="vo">
+            <li>
+                <img src="{:cmf_get_image_url($vo.pic)}">
+                <p class="main2_t">{$vo.title}</p>
+                {$vo.content}
+            </li>
+         </foreach>
+             
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="main3">
+        <div class="main_title w3">
+            <div class="mt1"></div>
+            <div class="mt2">{$types.about.pro}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <ul class="main3_list">
+         <foreach name="pros" item="vo" >
+          
+            <li style="background:url('{:cmf_get_image_url($vo.bg)}') no-repeat center center;">
+                <div class="main3_list_h">
+                    <div class="main3_l1">
+                        <p class="main3_l1_1">{$vo.title}</p>
+                        {$vo.content}
+                    </div>
+                    <div class="main3_l2">
+                    <notempty name="vo.pic">
+                        <img src="{:cmf_get_image_url($vo.pic)}">
+                    </notempty>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </li>
+          </foreach>
+           
+        </ul>
+    </div>
+    <div class="main4">
+        <div class="main_title w2">
+            <div class="mt1"></div>
+            <div class="mt2">{$types.link.pic}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="main4-b">
+            <ul class="main4-list w12">
+            <foreach name="links.pic" item="vo">
+                <li><a href="{$vo.url}"><img src="{:cmf_get_image_url($vo.image)}"></a></li>
+            </foreach>
+               
+                <div class="clear"></div>
+            </ul>
+        </div>
+    </div>
+    <div class="main5">
+        <div class="main_title w2">
+            <div class="mt1"></div>
+            <div class="mt2">{$types.link.text}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="w12 main5-list">
+        	<foreach name="links.text" item="vo">
+               <a href="{$vo.url}">{$vo.name}</a>
+            </foreach>
+            
+        </div>
+    </div>
+</div>
+ <include file="public@footer" />
+
+ 

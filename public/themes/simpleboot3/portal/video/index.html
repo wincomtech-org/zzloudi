@@ -1,0 +1,42 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="w12">
+    <div class="video-t">课程列表</div>
+    <ul class="video-list">
+     <foreach name="list" item="vo">
+        <li>
+            <a href="{:url('portal/video/detail',['id'=>$vo.id])}">
+                <img src="{:cmf_get_image_url($vo.pic)}">
+                <p class="video-m">{$vo.name}</p>
+                <p class="video-f">
+                    <span class="lf 666">主讲老师：{$vo.teacher}</span>
+                    <span class="rt color1">{$vo.browse}人观看</span>
+
+                </p>
+            </a>
+        </li>
+     </foreach>
+       </ul>     
+   <div class="fenye "> 
+        <ul class="pagination">
+          {$page}
+        </ul> 
+    </div>
+    
+</div>
+ 
+ <include file="public@footer" />
+ <script>
+var ahref='#w12';
+
+$('.pagination li a').each(function(){ 
+	this.href=this.href+ahref; 
+});
+
+</script>
+ 

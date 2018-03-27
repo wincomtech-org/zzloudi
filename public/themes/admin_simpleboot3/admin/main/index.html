@@ -1,0 +1,61 @@
+<php>function _get_system_widget($name){</php>
+ 
+<php>}</php>
+
+<include file="public@header"/>
+<style>
+    .home-info li em {
+        float: left;
+        width: 120px;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    .home-info ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .panel {
+        margin-bottom: 0;
+    }
+
+    .grid-sizer {
+        width: 10%;
+    }
+
+    .grid-item {
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        padding-left: 5px;
+        padding-right: 5px;
+        float: none;
+    }
+
+</style>
+<hook name="admin_before_head_end"/>
+</head>
+<body>
+<div class="wrap">
+    <p>案例、小程序、关于信息的名称和简介不能超过100个字，详情字数不限</p>
+ 	<p>课程视频是填写视频的url地址，并非上传视频到网站</p>
+ 	<p>详情有编辑器编辑，可以自由设置字体、段落和上传图片，请上传时编辑好格式</p>
+ 	<p>页面信息说明定义了页面一些大标题的说明文字，也是关于我们、超链接中分类的来源</p>
+ 	<p>上传的友情链接有图片的显示为合作伙伴，无图的显示为友情链接</p>
+ 	<p>关于我们的信息比较杂乱，根据需要填写简介、详情和上传图片</p>
+ 	<p>关键字的逗号需用英文逗号,</p>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<php>
+    $lang_set=defined('LANG_SET')?LANG_SET:'';
+    $thinkcmf_version=defined('THINKCMF_VERSION')?THINKCMF_VERSION:'';
+</php>
+<script>
+ 
+</script>
+<hook name="admin_before_body_end"/>
+</body>
+</html>

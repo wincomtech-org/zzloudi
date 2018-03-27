@@ -1,0 +1,60 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="w12">
+    <div class="pro-title">
+        <ul class="pro-tit-list">
+            <li>1.基本信息</li>
+            <li>2.选择类型</li>
+            <li>3.账号信息</li>
+            <li  class="pro-tit-cur">4.付款方式</li>
+            <li>5.支付反馈</li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <form action="{:url('portal/pay/createPay')}" method="post">
+           
+            <div class="pro-box4-l">
+                <div class="pro-box4-l-t1">
+                    <span>您的姓名</span>
+                    <i>{$order.uname}</i>
+                </div>
+                <div class="pro-box4-l-t1">
+                    <span>公众号名称</span>
+                    <i>{$order.wx_name}</i>
+                </div>
+                <div class="pro-box4-l-t1">
+                    <span>服务项目</span>
+                    <i>{$order.service_name}</i>
+                </div>
+                <div class="pro-box4-l-t1">
+                    <span>付款金额</span>
+                    <i>¥{$order.money}</i>
+                </div>
+                <div class="pro-box4-l-t2">
+                    <span>付款方式</span>
+                    <p>
+                        <input type="radio" name="pay" value="1" checked="" id="alipay"><label for="alipay" class="alipay1"></label><br>
+                        <input type="radio" name="pay" value="2" id="wechat"><label for="wechat" class="wechat1"></label>
+                    </p>
+                    <div class="clear"></div>
+                </div>
+                <div class="pro-box4-l-t1">
+                	<input type="hidden" name="oid" value="{$order.id}"/>
+                    <input class="guyuanwudi" type="submit" name="" value="确认付款">
+                </div>
+            </div>
+            <div class="pro-box2-r">
+                <img src="__TMPL__/public/assets/img/pro-1.jpg">
+            </div>
+            <div class="clear"></div>
+       
+    </form>
+</div>
+ 
+<include file="public@footer"/> 
+ 

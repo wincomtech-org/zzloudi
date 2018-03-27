@@ -1,0 +1,46 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="about">
+    <div class="about1">
+        <div class="main_title wb">
+            <div class="mt1"></div>
+            <div class="mt2">{$title.use}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <ul class="about-1">
+        <foreach name="use" item="vo"> 
+            <li>
+                <p>{$vo.content}</p>
+                <p class="fb">{$vo.title}</p>
+            </li>
+         </foreach>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="about2">
+        <div class="main_title wb">
+            <div class="mt1"></div>
+            <div class="mt2">{$title.team}</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="about2-main">
+            <ul class="about-m-1 w12">
+             <foreach name="team" item="vo"> 
+	             <li><img src="{:cmf_get_image_url($vo.pic)}"></li>
+	         </foreach>
+                
+                <div class="clear"></div>
+            </ul>
+            <p><span>专注于</span>微信营销推广</p>
+            <p>汇聚千万粉丝，为您打造最具商业价值的微营销平台</p>
+        </div>
+    </div>
+</div>
+<include file="public@footer"/>

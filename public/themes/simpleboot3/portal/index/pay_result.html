@@ -1,0 +1,34 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="w12">
+    <div class="pro-title">
+        <ul class="pro-tit-list">
+            <li>1.基本信息</li>
+            <li>2.选择类型</li>
+            <li>3.账号信息</li>
+            <li>4.付款方式</li>
+            <li class="pro-tit-cur">5.支付反馈</li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="paysuccess">
+        <p class="pay-f1">pay-s1</p>
+         <p class="pay-s2">· 支付方式：<span>{$order.service_name}</span></p>
+         <p class="pay-s2">· 支付单号：<span>{$order.service_name}</span></p>
+        <p class="pay-s2">· 订购详情：<span>{$order.service_name}</span></p>
+        <p class="pay-s2">· 实付款：<span>¥{$order.money}</span></p>
+        <p class="pay-s2">您可以<a href="#">查看已买到的宝贝</a></p>
+    </div>
+    <div class="pay-fail">
+        <p class="pay-f1"></p>
+    </div>
+</div>
+<include file="public@footer"/> 
+<script>
+
+</script>

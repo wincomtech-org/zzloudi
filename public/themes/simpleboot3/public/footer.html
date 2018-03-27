@@ -1,0 +1,36 @@
+<footer>
+    <div class="foot w12">
+        <div class="foot-l">
+            <p>{$company.company.dsc}</p>
+            <p>{$company.tel.title}：{$company.tel.dsc}</p>
+            <p>{$company.address.title}：{$company.address.dsc}</p><br><br>
+            <p>{$company.copyright.title}:{$company.copyright.dsc}</p>
+        </div>
+        <div class="foot-r">
+            <img src="{:cmf_get_image_url($company.wx_pic.dsc)}">
+            <p>{$company.wx_pic.title}</p>
+            <p>技术支持：<a href="http://www.wincomtech.cn/" target="_blank">华创在线网络科技有限公司</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</footer>
+<script src="__TMPL__/public/assets/js/jquery-1.12.1.min.js"></script>
+<script src="__TMPL__/public/assets/js/easySlider.js"></script>
+<script src="__TMPL__/public/assets/js/tt.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#slider").easySlider( {
+            slideSpeed: 500,
+            paginationSpacing: "15px",
+            paginationDiameter: "12px",
+            paginationPositionFromBottom: "20px",
+            slidesClass: ".slides",
+            controlsClass: ".controls",
+            paginationClass: ".pagination"                  
+        });
+    });
+</script> 
+</body>
+</html>
+
+ 

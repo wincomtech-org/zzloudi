@@ -1,0 +1,43 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="w12">
+    <div class="pro-title">
+        <div style="margin-left: 10px;color:#556B2F;font-size:30px;font-weight: bolder;">微信扫码支付</div>
+    </div>
+    <div class="paysuccess">
+        
+           	<p>支付订单号:{$info['oid']}</p>
+            <p>支付金额:￥{$info['money']}</p>
+                
+			<img alt="微信扫码支付" src="{:url('portal/pay/qrcode',['data'=>$info['weixinUrl']])}" style="width:150px;height:150px;"/>
+			 
+			<p id="wxmsg"></p>
+	 </div>
+    
+</div>
+<include file="public@footer"/> 
+ 
+<script>
+ 
+var query_url="{$info['query_url']}";
+var oid="{$info['oid']}";
+var inter=setInterval(weixin,2000);
+function weixin(){
+ 
+	$.post(query_url,{'out_trade_no':oid},function(data){
+		console.log(data);
+		if(data.code==1){
+			clearInterval(inter); 
+			 
+			$('#wxmsg').html('支付结果:'+data.msg);
+		}
+	},'json');
+	 
+}
+</script>
+ 

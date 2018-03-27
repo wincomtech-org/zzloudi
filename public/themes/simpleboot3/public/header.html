@@ -1,0 +1,31 @@
+ <!-- Page Title Header -->
+  <header>
+    <div class="head w12">
+        <div class="logo lf"><a href="{:url('portal/index/index')}"><img src="{:cmf_get_image_url($company.logo.dsc)}"></a></div>
+        <div class="head_left rt">
+            <div class="tell lf">
+                <p class="phone">{$company.tel.dsc}</p>
+                <p>{$company.tel.title}</p>
+            </div>
+            <div class="nav-push rt">
+                <img src="__TMPL__/public/assets/img/nav-push.png">
+            </div>
+            <empty name="Think.session.user">
+	            <div class="head_login rt">
+	                <a href="{:url('user/login/index')}" class="lf">登录</a>
+	                <a href="{:url('user/register/index')}" class="rt">注册</a>
+	                <div class="clear"></div>
+	            </div>
+	        <else/>
+	            <div class="head_user rt">sdgsd
+	                <a  href="#">
+	                    <img src="">
+	                </a>
+	            </div>
+            </empty>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</header>   
+	 

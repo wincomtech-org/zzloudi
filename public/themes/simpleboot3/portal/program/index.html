@@ -1,0 +1,78 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="program">
+    <div class="program1">
+        <div class="main_title wb">
+            <div class="mt1"></div>
+            <div class="mt2">小程序解决方案</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+            <p>娄底智达为各种商业应用场景提供小程序解决方案</p>
+        </div>
+        <section class="productCenter-container">
+        <div class="productCenter-solution">
+        <div class="solution-list-box">
+            <ul id="solutionList" class="solution-list f fc fj">
+             <foreach name="list" item="vo" k="key">
+                <li><span class="<eq name='key' value='1'>green-current-btn</eq>">{$vo.name}</span></li>
+             </foreach>
+               
+            </ul>
+        </div>
+        <div class="slide-show">
+            <div class="list-box f fc fc-h">
+                <div class="phone-box">
+                    <img src="__TMPL__/public/assets/img/phone-box.png" style="width:100%;height: 100%;">
+                </div>
+                <div id="list" class="list f fc fc-h">
+                    <ul>
+                      <foreach name="list" item="vo" k="key">
+                        <li class="p{$key}">
+                            <img src="{:cmf_get_image_url($vo.pic)}" alt="">
+                            <div class="list-item-masking f fv fc-h">
+                                <div class="f fv fj" style="height:60%;">
+                                    <div class="itme-masking-title">
+                                        <h2>{$vo.name}</h2>
+                                        <p>{$vo.dsc}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                     </foreach>
+                        
+                    </ul>
+                </div>
+            </div>
+            <a href="javascript:;" class="prev btn">&lt;</a>
+            <a href="javascript:;" class="next btn">&gt;</a>
+        </div>
+            </div>
+        </section>
+    </div>
+    <div class="program2 w12">
+        <div class="main_title wb">
+            <div class="mt1"></div>
+            <div class="mt2">小程序模板案例</div>
+            <div class="mt3"></div>
+            <div class="clear"></div>
+            <p>娄底智达为各种商业应用场景提供小程序解决方案</p>
+        </div>
+        <ul class="program2-list">
+         <foreach name="cates" item="vo" k="key">
+            <li>
+                <p class="program-li-t1">{$vo.name}</p>
+                <p class="program-li-t2">使用场景</p>
+                <p class="program-li-t3">{$vo.dsc}</p>
+                <a href="{:url('portal/case/index',['cid1'=>$vo.id])}" class="program-li-t4">查看更多</a>
+            </li>
+          </foreach>
+            
+        </ul>
+    </div>
+</div>
+<include file="public@footer"/> 

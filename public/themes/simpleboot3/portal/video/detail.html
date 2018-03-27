@@ -1,0 +1,20 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<div class="w12">
+    <div class="details-t">
+        <a href="javascript:void">当前位置：</a>
+        <span>{$info.name}</span>
+    </div>
+    <div class="video-box">
+        <embed src="{$info.url}" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+    </div>
+  
+    <div class="video-t">详情</div>
+    <p class="video-detail">{$info.content}</p>
+
+</div>
+ <include file="public@footer" />

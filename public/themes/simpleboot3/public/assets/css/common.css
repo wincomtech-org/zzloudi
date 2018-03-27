@@ -1,0 +1,75 @@
+@charset "UTF-8";
+/*reset*/
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,form,input,button,textarea,i,em,table,th,td { 
+	padding: 0; margin: 0; 
+	list-style: none; 
+	font-weight: normal;
+	font: 12px/1 "微软雅黑","Microsoft YaHei",arial,sans-serif;  
+}
+/*body{min-width: 320px;}*/
+.lf{ float: left; }
+.rt{ float: right; }
+.clear{ clear: both; }
+a{ text-decoration: none; color: #333; }
+textarea,input,button,select,img{border: none;outline: none;}
+i,em{ font-style: normal; }
+.666{color:#666;}
+.color1{color:#44b548;}
+.color2{color:#f00;}
+.w12{width:1200px;margin:0 auto;overflow: hidden;}
+.head{margin-top:15px;}
+.logo{}
+.head_left{}
+.tell{background:url(../img/ico-1.png) no-repeat left center;padding-left:35px;text-align: center;}
+.tell p{font-size:16px;color:#333;}
+.tell .phone{color:#44b548;}
+.nav-push{margin-left:5px;display: none;}
+.head_login{margin-left:55px;}
+.head_login a{display: inline-block;width: 67px;height: 36px;border-radius: 5px;font-size: 16px;color:#44b548;line-height: 36px;text-align: center;margin-left:30px;border:1px solid #44b548;}
+.head_login a:hover{background-color: #44b548;color:#fff;}
+nav{width:100%;background:#000;height:60px;}
+.nav li{float:left;}
+.nav li a{display: inline-block;text-align: center;line-height: 60px;padding:0 45px;font-size:16px;color: #fff;}
+.nav li a:hover{background:#44b548;}
+.mobile-nav{position: fixed;left:0;width:300px;display: none;}
+.mobile-nav-list{background:#fff;text-align: center;padding:20px 0;}
+#close{display:inline-block;text-align:right;width:280px;font-size: 24px;}
+.mobile-nav-list li a{display: inline-block;width:200px;line-height:30px;font-size: 16px;}
+.mobile-nav-list li a:hover{color:#fff;background:#44b548;}
+.blue{background:#44b548;}
+.banner{width:100%;}
+#slider {width: 100%;margin:0 auto;}
+.controls li {top: 50%;margin-top: -30px}
+.controls li:nth-child(1) {left: 0;}
+.controls li:nth-child(2) {right: 0;}
+.pagination li {background-color: #ddd;}
+.pagination li.active {background-color:#333;}
+.pagination li.active>a{color:#fff}
+.responsive {width: 100%;height: auto;}
+.clearfix:after {content: "";display: table;clear: both;}
+footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
+.foot-l{float: left;text-align: left;}
+.foot-l p,.foot-r p{color:#fff;font-size:16px;line-height: 25px;}
+.foot-r{float: right;text-align: right;}
+@media screen and (max-width: 1210px){
+    .w12{width:100%;}
+    nav{display: none;}
+    .nav-push{display: block;}
+    .head_login{margin-left:0px;}
+    .mobile-nav{z-index: 999;}
+    #slider{margin-top:10px;}
+}
+@media screen and (max-width:700px){
+    .tell{display: none;}
+    .head_login a{margin-left:10px;}
+    .nav-push{margin-left:100px;}
+    .foot-r{float: left;text-align: left;margin-top:10px;}
+    .foot{margin-left:10px;}
+}
+
+
+
+
+
+
+
