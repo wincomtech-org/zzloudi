@@ -76,12 +76,20 @@
 	margin:25px 10px;
 	background:#F58303;
 	border-radius: 10px;
+	font-size:20px;
+	font-weight: 600;
 }
 .fenye>.guyuan_hhu>.disabled{
 	background:#7D7D7D;
+	line-height: 30px;
+	color:#fff;
+	text-align: center;
 }
 .fenye>.guyuan_hhu>.active{
 	background:#333333;
+	color:#fff;
+	text-align: center;
+	line-height: 30px;
 }
 .fenye>.guyuan_hhu>.active>a{
 	color:#fff;
