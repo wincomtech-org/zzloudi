@@ -22,6 +22,7 @@
 					<th>{:lang('LAST_LOGIN_IP')}</th>
 					<th>{:lang('LAST_LOGIN_TIME')}</th>
 					<th>{:lang('EMAIL')}</th>
+					<th>手机号</th>
 					<th>{:lang('STATUS')}</th>
 					<th width="130">{:lang('ACTIONS')}</th>
 				</tr>
@@ -41,6 +42,7 @@
 						</if>
 					</td>
 					<td>{$vo.user_email}</td>
+					<td>{$vo.mobile}</td>
 					<td>{$user_statuses[$vo['user_status']]}</td>
 					<td>
 						<if condition="$vo['id'] eq 1 || $vo['id'] eq cmf_get_current_admin_id()">

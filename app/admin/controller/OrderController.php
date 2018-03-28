@@ -45,10 +45,21 @@ class OrderController extends AdminbaseController {
          if(empty($data['status'])){
              $data['status']=0;
          }else{
-             $where=['status'=>$data['status']];
+             $where['status']=['eq',$data['status']];
          }
-        
-         $list= $m->where($where)->order($this->order)->paginate(10);
+         if(empty($data['uname'])){
+             $data['uname']='';
+         }else{
+             $where['uname']=['like','%'.$data['uname'].'%'];
+         }
+         $keywordComplex = [];
+         if (!empty($data['where'])) {
+             $keyword = $data['where']; 
+             $keywordComplex['tel|qq|uname']    = ['eq', $keyword];
+         }else{
+             $data['where']='';
+         }
+         $list= $m->whereOr($keywordComplex)->where($where)->order($this->order)->paginate(10);
          // 获取分页显示
          $page = $list->appends($data)->render(); 
           

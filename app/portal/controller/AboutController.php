@@ -20,6 +20,7 @@ class AboutController extends HomeBaseController
         parent::_initialize();
         $this->assign('html_flag','about');
         
+        
        
     } 
     public function index()
@@ -38,6 +39,7 @@ class AboutController extends HomeBaseController
         $this->assign('use',$use);
         $this->assign('team',$team);
         $this->assign('title',$title);
+        $this->assign('html_title','关于我们');
         return $this->fetch();
     }
     /* 退换货流程 */
@@ -48,7 +50,18 @@ class AboutController extends HomeBaseController
         $about=DB::name('about')->where('type','refund')->find();
          
         $this->assign('about',$about);
+        $this->assign('html_title','退换货流程');
+        return $this->fetch();
+    }
+    /* 用户协议 */
+    public function protocol()
+    {
+        $this->assign('html_flag','protocol');
+        //首页关于我们
+        $about=DB::name('about')->where('type','user')->find();
         
+        $this->assign('about',$about);
+        $this->assign('html_title','服务协议');
         return $this->fetch();
     }
     

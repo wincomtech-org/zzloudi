@@ -1,0 +1,119 @@
+<include file="public@head"/>    
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<include file="public@banner"/> 
+<div class="w12" id="w12">
+    <div class="person-t">所有订单</div>
+    <form action="" method="get">
+    <div class="order">
+        <table>
+            <thead >
+                <tr>
+                    <th nowrap=true class="order-w1"><input type="checkbox" id="all">全选</th>
+                    <th nowrap=true class="order-w2">商品名称</th>
+                    <th nowrap=true class="order-w3">单价</th> 
+                    <th nowrap=true class="order-w3">联系人</th> 
+                    <th nowrap=true class="order-w3">联系电话</th> 
+                     <th nowrap=true class="order-w2">微信名称</th>
+                    <th nowrap=true class="order-w3">下单时间</th>
+                    <th nowrap=true class="order-w3">完成时间</th>
+                    <th nowrap=true class="order-w3">详情</th>
+                    <th nowrap=true class="order-w3">交易状态</th>
+                </tr>
+            </thead>
+            <tbody id="lk">
+            	<foreach name="orders" item="vo">
+	                <tr>
+	                    <td nowrap=true><input type="checkbox" value="{$vo.id}" ></td>
+	                    <td nowrap=true>{$vo.web_name}</td>
+	                    <td nowrap=true>{$vo.money}</td>
+	                    <td nowrap=true>{$vo.uname}</td>
+	                      <td nowrap=true>{$vo.tel}</td>
+	                    <td nowrap=true>{$vo.wx_name}</td>
+	                    <td nowrap=true>{$vo.insert_time|date='Y-m-d H:i',###}</td>
+	                    <td nowrap=true><eq name='vo.end_time' value='0'>--<else/>{$vo.end_time|date='Y-m-d H:i',###}</eq></td>
+	                    <td nowrap=true>查看详情</td>
+	                    <td nowrap=true>
+	                    {$order_status[$vo.status]} 
+	                    <eq name='vo.status' value='1'>
+	                    	<a href="{:url('portal/index/order',['id'=>$vo.id])}">去支付</a>
+	                    </eq>
+	                    </td>
+	                </tr>
+                </foreach>
+            </tbody>
+        </table>
+         <div class="fenye"> 
+	        <ul class="guyuan_hhu">
+	          {$page}
+	        </ul> 
+	    </div>
+        </div>
+        <input type="button" name="" value="删除" class="delete">
+        </form>
+</div>
+<include file="public@footer"/> 
+<script type="text/javascript"> 
+var ahref='#w12';
+
+$('.fenye li a').each(function(){ 
+	this.href=this.href+ahref; 
+});
+$("#all").click(function(){
+	 
+    if(this.checked){    
+        $("#lk :checkbox").prop("checked", true);   
+    }else{    
+        $("#lk :checkbox").prop("checked", false); 
+    }    
+});
+$('.delete').click(function(){
+	 
+	var ids='';
+	 $('#lk :checkbox').each(function(){
+		 if($(this).prop('checked')==true){
+			 ids+=','+$(this).val();
+			 $(this).parents('tr').addClass('on_delete');   
+		 } 
+	 });
+	if(ids==''){
+		return false;
+	}else{
+		ids=ids.substr(1);
+	}
+    $.ajax({
+        type: 'POST',
+        url: "{:url('user/info/delete')}",
+        dataType: 'json',
+        data: {'ids':ids},
+        success: function(data){ 
+        	if(data.code==1){
+        		$('.on_delete').remove();  
+			}else{ 
+				$('#lk tr').removeClass('on_delete');  
+				alert(data.msg);
+			}
+        },
+        error: function(){
+        	$('#lk tr').removeClass('on_delete');
+        	alert('服务器连接失败'); 
+        }
+    });
+	return false;
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

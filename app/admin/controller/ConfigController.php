@@ -33,6 +33,7 @@ class ConfigController extends AdminBaseController
      */
     public function index()
     { 
+         $this->error('暂无');
         $info=[
             'packs'=>implode('-',config('packs')),
             'units'=>implode('-',config('units')),

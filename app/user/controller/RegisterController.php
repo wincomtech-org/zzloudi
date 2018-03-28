@@ -12,105 +12,188 @@ namespace app\user\controller;
 
 use cmf\controller\HomeBaseController;
 use think\Validate;
-use app\user\model\UserModel;
+use think\Db;
+
+use sms\Msg;
 
 class RegisterController extends HomeBaseController
 {
-
+    
     /**
      * 前台用户注册
      */
     public function index()
     {
-        $redirect = $this->request->post("redirect");
-        if (empty($redirect)) {
-            $redirect = $this->request->server('HTTP_REFERER');
-        } else {
-            $redirect = base64_decode($redirect);
-        }
-        session('login_http_referer', $redirect);
-
+        
         if (cmf_is_user_login()) {
-            return redirect($this->request->root() . '/');
+            $this->redirect(url('user/index/index'));
         } else {
-            $this->error('暂不开放',url('portal/index/index'));
-            return $this->fetch(":register");
+            // return $this->fetch(":register");
+            $this->redirect(url('register'));
         }
     }
-
+    /**
+     * 前台用户注册页面
+     */
+    public function register()
+    {
+         
+        $this->assign('verify_type',config('verify'));
+        $this->assign('html_title','注册');
+        return $this->fetch();
+        
+    }
+    /**
+     * 发送验证码
+     */
+    public function sendmsg()
+    {
+        $verify=session('verify');
+        $time=time();
+        if(!empty($verify) && ($time-$verify['time'])<60){
+            $this->error('验证码发送频繁');
+        }
+        session('verify',null);
+        $phone=$this->request->param('tel',0);
+        $type=$this->request->param('type','reg'); 
+        $email=$this->request->param('email','');
+        
+        $tmp=Db::name('user')->where('mobile',$phone)->find();
+        switch ($type){
+            //注册
+            case 'reg': 
+                if(!empty($tmp)){
+                    $this->error('该手机号已被使用');
+                } 
+                $tmp1=Db::name('user')->where('user_email',$email)->find();
+                if(!empty($tmp1)){
+                    $this->error('邮箱已被使用');
+                }
+                break;
+                //找回密码
+            case 'find':
+                
+                if(empty($tmp)){
+                    $this->error('该手机号不存在');
+                }
+                if($tmp['user_email']!=$email){
+                    $this->error('邮箱与手机号不符');
+                }
+                break;
+                //换手机号
+            case 'mobile':
+                if(!empty($tmp)){
+                    $this->error('该手机号已被使用');
+                }
+                //判断密码
+                $psw=$this->request->param('psw',0);
+                $user=Db::name('user')->where('id',session('user.id'))->find();
+                if(cmf_password($psw)!=$user['user_pass']){
+                    $this->error('密码错误');
+                }
+                break;
+            default:
+                $this->error('未知操作');
+                
+        }
+        
+        $verify_type=config('verify');
+        $num=rand(100000,999999);
+       
+        if($verify_type==1){ 
+            $result = cmf_send_email($email, '邮箱验证码', $num);
+            if($result['error']==0){
+                session('verify',['time'=>$time,'code'=>$num,'mobile'=>$phone,'email'=>$email,'type'=>$type]);
+            } 
+            $this->error($result['message']);
+        }else{
+            
+            $this->error('短信验证未接入');
+        }
+       
+    }
+    
     /**
      * 前台用户注册提交
      */
-    public function doRegister()
+    public function ajaxRegister()
     {
-        if ($this->request->isPost()) {
-            $rules = [
-                'captcha'  => 'require',
-                'code'     => 'require',
-                'password' => 'require|min:6|max:32',
-
-            ];
-
-            $isOpenRegistration=cmf_is_open_registration();
-
-            if ($isOpenRegistration) {
-                unset($rules['code']);
-            }
-
-            $validate = new Validate($rules);
-            $validate->message([
-                'code.require'     => '验证码不能为空',
-                'password.require' => '密码不能为空',
-                'password.max'     => '密码不能超过32个字符',
-                'password.min'     => '密码不能小于6个字符',
-                'captcha.require'  => '验证码不能为空',
-            ]);
-
-            $data = $this->request->post();
-            if (!$validate->check($data)) {
-                $this->error($validate->getError());
-            }
-            if (!cmf_captcha_check($data['captcha'])) {
-                $this->error('验证码错误');
-            }
-
-            if(!$isOpenRegistration){
-                $errMsg = cmf_check_verification_code($data['username'], $data['code']);
-                if (!empty($errMsg)) {
-                    $this->error($errMsg);
-                }
-            }
-
-            $register          = new UserModel();
-            $user['user_pass'] = $data['password'];
-            if (Validate::is($data['username'], 'email')) {
-                $user['user_email'] = $data['username'];
-                $log                = $register->registerEmail($user);
-            } else if (preg_match('/(^(13\d|15[^4\D]|17[013678]|18\d)\d{8})$/', $data['username'])) {
-                $user['mobile'] = $data['username'];
-                $log            = $register->registerMobile($user);
-            } else {
-                $log = 2;
-            }
-            $sessionLoginHttpReferer = session('login_http_referer');
-            $redirect                = empty($sessionLoginHttpReferer) ? cmf_get_root() . '/' : $sessionLoginHttpReferer;
-            switch ($log) {
-                case 0:
-                    $this->success('注册成功', $redirect);
-                    break;
-                case 1:
-                    $this->error("您的账户已注册过");
-                    break;
-                case 2:
-                    $this->error("您输入的账号格式错误");
-                    break;
-                default :
-                    $this->error('未受理的请求');
-            }
-
-        } else {
-            $this->error("请求错误");
+        $time=time();
+        $verify=session('verify');
+        $data1 = $this->request->post();
+        //验证码
+          if(empty($verify) ||($time-$verify['time'])>600){
+            $this->error('验证码不存在或已过期');
         }
-
+        if($verify['code']!=$data1['code']){
+            $this->error('验证码错误');
+        }
+        if($verify['mobile']!=$data1['tel'] || $verify['email']!=$data1['email'] ){
+            $this->error('手机号码或邮箱不匹配');
+        } 
+        
+        $rules = [
+            'user_login' => 'require|min:2|max:20',
+            'user_pass' => 'require|min:6|max:20',
+            'mobile'=>'require|number|length:11',
+            'user_email'=>'require|email',
+             
+        ];
+        $redirect                = url('portal/index/index');
+        $validate = new Validate($rules);
+        $validate->message([
+            'user_pass.require' => '密码不能为空',
+            'user_pass.min'     => '密码为6-20位',
+            'user_pass.max'     => '密码为6-20位',
+            'user_login.require' => '用户名不能为空',
+            'user_login.min'     => '用户名为2-20位',
+            'user_login.max'     => '用户名为2-20位',
+            'mobile.require' => '手机号码不能为空',
+            'mobile.length'     => '手机号码格式错误',
+            'user_email.require'     => '邮箱不能为空',
+            'user_email.email'     => '邮箱格式错误',
+            
+        ]); 
+        $data=[
+            'user_login'=>$data1['username'],
+            'user_pass'=>$data1['password'],
+            'mobile'=>$data1['tel'],
+            'user_email'=>$data1['email'],
+            'last_login_ip'   => get_client_ip(0, true),
+            'create_time'     => $time,
+            'last_login_time' => $time,
+            'user_status'     => 1,
+            "user_type"       => 2,//会员
+             
+        ];
+       
+        if (!$validate->check($data)) {
+            $this->error($validate->getError());
+        }
+        if(preg_match(config('reg_mobile'), $data1['tel'])!=1){
+            $this->error('手机号码错误');
+        } 
+        $data['user_pass'] = cmf_password($data['user_pass']);
+         
+        $m_user=Db::name('user');
+        $tmp=$m_user->where('mobile',$data['mobile'])->find();
+        if(!empty($tmp)){
+            $this->error('该手机号已被使用');
+        }
+        $tmp1=Db::name('user')->where('user_email',$data['email'])->find();
+        if(!empty($tmp1)){
+            $this->error('邮箱已被使用');
+        }
+        $result  = $m_user->insertGetId($data);
+        if ($result !== false) {
+            $data   = Db::name("user")->where('id', $result)->find();
+            cmf_update_current_user($data);
+            session('verify',null);
+            $this->success("注册成功！",$redirect);
+        } else {
+            $this->error("注册失败！");
+        }
+        
     }
+    
 }

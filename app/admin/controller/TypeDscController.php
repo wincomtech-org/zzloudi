@@ -95,7 +95,7 @@ class TypeDscController extends AdminbaseController {
         }
         
     }
-    
+     
     
 }
 

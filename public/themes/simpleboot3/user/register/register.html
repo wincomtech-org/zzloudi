@@ -4,40 +4,42 @@
 <div class="bg">
     <div class="box">
         <div class="box-l">
-            <img src="{:cmf_get_image_url($company.logo.dsc)}">
+            <a href="{:url('portal/index/index')}"><img src="{:cmf_get_image_url($company.logo.dsc)}"></a>
             <p class="">智慧商业的引领者</p>
             <p>公众号商城微站建设服务平台</p>
             <p style="font-size:12px;">{$company.copyright.dsc}</p>
         </div>
         <div class="box-r">
             <div class="login-box login-mt2">
-                <form action="" method="">
+                <form action="" method="" id="form_register">
                     <div class="login-in input2">
                         <span>用户名称：</span>
-                        <input type="text" name="usename" placeholder="4-26位字符，仅支持字母、数字、中文">
+                        <input type="text" name="username" placeholder="2-20位字符，仅支持字母、数字、中文" maxlength="20" required>
                     </div>
                     <div class="login-in input2">
                         <span>设置密码：</span>
-                        <input type="password" name="usename" placeholder="密码须大于6位，仅支持字母、数字">
+                        <input type="password" name="password" placeholder="密码6-20位，仅支持字母、数字" maxlength="20" required>
                     </div>
                     <div class="login-in input2">
                         <span>确认密码：</span>
-                        <input type="password" name="usename" placeholder="请重新输入密码，须与上方一致">
+                        <input type="password" name="password1" placeholder="请重新输入密码，须与上方一致" maxlength="20" required>
                     </div>
                     <div class="login-in input2">
                         <span>常用邮箱：</span>
-                        <input type="text" name="usename" placeholder="请填写常用邮箱地址，用于找回账号">
+                        <input type="email" name="email" placeholder="请填写常用邮箱地址，用于找回账号" required>
                     </div>
                     <div class="login-in input2">
                         <span>手机号码：</span>
-                        <input type="number" name="usename" placeholder="请填写常用手机号码，用于找回账号">
+                        <input type="text" name="tel" placeholder="请填写常用手机号码，用于找回账号" required>
                     </div>
+                    
                     <div class="login-in input2">
-                        <span>验证码：</span>
-                        <input type="text" name="usename" placeholder="请输入验证码" class="login-code">
+                        <span><eq name="verify_type" value="1">邮件<else/>短信</eq>验证码：</span>
+                        <input type="text" name="code" placeholder="请输入验证码" class="login-code" required>
                         <a href="javascript:void(0);" class="code" id="yzm">发送验证码</a>
                     </div>
-                    <p class="login-cue">注册即表示同意并遵守<a href="#">《本站服务协议》</a></p>
+                   
+                    <p class="login-cue">注册即表示同意并遵守<a href="{:url('portal/about/protocol')}">《本站服务协议》</a></p>
                     <div class="login-sub">
                         <input type="submit" value="立即注册">
                     </div>
@@ -49,20 +51,78 @@
 <script src="__TMPL__/public/assets/js/jquery-1.12.1.min.js"></script>
 <script type="text/javascript">
     $("#yzm").click(function(){
+    	if($("#yzm").hasClass("disabled")==true){
+    		return false;
+    	}
+     
+    	var tel=$.trim($('input[name=tel]').val());
+    	var email=$.trim($('input[name=email]').val());
         var time=60;
-        if($("#yzm").hasClass("disabled")==false){
-            $("#yzm").addClass("disabled");
-            var t=setInterval(function(){
-                time--;alert()
-                $("#yzm").html(time+"秒");
-                if(time==0){
-                    clearInterval(t);                   
-                    $("#yzm").html("重新获取");
-                    $("#yzm").removeClass("disabled");
-                }
-            },1000)
-        }
-    })
+        
+        $.ajax({
+            type: 'POST',
+            url: "{:url('user/register/sendmsg')}",
+            dataType: 'json',
+            data:{'tel':tel,'email':email},
+            success: function(data){ 
+            	 
+            	if(data.msg=='success'){ 
+            		 $("#yzm").addClass("disabled");
+                     var t=setInterval(function(){
+                         time--; 
+                         $("#yzm").html(time+"秒");
+                         if(time==0){
+                             clearInterval(t);                   
+                             $("#yzm").html("重新获取");
+                             $("#yzm").removeClass("disabled");
+                         }
+                     },1000);
+            	}else{   
+            		alert(data.msg); 
+            	} 
+            },
+            error: function(){
+            	alert('服务器连接失败'); 
+            }
+        });
+        	 
+        
+    });
+     
+ // 注册表单提交
+    $('#form_register').submit(function(){
+    	var username=$.trim($('input[name=username]').val());
+    	var password=$.trim($('input[name=password]').val()); 
+    	var tel=$.trim($('input[name=tel]').val());
+    	var code=$.trim($('input[name=code]').val());
+    	var email=$.trim($('input[name=email]').val());
+         
+    	$('.login-sub input').prop('disabled','disabled');
+        $('.login-sub input').val('正在注册');
+         
+        $.ajax({
+            type: 'POST',
+            url: "{:url('user/register/ajaxRegister')}",
+            dataType: 'json',
+            data: {'username':username,'tel':tel,'password':password,'code':code,'email':email},
+            success: function(data){ 
+            	if(data.code==1){
+    				//返回上一页并刷新
+    				self.location=data.url;
+    			}else{
+    				$('.login-sub input').prop('disabled',false);
+    				$('.login-sub input').val('立即注册');
+    				alert(data.msg);
+    			}
+            },
+            error: function(){
+            	$('.login-sub input').prop('disabled',false);
+                $('.login-sub input').val('立即注册');
+            	alert('服务器连接失败'); 
+            }
+        });
+    	return false;
+    });
 </script>
 </body>
 </html>

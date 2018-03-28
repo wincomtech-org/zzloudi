@@ -23,6 +23,7 @@ class IndexController extends HomeBaseController
     public function index()
     {
         $this->assign('html_flag','index'); 
+        
         //banner
         $banners=DB::name('banner')->where('type','index')->order('sort asc,id asc')->select();
         $types_tmp=Db::name('type_dsc')->select();
@@ -56,6 +57,7 @@ class IndexController extends HomeBaseController
     public function product(){
         
         $this->assign('html_flag','product'); 
+        $this->assign('html_title','产品购买');
         //banner
         $banners=DB::name('banner')->where('type','product')->order('sort asc,id asc')->select();
         //获取city
@@ -81,7 +83,9 @@ class IndexController extends HomeBaseController
     /* 订单提交 */
     public function order_do(){
         $data0=$this->request->param();
-        
+        if(preg_match(config('reg_mobile'), $data0['tel'])!=1){
+            $this->error('手机号码错误');
+        } 
        /*  ["HTTP_HOST"] => string(10) "zzloudi.cc"
             ["REDIRECT_STATUS"] => string(3) "200"
                 ["SERVER_NAME"] => string(10) "zzloudi.cc" */
@@ -100,9 +104,23 @@ class IndexController extends HomeBaseController
             'oid'=>'kt'.cmf_get_order_sn(),
             'insert_time'=>time(),
         ];
-        
+       
         $uid=session('user.id');
-        $data['uid']=empty($uid)?0:$uid;
+        $m_user=Db::name('user');
+        //没登录就根据手机和邮箱查找用户，手机优先级高
+        if(empty($uid)){
+            $uid=0;
+            $tmp=$m_user->where('mobile',$data0['tel'])->find();
+            if(!empty($tmp)){
+                $uid=$tmp['id']; 
+            }else{
+                $tmp=$m_user->where('user_email',$data0['email'])->find();
+                if(!empty($tmp)){
+                    $uid=$tmp['id'];
+                }
+            }
+        }
+        $data['uid']=$uid;
         $service_name=Db::name('service')->where('id',$data['service_id'])->find();
         $data['service_name']=$service_name['name'];
         $data['money']=$service_name['price'];
@@ -111,6 +129,7 @@ class IndexController extends HomeBaseController
     }
     /* 订单支付 */
     public function order(){
+        $this->assign('html_title','订单支付');
         $id=$this->request->param('id','intval',0);
         $order=Db::name('order')->where(['id'=>$id,'status'=>1])->find();
         if(empty($order)){
@@ -127,10 +146,57 @@ class IndexController extends HomeBaseController
     /* 订单支付结果 */
     public function pay_result(){
         $id=$this->request->param('id','intval',0);
-        $order=Db::name('order')->where(['id'=>$id])->find();
+        $m_order=Db::name('order');
+        $order=$m_order->where(['id'=>$id])->find();
         if(empty($order)){
             $this->redirect(url('portal/index/product'));
         }
+       
+        $user=session('user');
+        //是0则是第一次跳转，自动登录
+        if($order['uid0']==0 && $order['status']==2 && empty($user)){
+            $m_user=Db::name('user');
+            if($order['uid']!=0){
+                $user=$m_user->where('id',$order['uid'])->find();
+                session('user',$user);
+                $m_order->where('id',$order['id'])->update(['uid0'=>1]);
+            }else{
+                //查找用户 
+                $user=$m_user->where('mobile',$order['tel'])->find();
+                if(empty($user)){
+                    $user=$m_user->where('user_email',$order['email'])->find();
+                } 
+                if(!empty($user)){
+                    session('user',$user);
+                    $m_order->where('id',$order['id'])->update(['uid0'=>1]);
+                }else{
+                    //创建用户
+                    $user_data=[
+                        'user_nickname'=>$order['uname'],
+                        'user_pass'=>cmf_password($order['tel']),
+                        'mobile'=>$order['tel'],
+                        'user_email'=>$order['email'],
+                        'last_login_ip'   => get_client_ip(0, true),
+                        'create_time'     => time(),
+                        'last_login_time' => time(),
+                        'user_status'     => 1,
+                        "user_type"       => 2,//会员
+                    ];
+                   try {
+                       $result  = $m_user->insertGetId($user_data);
+                   } catch (\Exception $e) {
+                       $result=0;
+                   }
+                   if(empty($result)){
+                      $this->error('支付成功但创建用户失败，请联系客服确保权益',url('protal/index/index'),'',10);
+                   }
+                   $user=$m_user->where('id',$result)->find();
+                   session('user',$user);
+                   $m_order->where('id',$order['id'])->update(['uid0'=>1,'uid'=>$result]); 
+                } 
+            }
+        }
+        $this->assign('html_title','支付结果');
         $this->assign('html_flag','product');
         //banner
         $banners=DB::name('banner')->where('type','product')->order('sort asc,id asc')->select();

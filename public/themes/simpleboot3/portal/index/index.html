@@ -46,7 +46,7 @@
             <div class="clear"></div>
         </div>
         <ul class="main3_list">
-         <foreach name="pros" item="vo" >
+         <volist name="pros" id="vo" >
           
             <li style="background:url('{:cmf_get_image_url($vo.bg)}') no-repeat center center;">
                 <div class="main3_list_h">
@@ -54,7 +54,7 @@
                         <p class="main3_l1_1">{$vo.title}</p>
                         {$vo.content}
                     </div>
-                    <div class="main3_l2">
+                    <div class="main3_l2 <eq name='mod' value='0'>guyuan_ssy</eq>">
                     <notempty name="vo.pic">
                         <img src="{:cmf_get_image_url($vo.pic)}">
                     </notempty>
@@ -62,7 +62,7 @@
                     <div class="clear"></div>
                 </div>
             </li>
-          </foreach>
+          </volist>
            
         </ul>
     </div>

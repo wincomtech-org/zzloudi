@@ -14,6 +14,7 @@ class CaseController extends HomeBaseController
         
         parent::_initialize();
         $this->assign('html_flag','case');
+        $this->assign('html_title','案例');
         $this->m=DB::name('case');
        
     } 

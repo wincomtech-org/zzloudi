@@ -56,11 +56,15 @@ class AdminIndexController extends AdminBaseController
      */
     public function index()
     {
-        $where   = [];
+        $where   = ['user_type'=>2];
+        $where=[];
         $request = input('request.');
 
         if (!empty($request['uid'])) {
             $where['id'] = intval($request['uid']);
+        }
+        if (!empty($request['mobile'])) {
+            $where['mobile'] = trim($request['mobile']);
         }
         $keywordComplex = [];
         if (!empty($request['keyword'])) {
@@ -70,9 +74,9 @@ class AdminIndexController extends AdminBaseController
         }
         $usersQuery = Db::name('user');
 
-        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(10);
+        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(2);
         // 获取分页显示
-        $page = $list->render();
+        $page = $list->appends($request)->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
         // 渲染模板输出
@@ -124,7 +128,9 @@ class AdminIndexController extends AdminBaseController
     {
         $id = input('param.id', 0, 'intval');
         if ($id) {
-            Db::name("user")->where(["id" => $id, "user_type" => 2])->setField('user_status', 1);
+            //Db::name("user")->where(["id" => $id, "user_type" => 2])->setField('user_status', 1);
+            //启用用户后失败登录清除
+            Db::name("user")->where(["id" => $id, "user_type" => 2])->update(['user_status'=>1,'fail_count'=>0,'fail_time'=>0]);
             $this->success("会员启用成功！", '');
         } else {
             $this->error('数据传入失败！');

@@ -103,6 +103,7 @@ class PayController extends HomeBaseController
         
         // 选择支付动作
         $wx_config = config('wx_config');
+        $wx_oid=$order['oid'].'_'.time();
         switch($payment){
             case 'alipc':
                 $order = array(
@@ -123,11 +124,30 @@ class PayController extends HomeBaseController
                 $order = array(
                     'wfprice'       => $order['money'],
                     'wfproduct'     =>  $order['service_name'],
-                    'out_trade_no'  =>  $order['oid'],
+                    'out_trade_no'  => $wx_oid,
                 ); 
                 $this->wxnative($order);
                 return $this->fetch('wxnative');
                 break;
+          case 'wxh5':
+              $order = array(
+              'order_amount'       => $order['money'], 
+              'order_sn'  => $wx_oid,
+              'wfproduct'     =>  $order['service_name'],
+              );
+              $this->wxh5($order, $wx_config);
+             
+              break;
+              
+          case 'wxjs':
+              $order = array(
+              'order_amount'       => $order['money'], 
+              'order_sn'  => $wx_oid,
+              'wfproduct'     =>  $order['service_name'],
+              );
+              $this->get_code($order, $wx_config);
+              return $this->fetch('wxnative');
+              break;
           default:
               break;
         }
@@ -243,9 +263,9 @@ class PayController extends HomeBaseController
         $pay = new \Wxpay();
         $result = $pay->get_h5($order, $config);
 
-        // $wx_return = U('Index/index',$order,true,true);
-        // $wx_return = U('Pay/wxh5success',$order,true,true);
-        $wx_return = U('Pay/wxh5return',$order,true,true);
+        // $wx_return = url('Index/index',$order,true,true);
+        // $wx_return = url('Pay/wxh5success',$order,true,true);
+        $wx_return = url('Pay/wxh5return',$order,true,true);
         if (empty($result)) {
             echo '<div style="text-align:center"><button type="button" disabled>未获得移动支付权限</button></div>';exit;
         } else {
@@ -275,8 +295,7 @@ class PayController extends HomeBaseController
         vendor('WxPayH5.notify');
 
         $data = I();
-
-        \Log::DEBUG("begin notify");
+ 
         $notify = new \PayNotifyCallBack();
         $notify->Handle(false);
 
@@ -350,11 +369,11 @@ class PayController extends HomeBaseController
         //自定义订单号，此处仅作举例
         // $timeStamp    = time();
         // $out_trade_no = C('WxPay.pub.config.APPID') . "$timeStamp";
-        $out_trade_no = $order['out_trade_no'].'_'.time();
+        $out_trade_no = $order['out_trade_no'];
         $unifiedOrder->setParameter("out_trade_no", $out_trade_no); //商户订单号
         $unifiedOrder->setParameter("total_fee", bcmul($jiagee , 100,0)); //总金额
         // $unifiedOrder->setParameter("notify_url", 'http://tp3.2_wx_cs.com/index.php/home/Pay/notify'); //通知地址
-        $unifiedOrder->setParameter("notify_url", url('portal/pay/notify','',true,true)); //通知地址
+        $unifiedOrder->setParameter("notify_url", url('portal/pay/wx_notify','',true,true)); //通知地址
         $unifiedOrder->setParameter("trade_type", "NATIVE"); //交易类型
         $jumpurl=url('portal/index/product');
         //获取统一支付接口结果
@@ -388,7 +407,17 @@ class PayController extends HomeBaseController
         $this->assign('banners',$banners);
         
     }
-    
+    /* 微信页面 */
+    public function wx_return(){
+        $order_sn=$this->request->param('oid');
+        $arr=explode('_', $order_sn);
+        $oid=$arr[0];
+        $info=DB::name('order')->where('oid',$oid)->find();
+        $info['order_sn']=$order_sn;
+        $this->assign('info',$info); 
+        $this->assign('html_flag','product');
+        return $this->fetch();
+    }
     public function notify()
     {
         //使用通用通知接口
@@ -413,22 +442,23 @@ class PayController extends HomeBaseController
 
         //以log文件形式记录回调信息
         //         $log_ = new Log_();
-        $log_name = __ROOT__ . "/Public/notify_url.log"; //log文件路径
-
-        $this->log_result($log_name, "【接收到的notify通知】:\n" . $xml . "\n");
-
+        $log_name = "wx.log"; //log文件路径
+ 
+        cmf_log( "接收到的notify通知:\r\n" . $xml . "\r\n",$log_name);
         if ($notify->checkSign() == true || 1) {
             if ($notify->data["return_code"] == "FAIL") {
                 //此处应该更新一下订单状态，商户自行增删操作
-                log_result($log_name, "【通信出错】:\n" . $xml . "\n");
+               
+                cmf_log( "通信出错通信出错:\r\n" . $xml . "\r\n",$log_name);
                 $this->error("1");
             } elseif ($notify->data["result_code"] == "FAIL") {
                 //此处应该更新一下订单状态，商户自行增删操作
-                log_result($log_name, "【业务出错】:\n" . $xml . "\n");
+               
+                cmf_log( "业务出错:\r\n" . $xml . "\r\n",$log_name);
                 $this->error("失败2");
             } else {
                 //此处应该更新一下订单状态，商户自行增删操作
-                log_result($log_name, "【支付成功】:\n" . $xml . "\n");
+                cmf_log( "支付成功:\r\n" . $xml . "\r\n",$log_name);
 
             }
 
@@ -524,6 +554,55 @@ class PayController extends HomeBaseController
             }
         }
     }
+    //查询订单
+    public function wx_notify()
+    {
+        $data = file_get_contents("php://input");
+        $postObj = simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $out_trade_no= $postObj->out_trade_no;
+          
+        //使用订单查询接口 
+        $orderQuery = new \OrderQuery_pub(config('wx_config')); 
+        $orderQuery->setParameter("out_trade_no", $out_trade_no); //商户订单号 
+        //获取订单查询结果
+        $orderQueryResult = $orderQuery->getResult();
+        if(isset($orderQueryResult["return_code"])
+            && isset($orderQueryResult["result_code"])
+            && $orderQueryResult["return_code"] == "SUCCESS"
+            && $orderQueryResult['result_code']=='SUCCESS'
+            && $orderQueryResult['trade_state']=='SUCCESS')
+        {  
+            //Db::name('order')->where(array('id' => session('order_id')))->save(array('pay' => '1'));
+            $arr=explode('_', $out_trade_no);
+            $oid=$arr[0];
+            // 修改订单状态
+            $m=Db::name('order');
+            
+            $order=$m->where(['oid'=>$oid])->find();
+            if($order['status']==1){
+                $m->startTrans();
+                $m->where('id',$order['id'])->update(['status'=>2,'time'=>time()]);
+                //保存支付信息
+                $data=[
+                    'type'=>2,
+                    'oid'=>$oid,
+                    'money'=>bcdiv($orderQueryResult['total_fee'],100,2),
+                    'trade_no'=>$orderQueryResult['transaction_id'],
+                    'buyer_id'=>$orderQueryResult['openid'],
+                    'time'=>time(),
+                ];
+                $insert=Db::name('pay')->insertGetId($data);
+                if($insert>0){ 
+                    $m->commit();
+                    exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
+                    
+                }else{
+                    $m->rollback(); 
+                }
+            } 
+        }
+        exit(); 
+    }
     //生成二维码
     public function qrcode(){
         $url=$this->request->param('data','','trim');
@@ -531,5 +610,7 @@ class PayController extends HomeBaseController
         $url = urldecode($url);
         \QRcode::png($url, false, QR_ECLEVEL_L,5, 2);
     }
+    
+    /* 处理支付完成 */
 }
 ?>
