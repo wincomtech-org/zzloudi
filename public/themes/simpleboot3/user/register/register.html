@@ -14,28 +14,28 @@
                 <form action="" method="" id="form_register">
                     <div class="login-in input2">
                         <span>用户名称：</span>
-                        <input type="text" name="username" placeholder="2-20位字符，仅支持字母、数字、中文" maxlength="20" required>
+                        <input type="text" name="username" placeholder="2-20位字符，仅支持字母、数字、中文" minlength="2" maxlength="20">
                     </div>
                     <div class="login-in input2">
                         <span>设置密码：</span>
-                        <input type="password" name="password" placeholder="密码6-20位，仅支持字母、数字" maxlength="20" required>
+                        <input type="password" name="password" placeholder="密码6-20位，必须字母+数字组合" minlength="6" maxlength="20" >
                     </div>
                     <div class="login-in input2">
                         <span>确认密码：</span>
-                        <input type="password" name="password1" placeholder="请重新输入密码，须与上方一致" maxlength="20" required>
+                        <input type="password" name="password1" placeholder="请重新输入密码，须与上方一致" >
                     </div>
                     <div class="login-in input2">
                         <span>常用邮箱：</span>
-                        <input type="email" name="email" placeholder="请填写常用邮箱地址，用于找回账号" required>
+                        <input type="text" name="email" placeholder="请填写常用邮箱地址，用于找回账号">
                     </div>
                     <div class="login-in input2">
                         <span>手机号码：</span>
-                        <input type="text" name="tel" placeholder="请填写常用手机号码，用于找回账号" required>
+                        <input type="text" name="tel" placeholder="请填写常用手机号码，用于找回账号" >
                     </div>
                     
                     <div class="login-in input2">
                         <span><eq name="verify_type" value="1">邮件<else/>短信</eq>验证码：</span>
-                        <input type="text" name="code" placeholder="请输入验证码" class="login-code" required>
+                        <input type="text" name="code" placeholder="请输入验证码" class="login-code" >
                         <a href="javascript:void(0);" class="code" id="yzm">发送验证码</a>
                     </div>
                    
@@ -93,13 +93,47 @@
     $('#form_register').submit(function(){
     	var username=$.trim($('input[name=username]').val());
     	var password=$.trim($('input[name=password]').val()); 
+		var password1=$.trim($('input[name=password1]').val()); 
     	var tel=$.trim($('input[name=tel]').val());
     	var code=$.trim($('input[name=code]').val());
     	var email=$.trim($('input[name=email]').val());
-         
-    	$('.login-sub input').prop('disabled','disabled');
+		
+     	//验证所有信息
+    	var pattern = /[A-Za-z0-9_\-\u4e00-\u9fa5]+/;
+		var pwd=/^[A-Za-z]+[0-9]+[A-Za-z0-9]*|[0-9]+[A-Za-z]+[A-Za-z0-9]*$/g;
+		var emil_s=/\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+		var shouji = /0?(13|14|15|18)[0-9]{9}/;
+		
+		if(!pattern.test(username)){
+			alert("用户名称不正确");
+			return false;
+		}
+		var as=pwd.test(password);
+		if(!as){
+			alert("密码格式不正确");
+			return false;
+		}
+		if(password1!==password){
+			$('input[name=password1]').val("");
+			alert("两次密码输入不一致");
+			return false;
+		}
+		var yx_s=emil_s.test(email);
+		if(!yx_s){
+			alert("邮箱格式不正确");
+			return false;
+		}
+		var sj_s=shouji.test(tel);
+		if(!sj_s){
+			alert("手机号码不正确");
+			return false;
+		}
+		
+		
+		
+		$('.login-sub input').prop('disabled','disabled');
         $('.login-sub input').val('正在注册');
-         
+      
         $.ajax({
             type: 'POST',
             url: "{:url('user/register/ajaxRegister')}",
