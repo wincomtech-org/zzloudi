@@ -7,8 +7,8 @@
 .settings
 .idea
 composer.lock
-/data/conf
 /data/runtime
+/data/conf
 /public/data
 /public/log
 /public/upload
