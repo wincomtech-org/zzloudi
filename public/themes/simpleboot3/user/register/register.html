@@ -35,7 +35,7 @@
                     
                     <div class="login-in input2">
                         <span><eq name="verify_type" value="1">邮件<else/>短信</eq>验证码：</span>
-                        <input type="text" name="code" placeholder="请输入验证码" class="login-code" >
+                        <input type="text" name="code" placeholder="请输入验证码" class="login-code" required>
                         <a href="javascript:void(0);" class="code" id="yzm">发送验证码</a>
                     </div>
                    
@@ -93,12 +93,10 @@
     $('#form_register').submit(function(){
     	var username=$.trim($('input[name=username]').val());
     	var password=$.trim($('input[name=password]').val()); 
-		var password1=$.trim($('input[name=password1]').val()); 
     	var tel=$.trim($('input[name=tel]').val());
     	var code=$.trim($('input[name=code]').val());
     	var email=$.trim($('input[name=email]').val());
-		
-     	//验证所有信息
+    	//验证所有信息
     	var pattern = /[A-Za-z0-9_\-\u4e00-\u9fa5]+/;
 		var pwd=/^[A-Za-z]+[0-9]+[A-Za-z0-9]*|[0-9]+[A-Za-z]+[A-Za-z0-9]*$/g;
 		var emil_s=/\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
@@ -128,12 +126,9 @@
 			alert("手机号码不正确");
 			return false;
 		}
-		
-		
-		
-		$('.login-sub input').prop('disabled','disabled');
+    	$('.login-sub input').prop('disabled','disabled');
         $('.login-sub input').val('正在注册');
-      
+         
         $.ajax({
             type: 'POST',
             url: "{:url('user/register/ajaxRegister')}",

@@ -60,10 +60,16 @@ $("#pro-first").click(function(){
 	if(!ghyuj){alert("请阅读本站服务协议！");return}
 	//验证所有信息是否填写
 	if(xlzt===true&&namr_s===true&&gu_s===true&&gy_t===true&&br_s===true&&ghyuj===true){
-	   	$(".pro-box1").hide();
-    	$(".pro-box2").show();
-    	$(".pro-tit-list li").removeClass("pro-tit-cur");
-		$(".pro-tit-list li:nth-child(2)").addClass("pro-tit-cur");
+		//执行ajax保存订单
+		order_do1(); 
+		if(ajax_result==1){ 
+			ajax_result=0;
+			$(".pro-box1").hide();
+	    	$(".pro-box2").show();
+	    	$(".pro-tit-list li").removeClass("pro-tit-cur");
+			$(".pro-tit-list li:nth-child(2)").addClass("pro-tit-cur");
+		}
+	   	
 	   }
 	
 });
@@ -80,7 +86,12 @@ $(".bugyalu>input").click(function(){
 	$(".show_ss_1>div>input").attr("checked",false)
 });
 var jiage,xiangxi;
+//记录所选服务
+var sid=0;
 $(".show_ss_1>div>input").click(function(){
+	//记录所选服务
+	sid=$(this).val();
+	 
 	var a=$(this).next().next().html();
 	xiangxi=$(this).next().html()
 	a=a.slice(1,-2);
@@ -95,13 +106,19 @@ $("#pro-second1").click(function(){
 });
 $("#pro-second2").click(function(){
 	console.log(xiangxi);
-   var a=$($($(".show_ss_1")[leixing]).children(".gy").children("input")).is(":checked");
+    var a=$($($(".show_ss_1")[leixing]).children(".gy").children("input")).is(":checked");
 	var b=$($($(".show_ss_1")[leixing]).children(".gu").children("input")).is(":checked");
 	if(a==true || b==true){
-		$(".pro-box3").show();
-    	$(".pro-box2").hide();
-    	$(".pro-tit-list li").removeClass("pro-tit-cur");
-    	$(".pro-tit-list li:nth-child(3)").addClass("pro-tit-cur");
+		//执行ajax保存订单
+		order_do2(); 
+		if(ajax_result==1){ 
+			ajax_result=0;
+			$(".pro-box3").show();
+	    	$(".pro-box2").hide();
+	    	$(".pro-tit-list li").removeClass("pro-tit-cur");
+	    	$(".pro-tit-list li:nth-child(3)").addClass("pro-tit-cur");
+		}
+		 
 	}else{
 		alert("请至少选择一个")
 	}

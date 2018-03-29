@@ -4,7 +4,7 @@ namespace app\portal\controller;
 
 use cmf\controller\HomeBaseController;
 use think\Db;
-use Memcache;
+ 
 class CaseController extends HomeBaseController
 {
     private $m;

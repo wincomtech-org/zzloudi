@@ -2,10 +2,9 @@
 
 namespace app\portal\controller;
 
-use cmf\controller\HomeBaseController;
+use cmf\controller\UserBaseController;
 use think\Db;
-use Memcache;
-class VideoController extends HomeBaseController
+class VideoController extends UserBaseController
 {
     private $m;
     

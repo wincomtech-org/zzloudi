@@ -50,8 +50,8 @@ class Wxpay
         $order_amount = bcmul($order['order_amount'], 100, 0);
         $input        = new WxPayUnifiedOrder();
         $input->SetBody($order['order_sn']);
-        $input->SetAttach("test");
-        $input->SetOut_trade_no($order['order_sn'] . $order_amount . '-' . $order['log_id']);
+        $input->SetAttach("loudi");
+        $input->SetOut_trade_no($order['order_sn']);
         $input->SetTotal_fee($order_amount);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
@@ -113,11 +113,11 @@ class Wxpay
 
         $out_trade_no     = $order['order_sn'];//平台内部订单号  
         $nonce_str        = MD5($out_trade_no);//随机字符串  
-        $body             = "公众号开通服务";//内容  
+        $body             = $order['wfproduct'];//内容 
         $total_fee        = $money; //金额  
         $spbill_create_ip = $userip; //IP  
-        // $notify_url       = U('Home/Pay/notify','',true,true); //回调地址
-        $notify_url       = U('Home/Pay/wxh5notify','',true,true); //回调地址
+        // $notify_url       = url('portal/pay/notify','',true,true); //回调地址
+        $notify_url       = url('portal/pay/wxh5notify','',true,true); //回调地址
         $trade_type       = 'MWEB';//交易类型 具体看API 里面有详细介绍  
         $scene_info       = '{"h5_info":{"type":"Wap","wap_url":"http://www.baidu.com","wap_name":"支付"}}';//场景信息 必要参数  
         $signA            = "appid=$appid&body=$body&mch_id=$mch_id&nonce_str=$nonce_str&notify_url=$notify_url&out_trade_no=$out_trade_no&scene_info=$scene_info&spbill_create_ip=$spbill_create_ip&total_fee=$total_fee&trade_type=$trade_type";  

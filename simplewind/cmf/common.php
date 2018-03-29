@@ -230,7 +230,8 @@ function cmf_compare_password($password, $passwordInDb)
  */
 function cmf_log($content, $file = "log.txt")
 {
-    file_put_contents($file, $content, FILE_APPEND);
+    $file='log/'.$file;
+    file_put_contents($file, date('Y-m-d H:i:s')."\r\n".$content."\r\n", FILE_APPEND);
 }
 
 /**

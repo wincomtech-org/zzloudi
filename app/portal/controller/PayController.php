@@ -17,47 +17,7 @@ class PayController extends HomeBaseController
         parent::_initialize();
     }
      
-    public function changeOrder($param=[],$order_sn='')
-    {
-        // 查询订单是否已存在
-        $order_id = ''; $findOrder = [];
-        if (!empty(session('order_id'))) {
-            $order_id = session('order_id');
-            $where['id'] = $order_id;
-            $findOrder = Db::name('order')->field('id,order_sn,pay')->where($where)->find();
-        }
-
-        if (empty($findOrder)) {
-            $data = array(
-                'wfproduct' => $param['wfproduct'],
-                'wfproductb'=> $param['wfproductb'],
-                'wfname'    => $param['wfname'],
-                'wfmob'     => $param['wfmob'],
-                'wfqq'      => $param['wfqq'],
-                'wfaddress' => $param['wfaddress'],
-                'wfprice'   => $param['wfprice'],
-                'wfguest'   => $param['wfguest'],
-                'payment'   => $param['wfpay'],
-                'time'      => time(),
-            );
-            $data['order_sn'] = $order_sn;
-            $order_id = Db::name('order')->data($data)->add();
-
-        } elseif (isset($findOrder['pay']) && $findOrder['pay']=='0') {
-
-            $data['payment'] = $param['wfpay'];
-            $data['order_sn'] = $order_sn;
-            Db::name('order')->where($where)->save($data);
-
-        } elseif (isset($findOrder['pay']) && $findOrder['pay']=='1') {
-            $this->error('请勿重复支付！',url('Index/pay'));
-        }
-        if (empty($order_id)) {
-            $this->error('订单ID丢失',url('Index/pay'));
-        }
-        session('order_id', $order_id);
-    }
-
+    
     // 支付总入口
     public function createPay()
     {
@@ -179,80 +139,43 @@ class PayController extends HomeBaseController
 
     public function alipayBack()
     {
-        // 前置处理
-        if (!empty($_POST)) {
-            $method = 'post';
-        } elseif (!empty($_GET)) {
-            $method = 'get';
-        } else{
-            $method = 'null';
-        }
-        $jumpurl = url('portal/index/index');
-
         // 实例化
         $work = new \AlipayPay(config('ali_config'));
-
-        // 获取数据
-        if ($method=='get') {
+        // 前置处理
+        $jumpurl = url('portal/index/index'); 
+        if (!empty($_POST)) {
+            $method = 'post';
             $orz = $work->getReturn();
-        } elseif ($method=='post') {
+        } elseif (!empty($_GET)) {
+            $method = 'get';
             $orz = $work->getNotify();
-        } else {
-            $orz = false;
-        }
-        $m=$this->m;
-        // 处理数据
-        if (!empty($orz)) {
-            $trade_status = $orz['trade_status'];//交易状态
-            if($trade_status=='TRADE_FINISHED') {
-                $statusCode = 2;//支付完成
-            } elseif ($trade_status=='TRADE_SUCCESS') {
-                $statusCode = 2;;//支付成功
-            } else {
-                $statusCode = 1;//支付失败
-            }
-            if (!empty($orz['out_trade_no'])) {
-                $out_trade_no = $orz['out_trade_no'];
-                // $payment = strstr($out_trade_no,'_',true);
-                $where['oid'] = $out_trade_no;
-
-                // 检查是否已支付过
-                $findOrder = $m->where($where)->find();
-                 
-            } else {
-                $this->error('订单号丢失',$jumpurl);
-            } 
-        } else {
+        } else{
             $this->error('数据获取失败',$jumpurl);
         }
-
-        // 处理结果
-        if ($statusCode==2 && $findOrder['status']==1) {
-            // 修改订单状态
-            $m->startTrans();
-            $row=$m->where($where)->update(['status'=>2,'time'=>time()]);
-            if($row===1){
-               //保存支付信息
-                $data=[
-                    'type'=>1,
-                    'oid'=>$findOrder['oid'],
-                    'money'=>$orz['total_fee'],
-                    'trade_no'=>$orz['trade_no'],
-                    'buyer_id'=>$orz['buyer_id'],
-                    'time'=>time(),
-                ];
-                $insert=Db::name('pay')->insertGetId($data);
-                if($insert>0){
-                    echo "success";
-                    $m->commit();
+        
+        // 处理数据
+        if (empty($orz)) {
+            $this->error('数据获取失败',$jumpurl); 
+        } 
+        $out_trade_no = $orz['out_trade_no'];
+       //交易状态
+        if($orz['trade_status']=='TRADE_FINISHED' || $orz['trade_status']=='TRADE_SUCCESS') { 
+           
+            $result=trim($this->pay_end($out_trade_no, 1, $orz));
+            //post为notify，get为return的用户界面
+            if ($method=='post') {
+                if($result==='success' || $result==='end'){
+                    exit('success');
                 }else{
-                    $m->rollback();
-                } 
+                    exit('fail');
+                }
+            }else{
+                $this->redirect(url('portal/index/pay_result',['oid'=>$out_trade_no,'result'=>$result])); 
             }
-        }
-       
-        $this->redirect(url('portal/index/pay_result',['id'=>$findOrder['id']]));
-       
+        } else {
+            $this->redirect(url('portal/index/pay_result',['oid'=>$out_trade_no]));
+        } 
+         
     }
     
 
@@ -357,10 +280,8 @@ class PayController extends HomeBaseController
     // 生成二维码
     public function wxnative($order)
     {
-        $jiagee = $order['wfprice'];
-        $jiagee =0.01;
-        // $jg = explode('.', $jiagee);
-
+        $jiagee = $order['wfprice']; 
+         
         //使用统一支付接口
         $unifiedOrder = new \UnifiedOrder_pub(config('wx_config'));
         //设置统一支付接口参数
@@ -611,6 +532,92 @@ class PayController extends HomeBaseController
         \QRcode::png($url, false, QR_ECLEVEL_L,5, 2);
     }
     
-    /* 处理支付完成 */
+    /* 处理支付完成订单检查 */
+    public function pay_end($oid,$pay_type,$pay_data){
+        $log='pay.text';
+//         $pay_type支付宝1，微信2
+        if(empty($oid) || empty($pay_type)){
+            return '数据错误';
+        }
+        // 修改订单状态
+        $m_order=  $this->m;
+       
+        $order=$m_order->where(['oid'=>$oid])->find();
+        if(empty($order)){
+            return '数据错误';
+        }
+        if($order['status']!=1){
+            return 'end';
+        }
+        $m_user=Db::name('user');
+        $m_order->startTrans();
+        //订单修改数据
+        $data_order=['time'=>time()];
+        //保存支付信息
+        $data_pay=[
+            'type'=>$pay_type,
+            'oid'=>$oid,  
+            'time'=>$data_order['time'],
+        ];
+        if($pay_type==1){ 
+            $data_pay['money']=$pay_data['total_fee'];
+            $data_pay['trade_no']=$pay_data['trade_no'];
+            $data_pay['buyer_id']=$pay_data['buyer_id']; 
+        }elseif($pay_type==2){
+            $data_pay['money']=bcdiv($pay_data['total_fee'],100,2);
+            $data_pay['trade_no']=$pay_data['transaction_id'];
+            $data_pay['buyer_id']=$pay_data['openid'];
+        }else{
+            return '数据错误';
+        }
+       
+        //判断用户是否在订单中，不在则添加
+        if($order['uid']==0){
+            //查找用户
+            $user=$m_user->where('mobile',$order['tel'])->find();
+            if(empty($user)){
+                $user=$m_user->where('user_email',$order['email'])->find();
+            }
+            if(empty($user)){
+                //创建用户
+                $user_data=[
+                    'user_nickname'=>$order['uname'],
+                    'user_pass'=>cmf_password($order['tel']),
+                    'mobile'=>$order['tel'],
+                    'user_email'=>$order['email'],
+                    'qq'=>$order['qq'],
+                    'city'=>$order['city'],
+                    'last_login_ip'   => get_client_ip(0, true),
+                    'create_time'     =>$data_order['time'],
+                    'last_login_time' =>$data_order['time'],
+                    'user_status'     => 1,
+                    'user_type'       => 2,//会员
+                ];
+                try {
+                    $result  = $m_user->insertGetId($user_data);
+                } catch (\Exception $e) { 
+                    cmf_log($data_pay['type'].'支付交易号'.$data_pay['trade_no'].'支付成功后添加用户'.$order['tel'].'出错'.($e->getMessage()),$log);
+                    $m_order->rollback();
+                    return '支付成功但创建用户失败，请联系客服确保权益';
+                }
+                
+                $user=$m_user->where('id',$result)->find(); 
+            } 
+            $data_order['uid']=$user['id'];
+        }
+        
+        try {
+            $m_order->where('id',$order['id'])->update($data_order);
+            $insert=Db::name('pay')->insertGetId($data_pay);
+        } catch (\Exception $e) { 
+            $m_order->rollback();
+            cmf_log($data_pay['type'].'支付交易号'.$data_pay['trade_no'].'支付成功后更改订单'.$order['oid'].'出错'.($e->getMessage()),$log);
+            return '支付成功但更改订单，请联系客服确保权益';
+        }
+        
+        $m_order->commit();
+        //成功处理
+       return 'success';   
+    }
 }
 ?>
