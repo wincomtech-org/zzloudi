@@ -16,8 +16,8 @@
             <div class="clear"></div>
         </ul>
     </div>
-    <form action="{:url('portal/index/order_do3')}" method="post" id="form_order">
-        <div class="pro-box1 pro-box">
+    <form action="{:url('portal/index/order_do')}" method="post" id="form_order">
+        <div class="pro-box1 pro-box" id="app">
             <div class="pro-box1-l">
                 <div class="pro-input">
                     <span>所在地区</span>
@@ -43,19 +43,19 @@
                 </div>
                 <div class="pro-input">
                     <span>申请人姓名</span>
-                    <input class="gy_ss_y" type="text" name="uname" placeholder="">
+                    <input v-model="name" class="gy_ss_y" type="text" name="uname" placeholder="" maxlength="6">
                 </div>
                 <div class="pro-input">
                     <span>联系手机</span>
-                    <input class="gy_ss_gg" type="text" name="tel" placeholder="">
+                    <input v-model="phone" class="gy_ss_gg" type="text" name="tel" placeholder="" maxlength="11">
                 </div>
                 <div class="pro-input">
                     <span>QQ号码</span>
-                    <input class="gy_t_i" type="text" name="qq" placeholder="">
+                    <input v-model="qq" class="gy_t_i" type="text" name="qq" placeholder="" maxlength="10">
                 </div>
                 <div class="pro-input">
                     <span>常用邮箱</span>
-                    <input class="gy_suyty" type="text" name="email" placeholder="">
+                    <input v-model="email" class="gy_suyty" type="text" name="email" placeholder="" maxlength="20">
                 </div>
                 <div class="pro-text1">
                     <p>请正确填写信息，避免无法正常接收服务信息</p>
@@ -66,7 +66,16 @@
                 </div>
             </div>
             <div class="pro-box-r">
-                <img src="__TMPL__/public/assets/img/pro-1.jpg">
+<!--                <img src="__TMPL__/public/assets/img/pro-1.jpg">-->
+				<div class="shaungxsj_ss">
+					<div class="div1_ss"></div>
+					<div class="txtsy_ss">
+						<p><span>姓名</span>{{ name }}</p>
+						<p><span>手机号</span>{{phone}}</p>
+						<p><span>QQ号</span>{{qq}}</p>
+						<p><span>邮箱</span>{{email}}</p>
+					</div>
+				</div>
             </div>
             <div class="clear"></div>
         </div>
@@ -104,15 +113,40 @@
             <div class="clear"></div>
         </div>
         <div class="pro-box3 pro-box">
-             <div class="huluwa" id="app">
+<!--
+            <div class="pro-box3-l">
+              	<div class="pro-box3-t1">
+                    <span>公众号名称</span>
+                    <input class="guyuan_syj1" type="text" name="wx_name" placeholder="100个字符串">
+                </div>
+                <div class="pro-box3-t1">
+                    <span>产品介绍</span>
+                    <textarea class="guyuan_syj2" name="wx_dsc" placeholder="1-200个字符串"></textarea>
+                </div>
+                
+                
+                <div class="">
+                    <a href="javascript:void(0)" class="pro-prev" id="pro-third1">上一步</a>
+                    <a href="javascript:void(0)" class="pro-next" id="pro-third2">下一步</a>
+                </div>
+            </div>
+            <div class="pro-box2-r">
+                <img src="__TMPL__/public/assets/img/pro-1.jpg">
+            </div>
+            <div class="clear"></div>
+-->
+			
+			
+<!--			古源加-->
+			<div class="huluwa" id="ass">
 			<div class="aoteman_left">
 			<div class="divs_1">
 				<span>公众号名称</span>
-				<input type="text" name="wx_name" v-model="text" placeholder="请输入公众号名称（2-16字）" minlength="2" maxlength="16">
+				<input type="text" v-model="text" placeholder="请输入公众号名称（2-16字）" minlength="2" maxlength="16">
 			</div>
 			<div class="divs_2">
 				<span>产品介绍</span>
-				<textarea  v-model="gy" name="wx_dsc" id="" placeholder="请输入产品简介（4-140字）" minlength="4" maxlength="140" cols="30" rows="10"></textarea>
+				<textarea  v-model="gy" name="" id="" placeholder="请输入产品简介（4-140字）" minlength="4" maxlength="140" cols="30" rows="10"></textarea>
 			</div>
 			<div class="divs_3">
 				<span>功能描述</span>
@@ -121,8 +155,8 @@
 				</p>
 			</div>
 			<div class="divs_4">
-				<a href="javascript:void(0);">上一步</a>
-				<a href="javascript:void(0);" id="form_submit">确认订单</a>
+				<a href="javascript:(0)">上一步</a>
+				<a href="javascript:(0)">下一步</a>
 			</div>
 		</div>
 		<div class="dongfangsw_right">
@@ -132,26 +166,37 @@
 			<div><img src="__TMPL__/public/assets/img/section229f4d4.png" width="100%" alt=""></div>
 			<div style="clear: both"></div>
 		</div>
+	</div>
+			
+<!--			古源结束-->
         </div>
-        <input type="hidden" id="oid" name="oid" value=""/>
+        
     </form>
 </div>
- <div id="error_html"></div>
-<include file="public@footer"/> 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script>
 	var vm=new Vue({
 		el:"#app",
+		data:{
+			name:"",
+			phone:"",
+			qq:"",
+			email:"",
+		}
+	})
+	var vm=new Vue({
+		el:"#ass",
 		data:{
 			text:"",
 			gy:"",
 		}
 	})
 </script>
+<include file="public@footer"/> 
 <script>
 $('#city2 .city2').hide();
 $('#city3 .city3').hide();
-$('#oid').val('');
+ 
 $('#city1').change(function(){
 	var fid=this.value;
 	$('#city2').val(0);
@@ -165,58 +210,7 @@ $('#city2').change(function(){
 	$('#city3').val(0); 
 	$('#city3 .city3').hide(); 
 	var fid=this.value;
-	$('#city3 .city3_'+fid).show(); 
+	$('#city3 .city3_'+fid).show();
+	 
 });
  
-function order_do1(){ 
-	ajax_result=0;
-     var oid=$('#oid').val();
-	 $.ajax({
-         type: 'POST',
-         url: "{:url('portal/index/order_do1')}",
-         dataType: 'json',
-         async:false,
-         data:{'city':quji,'uname':xingming,'tel':shouji,'qq':qqhao,'email':youxiang,'oid':oid},
-         success: function(data){  
-         	if(data.code==1){ 
-         		 
-         		$('#oid').val(data.data.oid);
-         		ajax_result=1;
-         	}else{   
-         		alert(data.msg);  
-         	} 
-         },
-         error: function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-        	 
-        	 $('#error_html').html(event.responseText); 
-        	 alert('服务器连接错误'); 
-         }
-     });
-} 
-function order_do2(){ 
-	ajax_result=0;
-    var oid=$('#oid').val(); 
-	 $.ajax({
-         type: 'POST',
-         url: "{:url('portal/index/order_do2')}",
-         dataType: 'json',
-         async:false,
-         data:{'oid':oid,'service_id':sid},
-         success: function(data){  
-         	if(data.code==1){ 
-         		ajax_result=1;
-         	}else{   
-         		alert(data.msg);  
-         	} 
-         },
-         error: function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-        	 
-        	 $('#error_html').html(event.responseText); 
-        	 alert('服务器连接错误'); 
-         }
-     });
-} 
- $('#form_submit').click(function(){
-	 $('#form_order').submit();
- });
-</script>
