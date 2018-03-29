@@ -104,6 +104,7 @@
             <div class="clear"></div>
         </div>
         <div class="pro-box3 pro-box">
+<!--
             <div class="pro-box3-l">
               	<div class="pro-box3-t1">
                     <span>公众号名称</span>
@@ -124,11 +125,55 @@
                 <img src="__TMPL__/public/assets/img/pro-1.jpg">
             </div>
             <div class="clear"></div>
+-->
+			
+			
+<!--			古源加-->
+			<div class="huluwa" id="app">
+			<div class="aoteman_left">
+			<div class="divs_1">
+				<span>公众号名称</span>
+				<input type="text" v-model="text" placeholder="请输入公众号名称（2-16字）" minlength="2" maxlength="16">
+			</div>
+			<div class="divs_2">
+				<span>产品介绍</span>
+				<textarea  v-model="gy" name="" id="" placeholder="请输入产品简介（4-140字）" minlength="4" maxlength="140" cols="30" rows="10"></textarea>
+			</div>
+			<div class="divs_3">
+				<span>功能描述</span>
+				<p>  
+					文章推送(文字、语音、视频、图文)、粉丝管理、群发功能、微信自动回复、客服功能、自定义导航菜单。微网站、微表单、微投票、抽奖、	刮刮奖、会员卡、优惠券等营销功能。
+				</p>
+			</div>
+			<div class="divs_4">
+				<a href="javascript:(0)">上一步</a>
+				<a href="javascript:(0)">下一步</a>
+			</div>
+		</div>
+		<div class="dongfangsw_right">
+			<div><img src="__TMPL__/public/assets/img/section129f4d4.png" width="100%" alt=""></div>
+			<p class="p1">{{ text }}</p> 
+			<div class="parent"><p class="p2"><span>功能介绍&nbsp;&nbsp;&nbsp;</span>{{ gy }}</p></div>
+			<div><img src="__TMPL__/public/assets/img/section229f4d4.png" width="100%" alt=""></div>
+			<div style="clear: both"></div>
+		</div>
+	</div>
+			
+<!--			古源结束-->
         </div>
         
     </form>
 </div>
- 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+	var vm=new Vue({
+		el:"#app",
+		data:{
+			text:"",
+			gy:"",
+		}
+	})
+</script>
 <include file="public@footer"/> 
 <script>
 $('#city2 .city2').hide();
