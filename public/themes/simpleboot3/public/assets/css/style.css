@@ -279,6 +279,9 @@ body{font-family: 微软雅黑;}
 .pro-box4-l-t1,.pro-box4-l-t1{margin:20px 0;}
 .pro-box4-l-t1 span,.pro-box4-l-t2 span{display: inline-block;width:120px;text-align: center;line-height: 30px;font-size:18px;}
 .pro-box4-l-t1 i{display: inline-block;text-align: center;line-height: 30px;color:#999;font-style: normal;font-size:16px;}
+.pro-box4-l-t2>span{
+	float: left
+}
 .pro-box4-l-t2 p{float: left;}
 .pro-box4-l-t2 input{margin-bottom:20px;}
 .pro-box4-l-t2 label{display: inline-block;width:90px;height:20px;margin-left: 20px;}
