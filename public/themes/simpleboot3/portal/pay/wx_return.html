@@ -67,7 +67,8 @@ function weixin(){
 		if(data.code==1){
 			clearInterval(inter);  
 			$('#wxmsg').html('支付结果:'+data.msg);
-			location.href="{:url('protal/index/index')}"; 
+			location.href=data.url;
+			
 		}
 	},'json');
 	 

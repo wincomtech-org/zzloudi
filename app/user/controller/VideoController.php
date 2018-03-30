@@ -1,6 +1,6 @@
 <?php
 
-namespace app\portal\controller;
+namespace app\user\controller;
 
 use cmf\controller\UserBaseController;
 use think\Db;

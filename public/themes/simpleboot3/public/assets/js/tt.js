@@ -150,10 +150,7 @@ $("#pro-third2").click(function(){
 	}
   
 });
-$(".guyuanwudi").click(function(){
-	location.href=""	//"./1.html"
-})
-
+ 
 
 
 

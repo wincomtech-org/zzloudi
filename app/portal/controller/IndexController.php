@@ -171,7 +171,7 @@ class IndexController extends HomeBaseController
                     }else{
                         $uid=$tmp['id'];
                     }
-                    $uid=$tmp['id'];
+                   
                 }else{
                     $uid=$tmp['id'];
                 }

@@ -16,13 +16,13 @@
             <div class="clear"></div>
         </ul>
     </div>
-    <div class="<eq name='order.status' value='1'>paysuccess<else/>pay-fail</eq>">
-        <p class="pay-f1">pay-s1</p>
+    <div class="paysuccess">
+        <p class="<eq name='order.status' value='1'>pay-f1<else/>pay-s1</eq>"></p>
         
         <p class="pay-s2">· 订单号：<span>{$order.oid}</span></p>
         <p class="pay-s2">· 订购服务：<span>{$order.service_name}</span></p>
         <p class="pay-s2">· 实付款：<span>¥{$order.money}</span></p>
-        <p class="pay-s2">· 支付提示：<span><eq name="order.status" value="1">{$order.result|default=''}</eq></span></p>
+        <p class="pay-s2">· 支付提示：<span><eq name="order.status" value="1">{$order.result|default=''}<else/>支付成功</eq></span></p>
         <p class="pay-s2">您可以<a href="{:url('user/info/index')}">查看已买到的宝贝</a></p>
     </div>
     

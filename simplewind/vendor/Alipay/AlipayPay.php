@@ -105,32 +105,10 @@ class AlipayPay
         $verify_result = $alipayNotify->verifyReturn();
 
         if ($verify_result) { //验证成功
-            //请在这里加上商户的业务逻辑程序代码
-            //请根据您的业务逻辑来编写程序（以下代码仅作参考）
-            //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表
-            // 以下是返回的数据示例
-            // $out_trade_no   = $_GET['out_trade_no'];//商户订单号
-            // $trade_no       = $_GET['trade_no'];//支付宝交易号
-            // $trade_status   = $_GET['trade_status'];//交易状态
-            // $total_fee      = $_GET['total_fee'];//交易金额
-            // $notify_id      = $_GET['notify_id'];//通知校验ID
-            // $notify_time    = $_GET['notify_time'];//通知的发送时间
-            // $buyer_email    = $_GET['buyer_email'];//买家支付宝帐号
-
-            // if($trade_status=='TRADE_FINISHED') {
-            //     return array_merge($_GET,['status'=>10]);//支付完成
-            // } elseif ($trade_status=='TRADE_SUCCESS') {
-            //     return array_merge($_GET,['status'=>1]);//支付成功
-            // } else {
-            //     return false;//支付失败
-            // }
-
-            // $this->log($_GET);
-            // 在这里只管返回数据
+             
             return $_GET;
-        } else { //验证失败
-            //调试
-            // $this->log($_GET);
+        } else { 
+            //验证失败 
             return false;
         }
     }
@@ -144,13 +122,11 @@ class AlipayPay
         $alipayNotify = new AlipayNotify($this->p_set());
         $verify_result = $alipayNotify->verifyNotify();
 
-        if($verify_result) { //验证成功
-            // $this->log($_POST);
-            // 在这里只管返回数据
+        if($verify_result) { 
+            //验证成功 
             return $_POST;
-        } else { //验证失败
-            //调试用，写文本函数记录程序运行情况是否正常
-            // $this->log($_POST);
+        } else { 
+            //验证失败 
             return false;
         }
     }
@@ -250,7 +226,7 @@ class AlipayPay
         // ca证书路径地址，用于curl中ssl校验
         // 请保证cacert.pem文件在当前文件夹目录中
         $set['cacert'] = dirname(__FILE__).'/cacert.pem';
-        error_log($set['cacert'],3,'z.log');
+        
         // 支付宝的公钥文件路径
         // $set['ali_public_key_path'] = '';
         
@@ -292,7 +268,7 @@ class AlipayPay
         //商户订单号，商户网站订单系统中唯一订单号，必填
         $param['out_trade_no'] = $this->order_sn;
         //订单名称，必填
-        $param['subject'] = 'OrderSn：'. $this->order_sn .' (公众号服务)';
+        $param['subject'] = '订单号：'. $this->order_sn .' (公众号服务)';
         //付款金额，必填
         $param['total_fee'] = $this->order_amount;
         //订单描述

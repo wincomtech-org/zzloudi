@@ -11,9 +11,11 @@ class SqlController extends AdminbaseController {
     
     
     private $dir;
+    private $line;
     public function _initialize() {
         parent::_initialize();
         $this->dir=getcwd().'/data/';
+        $this->line="\r\n";
         
     }
     
@@ -35,13 +37,10 @@ class SqlController extends AdminbaseController {
         $dir=$this->dir;
         $files=scandir($dir);
         $list=[];
-        foreach($files as $v){
-            
-            if(is_file($dir.$v) && substr($v,strrpos($v, '.'))=='.sqlsql'){
-                
+        foreach($files as $v){ 
+            if(is_file($dir.$v) && substr($v,strrpos($v, '.'))=='.sqlsql'){ 
                 $list[]=$v;
-            }
-            
+            } 
         }
         if($list){
             rsort($list);
@@ -78,8 +77,7 @@ class SqlController extends AdminbaseController {
         $msqlback=new \SqlBack($db['hostname'], $db['username'], $db['password'], $dname,  $db['hostport'],$db['charset'],$dir);
         $url=url('index');
         if($msqlback->backup()){
-            error_log(date('Y-m-d H:i:s').'管理员'.session('ADMIN_ID').'备份了数据库'."\n",3,'zz.log');
-            
+            cmf_log('管理员'.session('name').'备份了数据库','sql.txt');
             $this->success('数据备份成功',$url);
         }else{
             echo "备份失败! <a href='.$url.'>返回</a>";
@@ -116,10 +114,10 @@ class SqlController extends AdminbaseController {
             $url=url('index');
             
              if($msqlback->restore($filename)){
-                 error_log(date('Y-m-d H:i:s').'管理员'.session('ADMIN_ID').'还原了数据库'.$filename."\n",3,'zz.log');
-                $this->success('数据备份成功',$url);
+                 cmf_log('管理员'.session('name').'还原了数据库'.$filename,'sql.txt');
+                 $this->success('数据还原成功',$url);
             }else{
-                echo "备份失败! <a href='.$url.'>返回</a>";
+                echo "还原失败! <a href='.$url.'>返回</a>";
             }
         }else{
             echo "文件不存在! <a href='.$url.'>返回</a>";
@@ -143,7 +141,7 @@ class SqlController extends AdminbaseController {
     public function del(){
         $file=$this->request->param('id','');
         if(unlink(($this->dir).$file)===true){
-            error_log(date('Y-m-d H:i:s').'管理员'.session('ADMIN_ID').'删除了备份数据库'.$file."\n",3,'zz.log');
+             cmf_log('管理员'.session('name').'删除了备份数据库'.$file,'sql.txt');
             $this->success('备份已删除');
         }else{
             $this->error('删除失败');
@@ -172,8 +170,8 @@ class SqlController extends AdminbaseController {
                 $this->error('删除失败');
             }
         }
-        error_log(date('Y-m-d H:i:s').'管理员'.session('ADMIN_ID').'批量删除了备份数据库'."\n",3,'zz.log');
-        
+        cmf_log('管理员'.session('name').'批量删除了数据库','sql.txt');
+         
         $this->success('备份已删除');
          
     }
@@ -216,7 +214,7 @@ class SqlController extends AdminbaseController {
                $row=0;
            }
            $this->assign('row',$row);
-           error_log(date('Y-m-d H:i:s').'管理员'.session('ADMIN_ID').'使用了Sql语句'."\n".$data['sql']."\n".'影响了'.$row.'行数据'."\n",3,'zz.log');
+           cmf_log('管理员'.session('name').'使用了Sql语句'.($this->line).$data['sql'],'sql.txt');
            
        }
         $this->assign('data',$data);

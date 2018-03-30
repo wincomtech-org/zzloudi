@@ -64,13 +64,11 @@ var inter=setInterval(weixin,2000);
 function weixin(){
  
 	$.post(query_url,{'out_trade_no':oid},function(data){
-		console.log(data);
+		 
 		if(data.code==1){
 			clearInterval(inter);  
 			$('#wxmsg').html('支付结果:'+data.msg);
-			setTimeout(function(){
-				location.href="{:url('protal/index/index')}";
-			},3000);
+			location.href=data.url;
 			
 		}
 	},'json');

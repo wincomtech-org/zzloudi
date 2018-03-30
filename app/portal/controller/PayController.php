@@ -86,8 +86,7 @@ class PayController extends HomeBaseController
                     'wfproduct'     =>  $order['service_name'],
                     'out_trade_no'  => $wx_oid,
                 ); 
-                $this->wxnative($order);
-                return $this->fetch('wxnative');
+                $this->wxnative($order); 
                 break;
           case 'wxh5':
               $order = array(
@@ -139,34 +138,40 @@ class PayController extends HomeBaseController
 
     public function alipayBack()
     {
+        $log='pay.txt';
+       
         // 实例化
         $work = new \AlipayPay(config('ali_config'));
         // 前置处理
         $jumpurl = url('portal/index/index'); 
         if (!empty($_POST)) {
-            $method = 'post';
-            $orz = $work->getReturn();
-        } elseif (!empty($_GET)) {
-            $method = 'get';
+            $method = 'post'; 
             $orz = $work->getNotify();
+        } elseif (!empty($_GET)) {
+            $method = 'get'; 
+            $orz = $work->getReturn(); 
         } else{
+            cmf_log('支付宝验证数据获取失败',$log);
             $this->error('数据获取失败',$jumpurl);
         }
         
         // 处理数据
-        if (empty($orz)) {
+        if (empty($orz['out_trade_no'])) {
+            cmf_log('支付宝数据验证失败',$log); 
+             
             $this->error('数据获取失败',$jumpurl); 
         } 
         $out_trade_no = $orz['out_trade_no'];
        //交易状态
         if($orz['trade_status']=='TRADE_FINISHED' || $orz['trade_status']=='TRADE_SUCCESS') { 
-           
+            
             $result=trim($this->pay_end($out_trade_no, 1, $orz));
             //post为notify，get为return的用户界面
             if ($method=='post') {
-                if($result==='success' || $result==='end'){
+                if($result==='success' || $result==='end'){ 
                     exit('success');
                 }else{
+                    cmf_log('支付宝post验证失败单号'.$out_trade_no,$log); 
                     exit('fail');
                 }
             }else{
@@ -303,29 +308,19 @@ class PayController extends HomeBaseController
         //商户根据实际情况设置相应的处理流程
         if ($unifiedOrderResult["return_code"] == "FAIL") {
             //商户自行增加处理流程
-           $this->error("通信出错：" . $unifiedOrderResult['return_msg'],$jumpurl);
+           $this->error("通信出错：" . $unifiedOrderResult['return_msg'],$jumpurl,10);
         } elseif ($unifiedOrderResult["result_code"] == "FAIL") {
             //商户自行增加处理流程
-            echo "错误代码：" . $unifiedOrderResult['err_code'] . "<br>";
-            echo "错误代码描述：" . $unifiedOrderResult['err_code_des'] . "<br>";
-            $this->error($unifiedOrderResult['err_code'].$unifiedOrderResult['err_code_des'],$jumpurl);
+            $this->error("错误代码：" . $unifiedOrderResult['err_code']."<br/>错误代码描述：" . $unifiedOrderResult['err_code_des'],$jumpurl,10);
+            
         } elseif ($unifiedOrderResult["code_url"] != null) {
             //从统一支付接口获取到code_url
             $code_url = $unifiedOrderResult["code_url"];
-            //商户自行增加处理流程
-            //......
-        } 
-        $info=[
-            'oid'=>$out_trade_no,
-            'money'=>$order['wfprice'],
-            'weixinUrl'=> urlencode($code_url),
-            'query_url'=>url('Portal/Pay/orderQuery'),
-        ];
-        $this->assign('info',$info);  
-        $this->assign('html_flag','product');
-        //banner
-        $banners=DB::name('banner')->where('type','product')->order('sort asc,id asc')->select();
-        $this->assign('banners',$banners);
+            $this->redirect(url('portal/pay/wx_native',['url'=> urlencode($code_url),'out_trade_no'=>$out_trade_no,'money'=>$jiagee]));
+            
+        }else{
+            $this->error("微信下单失败",$jumpurl,10);
+        }
         
     }
     /* 微信页面 */
@@ -415,73 +410,53 @@ class PayController extends HomeBaseController
 
             //商户根据实际情况设置相应的处理流程,此处仅作举例
             if ($orderQueryResult["return_code"] == "FAIL") {
-                $this->error($out_trade_no);
-            } elseif ($orderQueryResult["result_code"] == "FAIL") {
-                // $this->ajaxReturn('','支付失败！',0);
-                $this->error($out_trade_no);
+                $this->error('支付失败');
+            } elseif ($orderQueryResult["result_code"] == "FAIL") { 
+                $this->error('支付失败');
             } else {
-                error_log($orderQueryResult["trade_state"]."\r\n",3,'zz.log');
+               
                 //判断交易状态
                 switch ($orderQueryResult["trade_state"]) {
                     case 'SUCCESS':
-                        //Db::name('order')->where(array('id' => session('order_id')))->save(array('pay' => '1'));
+                        
                         $arr=explode('_', $out_trade_no);
                         $oid=$arr[0];
-                        // 修改订单状态
-                        $m=Db::name('order');
                       
-                        $order=$m->where(['oid'=>$oid])->find();
-                        if($order['status']==1){
-                            $m->startTrans();
-                            $m->where('id',$order['id'])->update(['status'=>2,'time'=>time()]);
-                            //保存支付信息
-                            $data=[
-                                'type'=>2,
-                                'oid'=>$oid,
-                                'money'=>bcdiv($orderQueryResult['total_fee'],100,2),
-                                'trade_no'=>$orderQueryResult['transaction_id'],
-                                'buyer_id'=>$orderQueryResult['openid'],
-                                'time'=>time(),
-                            ];
-                            $insert=Db::name('pay')->insertGetId($data);
-                            if($insert>0){ 
-                                
-                                $m->commit();
-                                $this->success("支付成功！");
-                            }else{
-                                $m->rollback();
-                                $this->error("已支付但订单处理失败，请联系客服");
-                            }
+                        $result=trim($this->pay_end($oid, 2, $orderQueryResult));
+                        
+                        if($result==='success' || $result==='end'){
+                            $this->success("支付成功！",url('portal/index/pay_result',['oid'=>$oid]));
+                        }else{
+                            $this->error($result);
                         }
-                       
                         break;
                     case 'REFUND':
-                        $this->error("超时关闭订单：" );
+                        $this->error("订单REFUND" );
                         break;
                     case 'NOTPAY':
-                        $this->error("超时关闭订单：" );
+                        $this->error("未支付");
                           // $this->ajaxReturn($orderQueryResult["trade_state"], "支付成功", 1);
                         break;
                     case 'CLOSED':
-                        $this->error("超时关闭订单：" );
+                        $this->error("订单CLOSED");
                         break;
                     case 'PAYERROR':
-                        $this->error("支付失败" . $orderQueryResult["trade_state"]);
+                        $this->error("支付失败PAYERROR");
                         break;
                     default:
-                        $this->error("未知失败" . $orderQueryResult["trade_state"]);
+                        $this->error("未知失败");
                         break;
                 }
             }
         }
     }
-    //查询订单
+    //微信通知，查询订单
     public function wx_notify()
     {
         $data = file_get_contents("php://input");
         $postObj = simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
         $out_trade_no= $postObj->out_trade_no;
-          
+        $log='pay.txt';
         //使用订单查询接口 
         $orderQuery = new \OrderQuery_pub(config('wx_config')); 
         $orderQuery->setParameter("out_trade_no", $out_trade_no); //商户订单号 
@@ -496,33 +471,21 @@ class PayController extends HomeBaseController
             //Db::name('order')->where(array('id' => session('order_id')))->save(array('pay' => '1'));
             $arr=explode('_', $out_trade_no);
             $oid=$arr[0];
-            // 修改订单状态
-            $m=Db::name('order');
+           
+            $result=trim($this->pay_end($out_trade_no, 2, $orderQueryResult)); 
             
-            $order=$m->where(['oid'=>$oid])->find();
-            if($order['status']==1){
-                $m->startTrans();
-                $m->where('id',$order['id'])->update(['status'=>2,'time'=>time()]);
-                //保存支付信息
-                $data=[
-                    'type'=>2,
-                    'oid'=>$oid,
-                    'money'=>bcdiv($orderQueryResult['total_fee'],100,2),
-                    'trade_no'=>$orderQueryResult['transaction_id'],
-                    'buyer_id'=>$orderQueryResult['openid'],
-                    'time'=>time(),
-                ];
-                $insert=Db::name('pay')->insertGetId($data);
-                if($insert>0){ 
-                    $m->commit();
-                    exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
-                    
-                }else{
-                    $m->rollback(); 
-                }
-            } 
+            if($result==='success' || $result==='end'){
+                exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
+                
+            }else{ 
+                cmf_log('微信验证失败单号'.$out_trade_no,$log);
+                exit('fail');
+            }
+             
+            
         }
-        exit(); 
+        
+         
     }
     //生成二维码
     public function qrcode(){
@@ -531,10 +494,25 @@ class PayController extends HomeBaseController
         $url = urldecode($url);
         \QRcode::png($url, false, QR_ECLEVEL_L,5, 2);
     }
-    
+    public function wx_native(){
+         
+        $data=$this->request->param();
+        $info=[
+            'oid'=>$data['out_trade_no'],
+            'money'=>$data['money'],
+            'weixinUrl'=>$data['url'],
+            'query_url'=>url('portal/pay/orderQuery'),
+        ];
+        $this->assign('info',$info);
+        $this->assign('html_flag','product');
+        //banner
+        $banners=DB::name('banner')->where('type','product')->order('sort asc,id asc')->select();
+        $this->assign('banners',$banners);
+        return $this->fetch();
+    }
     /* 处理支付完成订单检查 */
     public function pay_end($oid,$pay_type,$pay_data){
-        $log='pay.text';
+        $log='pay.txt';
 //         $pay_type支付宝1，微信2
         if(empty($oid) || empty($pay_type)){
             return '数据错误';
@@ -544,15 +522,15 @@ class PayController extends HomeBaseController
        
         $order=$m_order->where(['oid'=>$oid])->find();
         if(empty($order)){
-            return '数据错误';
+            return '没有该订单';
         }
         if($order['status']!=1){
-            return 'end';
+             return 'end';
         }
         $m_user=Db::name('user');
         $m_order->startTrans();
         //订单修改数据
-        $data_order=['time'=>time()];
+        $data_order=['time'=>time(),'status'=>2];
         //保存支付信息
         $data_pay=[
             'type'=>$pay_type,
