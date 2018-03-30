@@ -1,3 +1,4 @@
+body{font-family: 微软雅黑;}
 .main{width: 100%;background:#fff;overflow: hidden;}
 .main1{padding-top:60px;margin:0 auto;width:850px;}
 .w1{width:440px;}.w2{width:470px;}.w3{width:620px;}
@@ -195,9 +196,9 @@
 .pro-input input{width:470px;border:1px solid #ccc;line-height: 30px;font-size: 16px;padding-left:10px;}
 .pro-text1{margin:20px 0;margin-left:200px;}
 .pro-text1 p{font-size:12px;color:#999;line-height: 20px;}
-.pro-next{display: inline-block;width:80px;line-height: 35px;text-align: center;font-size: 18px;background:#44b548;border-radius: 5px;color:#fff;margin-top:20px;}
+.pro-next{display:inline-block;width:80px;line-height: 35px;text-align: center;font-size: 18px;background:#44b548;border-radius: 5px;color:#fff;margin-top:20px;}
 .pro-box-r{float: right;width:460px;text-align: center;}
-
+#pro-first{position:absolute;bottom:48px;left:209px;}
 /*古源改*/
 .shaungxsj_ss{
 	height:440px;
@@ -466,7 +467,7 @@
 
 .huluwa>.dongfangsw_right{
 	width:300px;
-	min-height:504px;
+/*	min-height:504px;*/
 	background:#fff;
 	margin-left: 40px;
 	position: relative;
@@ -476,25 +477,33 @@
 	position:absolute;
 	top:97px;
 	left:100px;
-	
-}
-.huluwa>.dongfangsw_right>.parent{
-/*	margin-top:-22px;*/
-	
-	width:300px;
-}
-.huluwa>.dongfangsw_right>.parent>p{
-	word-wrap :  break-word;
-	width:300px
-}
-.huluwa>.dongfangsw_right>.parent>p>span{
-	display:inline-block;
-	margin-left: 15px;
-	font-size: 15px;
+	font-size:16px;
 	font-weight: 600;
-	color:#858585;
+	word-wrap: break-word;
+	
+}
+.huluwa>.dongfangsw_right>div>.parent1{
+	display: inline-block;
+}
+.huluwa>.dongfangsw_right>div>.parent{
+	display: inline-block;
+	width:200px;
+	font-size:15px;
+	margin-top:5px;
+	word-wrap :  break-word;
+	min-height: 20px;
+    margin-top: 10px;
+	font-size:16px;
+	font-weight: 600;
+}
+
+
+#form_order{
+	position:relative;
 }
 .divs_4{
+	position: absolute;
+	bottom: 60px;
 	display: inline-block;
 	box-sizing: border-box;
 	padding-left: 250px;
@@ -537,3 +546,37 @@
 	}
 }
 /*古源结束*/
+.shaungxsj_ss{
+	height:440px;
+	width:230px;
+	background:url("../img/iphone Device.png");
+	background-size: cover;
+	padding-top:49px;
+	box-sizing: border-box;
+}
+.shaungxsj_ss>.div1_ss{
+	width:204.6px;
+	height:92.4px;
+	margin:auto; 
+	background: url("../img/tou_sss.png");
+	background-size: cover;
+}
+.shaungxsj_ss>.txtsy_ss{
+	width:204.6px;
+	margin: auto;
+	background:#fff;
+/*	padding:0 10px;*/
+}
+.shaungxsj_ss>.txtsy_ss>p{
+	height:23px;
+	line-height: 23px;
+	text-align:left;
+	overflow: hidden;
+	border-bottom: 2px solid #f8f8fa;
+}
+.shaungxsj_ss>.txtsy_ss>p>span{
+	display: inline-block;
+	text-align: right;
+	width:43px;
+	padding-right: 5px;
+}

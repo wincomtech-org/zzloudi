@@ -65,6 +65,7 @@ $("#pro-first").click(function(){
 		if(ajax_result==1){ 
 			ajax_result=0;
 			$(".pro-box1").hide();
+			$(this).hide();
 	    	$(".pro-box2").show();
 	    	$(".pro-tit-list li").removeClass("pro-tit-cur");
 			$(".pro-tit-list li:nth-child(2)").addClass("pro-tit-cur");
@@ -99,7 +100,8 @@ $(".show_ss_1>div>input").click(function(){
 	console.log(a,xiangxi);
 });
 $("#pro-second1").click(function(){
-    $(".pro-box1").show();
+   $("#pro-first").show();
+	$(".pro-box1").show();
     $(".pro-box2").hide();
     $(".pro-tit-list li").removeClass("pro-tit-cur");
     $(".pro-tit-list li:nth-child(1)").addClass("pro-tit-cur");
@@ -125,32 +127,4 @@ $("#pro-second2").click(function(){
 	console.log(leixing);
 	console.log(a,b);
 });
-$("#pro-third1").click(function(){
-    $(".pro-box2").show();
-    $(".pro-box3").hide();
-    $(".pro-tit-list li").removeClass("pro-tit-cur");
-    $(".pro-tit-list li:nth-child(2)").addClass("pro-tit-cur");
-});
-var mingcheng;
-$("#pro-third2").click(function(){
-	var hgy=false;
-	var hyg=false;
-	var re5=new RegExp("\\s+");
-	mingcheng=$(".guyuan_syj1").val();
-	var neirong=$(".guyuan_syj2").val();
-	var r=re5.test(mingcheng);
-	var t=re5.test(neirong);
-	console.log(r,t);
-	if(r){alert("公众号名称不能含有空格！");return}else{hgy=true}
-	if(mingcheng==""){hgy=false;alert("公众号名称必须填写！");return}
-	if(t){alert("产品介绍不能含有空格！");return}else{hyg=true}
-	if(neirong==""){hyg=false;alert("产品介绍必须填写!");return}
-	if(hgy&&hyg){
-		 $('#form_order').submit();
-	}
-  
-});
- 
-
-
 
