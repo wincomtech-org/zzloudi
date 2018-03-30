@@ -157,7 +157,7 @@ body{font-family: 微软雅黑;}
 .order table tr,.order table tr td{text-align: center;font-size: 16px;color:#333;line-height: 50px;}
 .order thead th{font-size: 16px;height:50px;background:#efefef;}
 .delete{display: inline-block;line-height: 30px;font-size: 16px;width:60px;margin-top:30px;text-align: center;cursor: pointer;background:#f00;color:#fff;}
-.order table tr td:last-child{color:#f00;}
+.order table tr td>a{color:#f00;}
 /*login*/
 .bg{background:url('../img/login-b.jpg') no-repeat center center;width:100%;padding:130px 0;}
 .box{width:90%;margin: 0 auto;height:814px;overflow: hidden;}
