@@ -53,7 +53,7 @@ class CaseController extends HomeBaseController
             $where['cid']=['eq',$data['cid2']];
         }
        
-        $list=$m->where($where)->order('sort asc,browse desc,time desc')->paginate(2);
+        $list=$m->where($where)->order('sort asc,browse desc,time desc')->paginate(8);
         // 获取分页显示
         $page = $list->appends($data)->render();
         

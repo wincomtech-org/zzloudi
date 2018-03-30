@@ -23,7 +23,7 @@ class VideoController extends UserBaseController
         $m=$this->m;
          
          
-        $list=$m->order('sort asc,browse desc,time desc')->paginate(2);
+        $list=$m->order('sort asc,browse desc,time desc')->paginate(8);
         // 获取分页显示
         $page = $list->render();
         

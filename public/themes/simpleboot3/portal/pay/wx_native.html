@@ -46,9 +46,8 @@
 		<div class="erweima_ss_y">
 			<p>微信扫码支付</p>
 		</div>
-		<div class="dingdan_sssy">
-<!--			<p>支付订单号：{$info['oid']}</p>-->
-			<p>支付订单号：6645555555555555555555555555555555555555555</p>
+		<div class="dingdan_sssy"> 
+			<p>支付订单号：{$info['oid']}</p>
 			<p>支付金额：￥{$info['money']}</p>
 			<img alt="微信扫码支付" src="{:url('portal/pay/qrcode',['data'=>$info['weixinUrl']])}" style="width:150px;height:150px;"/>
 			<p id="wxmsg"></p>
@@ -59,7 +58,7 @@
  
 <script>
  
-var query_url="{$info['query_url']}";
+var query_url="{:url('portal/pay/orderQuery')}";
 var oid="{$info['oid']}";
 var inter=setInterval(weixin,2000);
 function weixin(){

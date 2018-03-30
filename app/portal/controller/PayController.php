@@ -36,9 +36,9 @@ class PayController extends HomeBaseController
         }
         $time=time();
          
-        if (($time-$order['insert_time'])==300) {
+         if (($time-$order['insert_time'])>(config('order_time'))) {
             $this->error('订单已过期',$url);
-        }
+        } 
         // 支付动作
         //"1"支付宝1，微信2
         $mobile=cmf_is_mobile();
@@ -104,8 +104,7 @@ class PayController extends HomeBaseController
               'order_sn'  => $wx_oid,
               'wfproduct'     =>  $order['service_name'],
               );
-              $this->get_code($order, $wx_config);
-              return $this->fetch('wxnative');
+              $this->wxnative($order); 
               break;
           default:
               break;
@@ -190,97 +189,21 @@ class PayController extends HomeBaseController
     {
         $pay = new \Wxpay();
         $result = $pay->get_h5($order, $config);
-
-        // $wx_return = url('Index/index',$order,true,true);
-        // $wx_return = url('Pay/wxh5success',$order,true,true);
-        $wx_return = url('Pay/wxh5return',$order,true,true);
+ 
+        $wx_return = url('wx_return',['oid'=>$order['order_sn']],true,true);
+       
         if (empty($result)) {
             echo '<div style="text-align:center"><button type="button" disabled>未获得移动支付权限</button></div>';exit;
         } else {
-            // $url = $result;//如果不写则返回到之前的页面
+          
             $url = $result . '&redirect_url='. $wx_return;//这个是指定用户操作后返回的页面
-            // echo '<a href="'. $url .'" class="box-flex btn-submit" type="button">微信支付</a>';exit;
-            $this->assign('wxh5Url',$url);
-            $this->display('wxh5');
+           
+            $this->redirect($url);
         }
     }
-    // 支付中间页
-    public function wxh5return()
-    {
-        // session(null);
-        // echo date('Y-m-d H:i:s');
-        // die;
-
-        $order = I('get.');
-        // $findOrder = Db::name('order')->field('id,order_sn,wfprice,pay,payment')->where(array('id',$order['log_id']))->find();
-        $this->assign('order',$order);
-        $this->display();
-    }
-    public function wxh5notify()
-    {
-        // dump($_REQUEST);die;
-        vendor('WxPayH5.log');
-        vendor('WxPayH5.notify');
-
-        $data = I();
- 
-        $notify = new \PayNotifyCallBack();
-        $notify->Handle(false);
-
-        $result = $notify->NotifyProcess($data);
-
-        if ($result===true) {
-            $status = Db::name('order')->where(array('order_sn'=>$data['out_trade_no']))->setField('pay',1);
-            if (!empty($status)) {
-                exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
-                echo true;exit();
-            } else {
-                echo false;exit();
-            }
-        } else {
-            echo false;exit();
-        }
-    }
-    public function wxh5OrderQuery($order_sn='')
-    {
-        $data = I();
-        $out_trade_no = $data['order_sn'];
-        $data_type = I('get.data_type');
-
-        $orderModel = new OrderModel();
-        $status = $orderModel->wxOrderQuery($out_trade_no);
-        // dump($status);die;
-        if ($status===true) {
-            $result = Db::name('order')->where(array('order_sn'=>$out_trade_no))->setField('pay',1);  
-        }
-        if ($data_type=='html') {
-            if (!empty($result)) {
-                // $findOrder = Db::name('order')->field('id,order_sn,wfprice,pay,payment')->where(array('order_sn'=>$out_trade_no))->find();
-                $order['wfprice'] = $data['wfprice'];
-                session(null);
-                $this->redirect('Pay/wxh5success',$order);
-            } else {
-                $this->redirect('Index/index');
-            }
-        } else {
-            echo $status;exit();
-        }
-    }
-    public function wxh5success()
-    {
-        $order = I('get.');
-        // $wfprice = $order['order_amount'];
-        // $wfprice = $order['wfprice'];
-        if ($order['pay']==1) {
-            session(null);
-        }
-
-        $this->assign('order',$order);
-        // $this->assign('wfprice',$wfprice);
-        $this->display();
-    }
-
-
+    
+     
+    
     //PC访问 扫码支付
     // 生成二维码
     public function wxnative($order)
@@ -329,65 +252,13 @@ class PayController extends HomeBaseController
         $arr=explode('_', $order_sn);
         $oid=$arr[0];
         $info=DB::name('order')->where('oid',$oid)->find();
+         
         $info['order_sn']=$order_sn;
         $this->assign('info',$info); 
         $this->assign('html_flag','product');
         return $this->fetch();
     }
-    public function notify()
-    {
-        //使用通用通知接口
-        $notify = new \Notify_pub(config('wx_config'));
-        //存储微信的回调
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        $notify->saveData($xml);
-         // var_dump($xml);
-        //验证签名，并回应微信。
-        //对后台通知交互时，如果微信收到商户的应答不是成功或超时，微信认为通知失败，
-        //微信会通过一定的策略（如30分钟共8次）定期重新发起通知，
-        //尽可能提高通知的成功率，但微信不保证通知最终能成功。
-        if ($notify->checkSign() == false) {
-            $notify->setReturnParameter("return_code", "FAIL"); //返回状态码
-            $notify->setReturnParameter("return_msg", "签名失败"); //返回信息
-        } else {
-            $notify->setReturnParameter("return_code", "SUCCESS"); //设置返回码
-        }
-        $returnXml = $notify->returnXml();
-
-        //==商户根据实际情况设置相应的处理流程，此处仅作举例=======
-
-        //以log文件形式记录回调信息
-        //         $log_ = new Log_();
-        $log_name = "wx.log"; //log文件路径
- 
-        cmf_log( "接收到的notify通知:\r\n" . $xml . "\r\n",$log_name);
-        if ($notify->checkSign() == true || 1) {
-            if ($notify->data["return_code"] == "FAIL") {
-                //此处应该更新一下订单状态，商户自行增删操作
-               
-                cmf_log( "通信出错通信出错:\r\n" . $xml . "\r\n",$log_name);
-                $this->error("1");
-            } elseif ($notify->data["result_code"] == "FAIL") {
-                //此处应该更新一下订单状态，商户自行增删操作
-               
-                cmf_log( "业务出错:\r\n" . $xml . "\r\n",$log_name);
-                $this->error("失败2");
-            } else {
-                //此处应该更新一下订单状态，商户自行增删操作
-                cmf_log( "支付成功:\r\n" . $xml . "\r\n",$log_name);
-
-            }
-
-            //商户自行增加处理流程,
-            //例如：更新订单状态
-            //例如：数据库操作
-            //例如：推送支付完成信息
-
-        }
-    }
-
      
-
     //查询订单
     public function orderQuery($order_sn='')
     {
@@ -457,6 +328,7 @@ class PayController extends HomeBaseController
         $postObj = simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
         $out_trade_no= $postObj->out_trade_no;
         $log='pay.txt';
+        cmf_log('$wx_notify$out_trade_no'.$out_trade_no,'pay.txt');
         //使用订单查询接口 
         $orderQuery = new \OrderQuery_pub(config('wx_config')); 
         $orderQuery->setParameter("out_trade_no", $out_trade_no); //商户订单号 
@@ -468,17 +340,19 @@ class PayController extends HomeBaseController
             && $orderQueryResult['result_code']=='SUCCESS'
             && $orderQueryResult['trade_state']=='SUCCESS')
         {  
+            
             //Db::name('order')->where(array('id' => session('order_id')))->save(array('pay' => '1'));
             $arr=explode('_', $out_trade_no);
             $oid=$arr[0];
-           
-            $result=trim($this->pay_end($out_trade_no, 2, $orderQueryResult)); 
+            cmf_log('SUCCESS未处理'.$oid,'pay.txt');
+            $result=trim($this->pay_end($oid, 2, $orderQueryResult)); 
             
-            if($result==='success' || $result==='end'){
+            if($result==='success' || $result==='end'){ 
+                cmf_log('SUCCESS处理'.$oid,'pay.txt');
                 exit('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
                 
             }else{ 
-                cmf_log('微信验证失败单号'.$out_trade_no,$log);
+                cmf_log('微信验证失败单号'.$out_trade_no.$result,$log);
                 exit('fail');
             }
              
@@ -598,4 +472,3 @@ class PayController extends HomeBaseController
        return 'success';   
     }
 }
-?>

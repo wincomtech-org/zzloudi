@@ -116,8 +116,8 @@ class Wxpay
         $body             = $order['wfproduct'];//内容 
         $total_fee        = $money; //金额  
         $spbill_create_ip = $userip; //IP  
-        // $notify_url       = url('portal/pay/notify','',true,true); //回调地址
-        $notify_url       = url('portal/pay/wxh5notify','',true,true); //回调地址
+        
+        $notify_url       = url('portal/pay/wx_notify','',true,true); //回调地址
         $trade_type       = 'MWEB';//交易类型 具体看API 里面有详细介绍  
         $scene_info       = '{"h5_info":{"type":"Wap","wap_url":"http://www.baidu.com","wap_name":"支付"}}';//场景信息 必要参数  
         $signA            = "appid=$appid&body=$body&mch_id=$mch_id&nonce_str=$nonce_str&notify_url=$notify_url&out_trade_no=$out_trade_no&scene_info=$scene_info&spbill_create_ip=$spbill_create_ip&total_fee=$total_fee&trade_type=$trade_type";  
@@ -170,107 +170,7 @@ class Wxpay
         return true;
     }
 
-    /**
-     * 异步通知
-     * @param $data
-     * @return mixed
-     */
-    public function notify($data)
-    {
-        include_once BASE_PATH . 'helpers/payment_helper.php';
-
-        if (!empty($data['postStr'])) {
-            $payment = get_payment($data['code']);
-            $postdata = json_decode(json_encode(simplexml_load_string($data['postStr'], 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-            /* 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 */
-            // 微信端签名
-            $wxsign = $postdata['sign'];
-            unset($postdata['sign']);
-            foreach ($postdata as $k => $v) {
-                $Parameters[$k] = $v;
-            }
-
-            // 签名步骤一：按字典序排序参数
-            ksort($Parameters);
-            $buff = "";
-            foreach ($Parameters as $k => $v) {
-                $buff .= $k . "=" . $v . "&";
-            }
-
-            $String = '';
-            if (strlen($buff) > 0) {
-                $String = substr($buff, 0, strlen($buff) - 1);
-            }
-
-            // 签名步骤二：在string后加入KEY
-            $String = $String . "&key=" . $payment['wxpay_key'];
-
-            // 签名步骤三：MD5加密
-            $String = md5($String);
-
-            // 签名步骤四：所有字符转为大写
-            $sign = strtoupper($String);
-
-            // 验证成功
-            if ($wxsign == $sign) {
-                // 交易成功
-                if ($postdata['result_code'] == 'SUCCESS') {
-                    // 获取log_id
-                    $out_trade_no = explode('-', $postdata['out_trade_no']);
-                    $order_sn = $out_trade_no[1]; // 订单号log_id
-                    // 改变订单状态
-                    order_paid($order_sn, 2);
-                    // 修改订单信息(openid，tranid)
-                    model()->table('pay_log')
-                        ->data(array('openid' => $postdata['openid'], 'transid' => $postdata['transaction_id']))
-                        ->where(array('log_id' => $order_sn))
-                        ->update();
-
-                    /*if(method_exists('WechatController', 'do_oauth')){
-                        // 如果需要，微信通知 wanglu
-                        $order_id = model('Base')->model->table('order_info')
-                            ->field('order_id')
-                            ->where('order_sn = "' . $out_trade_no[0] . '"')
-                            ->getOne();
-                        $order_url = __HOST__ . url('user/order_detail', array(
-                            'order_id' => $order_id
-                        ));
-                        $order_url = urlencode(base64_encode($order_url));
-                        send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url, $out_trade_no[0]);
-                    }*/
-
-                }
-
-                $returndata['return_code'] = 'SUCCESS';
-
-            } else {
-
-                $returndata['return_code'] = 'FAIL';
-                $returndata['return_msg'] = '签名失败';
-            }
-
-        } else {
-
-            $returndata['return_code'] = 'FAIL';
-            $returndata['return_msg'] = '无数据返回';
-        }
-
-        // 数组转化为xml
-        $xml = "<xml>";
-        foreach ($returndata as $key => $val) {
-            if (is_numeric($val)) {
-                $xml .= "<" . $key . ">" . $val . "</" . $key . ">";
-            } else {
-                $xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
-            }
-        }
-
-        $xml .= "</xml>";
-
-        echo $xml;
-        exit();
-    }
-
+    
     public function trimString($value)
     {
         $ret = null;

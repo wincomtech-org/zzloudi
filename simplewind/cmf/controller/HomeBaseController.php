@@ -13,7 +13,7 @@ namespace cmf\controller;
 use think\Db;
 use app\admin\model\ThemeModel;
 use think\View;
-use Memcache;
+
 
 class HomeBaseController extends BaseController
 {

@@ -23,6 +23,8 @@ class IndexController extends HomeBaseController
     } 
     public function index()
     {
+       
+        
         $this->assign('html_flag','index'); 
         
         //banner

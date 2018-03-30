@@ -2,21 +2,21 @@
 <style type="text/css">
 		html,body{padding:0;margin:0;}
 		.body_s_sssy{
+			padding-top: 30px;
 			width:671px;
 			height:378px;
 			margin: auto;
-			border: 1px solid  #959595;
 			border-radius: 10px;
 			
 		}
 		.body_s_sssy>.erweima_ss_y{
 			width:671px;
 			height:78px;
-			background:url(img/weixin.png) no-repeat 200px 25px;
-			border-bottom: 1px solid #959595;
+			background:url(__TMPL__/public/assets/img/weixin.png) no-repeat 200px 25px;
+			
 		}
 		.body_s_sssy>.erweima_ss_y>p{
-			text-align: center;
+/*			text-indent: 50px;*/
 			line-height: 78px;
 			color:#546A2E;
 			font-size:27px;
@@ -26,17 +26,19 @@
 			;
 		}
 		.dingdan_sssy>p{
-			text-indent: 200px;
+/*			text-indent: 50px;*/
 			font-size:20px;
+			padding:15px 0;
 		}
 		.dingdan_sssy>img{
 			width:150px;
 			height:150px;
 			display: block;
-			margin: auto;
+/*			margin-left:50px;*/
 		}
 	</style> 
 </head>
+ 
 <body>
 <include file="public@header"/> 
  
@@ -57,7 +59,7 @@
  
 <script>
  
-var query_url="{$info['query_url']}";
+var query_url="{:url('portal/pay/orderQuery')}";
 var oid="{$info['order_sn']}";
 var inter=setInterval(weixin,1000);
 function weixin(){

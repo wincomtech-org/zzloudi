@@ -28,18 +28,18 @@
             	<foreach name="orders" item="vo">
 	                <tr>
 	                    <td nowrap=true><input type="checkbox" value="{$vo.id}" ></td>
-	                    <td nowrap=true>{$vo.web_name}</td>
+	                    <td nowrap=true>{$vo.service_name}</td>
 	                    <td nowrap=true>{$vo.money}</td>
 	                    <td nowrap=true>{$vo.uname}</td>
-	                      <td nowrap=true>{$vo.tel}</td>
+	                   <td nowrap=true>{$vo.tel}</td>
 	                    <td nowrap=true>{$vo.wx_name}</td>
 	                    <td nowrap=true>{$vo.insert_time|date='Y-m-d H:i',###}</td>
 	                    <td nowrap=true><eq name='vo.end_time' value='0'>--<else/>{$vo.end_time|date='Y-m-d H:i',###}</eq></td>
-	                    <td nowrap=true>查看详情</td>
+	                    <td nowrap=true>详情</td>
 	                    <td nowrap=true>
 	                    {$order_status[$vo.status]} 
 	                    <eq name='vo.status' value='1'>
-	                    	<a href="{:url('portal/index/order',['id'=>$vo.id])}">去支付</a>
+	                    	<a href="{:url('portal/index/order',['oid'=>$vo.oid])}">去支付</a>
 	                    </eq>
 	                    </td>
 	                </tr>

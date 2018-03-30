@@ -26,7 +26,7 @@ class InfoController extends UserBaseController
         $this->assign('html_title','个人中心');
         $uid   =session('user.id');
         $where=['uid'=>$uid,'is_delete'=>0];
-        $orders = Db::name("order")->where($where)->paginate(2);
+        $orders = Db::name("order")->order('id desc')->where($where)->paginate(10);
        
         // 获取分页显示
         $page = $orders->render();

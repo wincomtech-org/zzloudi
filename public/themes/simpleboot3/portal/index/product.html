@@ -115,42 +115,42 @@
         </div>
         <div class="pro-box3 pro-box">
              <div class="huluwa" id="app">
-			<div class="aoteman_left">
-			<div class="divs_1">
-				<span class="guyuan">公众号名称</span>
-				<input class="guyuan_syj1" type="text" name="wx_name" v-model="text" placeholder="请输入公众号名称（2-16字）" minlength="2" maxlength="16">
-			</div>
-			<div class="divs_2">
-				<span>产品介绍</span>
-				<textarea class="guyuan_syj2"  v-model="gy" name="wx_dsc" id="" placeholder="请输入产品简介（4-140字）" minlength="4" maxlength="140" cols="30" rows="10"></textarea>
-			</div>
-			<div class="divs_3">
-				<span>功能描述</span>
-				<p>  
-					文章推送(文字、语音、视频、图文)、粉丝管理、群发功能、微信自动回复、客服功能、自定义导航菜单。微网站、微表单、微投票、抽奖、	刮刮奖、会员卡、优惠券等营销功能。
-				</p>
-			</div>
-		</div>
-		<div class="dongfangsw_right">
-			<div><img src="__TMPL__/public/assets/img/section129f4d4.png" width="100%" alt=""></div>
-			<p class="p1">{{ text }}</p> 
-			<div>
-				<div style="vertical-align: top" class="parent1"><img src="__TMPL__/public/assets/img/sectionwewew.png" height="35px" alt=""></div>
-				<div class="parent">{{ gy }}</div>
-			</div>
-			<div><img src="__TMPL__/public/assets/img/section229f4d4.png" width="100%" alt=""></div>
-		</div>
-        </div>
+				<div class="aoteman_left">
+					<div class="divs_1">
+						<span class="guyuan">公众号名称</span>
+						<input class="guyuan_syj1" type="text" name="wx_name" v-model="text" placeholder="请输入公众号名称（2-16字）" minlength="2" maxlength="16">
+					</div>
+					<div class="divs_2">
+						<span>产品介绍</span>
+						<textarea class="guyuan_syj2"  v-model="gy" name="wx_dsc" id="" placeholder="请输入产品简介（4-140字）" minlength="4" maxlength="140" cols="30" rows="10"></textarea>
+					</div>
+					<div class="divs_3">
+						<span>功能描述</span>
+						<p>  
+							文章推送(文字、语音、视频、图文)、粉丝管理、群发功能、微信自动回复、客服功能、自定义导航菜单。微网站、微表单、微投票、抽奖、	刮刮奖、会员卡、优惠券等营销功能。
+						</p>
+					</div>
+				</div>
+				<div class="dongfangsw_right">
+					<div><img src="__TMPL__/public/assets/img/section129f4d4.png" width="100%" alt=""></div>
+					<p class="p1">{{ text }}</p> 
+					<div>
+						<div style="vertical-align: top" class="parent1"><img src="__TMPL__/public/assets/img/sectionwewew.png" height="35px" alt=""></div>
+						<div class="parent">{{ gy }}</div>
+					</div>
+					<div><img src="__TMPL__/public/assets/img/section229f4d4.png" width="100%" alt=""></div>
+				</div>
+	        </div>
 			<div class="divs_4">
 				<a href="javascript:void(0);" id="pro-third1">上一步</a>
 				<a href="javascript:void(0);" id="form_submit">确认订单</a>
 			</div>
-        <input type="hidden" id="oid" name="oid" value=""/>
-   	 </div>
+	        <input type="hidden" id="oid" name="oid" value=""/>
+	   	 </div>
 	</form>
 	
 </div>
-<div id="error_html"></div>
+ 
 <include file="public@footer"/>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script>
@@ -211,7 +211,6 @@ function order_do1(){
          },
          error: function (event, XMLHttpRequest, ajaxOptions, thrownError) {
         	 
-        	 $('#error_html').html(event.responseText); 
         	 alert('服务器连接错误'); 
          }
      });
@@ -233,8 +232,7 @@ function order_do2(){
          	} 
          },
          error: function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-        	 
-        	 $('#error_html').html(event.responseText); 
+        	  
         	 alert('服务器连接错误'); 
          }
      });
