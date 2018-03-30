@@ -51,6 +51,24 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 .foot-l{float: left;text-align: left;}
 .foot-l p,.foot-r p{color:#fff;font-size:16px;line-height: 25px;}
 .foot-r{float: right;text-align: right;}
+/*用户名找回密码处*/
+.head_user{
+	margin-left: 40px;
+	float:right;
+}
+.head_user>a{
+	text-align: right;
+}
+.head_user>a:nth-child(1){
+	
+	font-size:20px;
+	display: block;
+}
+.head_user>a:nth-child(2){
+	display: block;
+	font-size:10px;
+	color:#68c06a;
+}
 @media screen and (max-width: 1210px){
     .w12{width:100%;}
     nav{display: none;}
