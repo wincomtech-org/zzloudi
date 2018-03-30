@@ -543,9 +543,18 @@ body{font-family: 微软雅黑;}
 	.divs_4 { bottom: -8px;padding-left: 365px;}
 	#pro-first{position:absolute;bottom:165px;left:203px;}
 }
+@media screen and (max-width:700px) {
+	#pro-first{position:absolute;bottom:165px;left:21px;}
+}
+@media screen and (max-width:678px){
+	.divs_4 { bottom: -8px;padding-left: 180;}
+}
 @media screen and (max-width:666px){
 	.divs_4 { bottom: -8px;padding-left: 165px;}
 }
+
+
+
 @media screen and (max-width:620px){
 	.huluwa>.aoteman_left>div>span{
 		display:block;
@@ -564,7 +573,7 @@ body{font-family: 微软雅黑;}
 	.divs_4 { bottom: -13px;}
 	#pro-first{position:absolute;bottom:167px;left:26px;}
 } 
-@media screen and (max-width:400px){
+@media screen and (max-width:414px){
 	.huluwa>.aoteman_left{
 		padding-left: 25px;
 	}

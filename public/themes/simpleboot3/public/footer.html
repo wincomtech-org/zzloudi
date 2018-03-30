@@ -9,7 +9,7 @@
         <div class="foot-r">
             <img src="{:cmf_get_image_url($company.wx_pic.dsc)}">
             <p>{$company.wx_pic.title}</p>
-            <p>技术支持：<a href="http://www.wincomtech.cn/" target="_blank">华创在线网络科技有限公司</a></p>
+            <p>技术支持：<a style="color:#fff;" href="http://www.wincomtech.cn/" target="_blank">华创在线网络科技有限公司</a></p>
         </div>
         <div class="clear"></div>
     </div>
@@ -17,6 +17,11 @@
 <script>
 var ajax_result=0;
 </script>
+<style>
+	po{
+		position:relative;
+	}
+</style>
 <script src="__TMPL__/public/assets/js/jquery-1.12.1.min.js"></script>
 <script src="__TMPL__/public/assets/js/easySlider.js"></script>
 <script src="__TMPL__/public/assets/js/productCenter.js"></script>
@@ -33,7 +38,25 @@ var ajax_result=0;
             paginationClass: ".pagination"                  
         });
     });
-   
+	//底部不能留空白判断；修改
+	function auto_se(){
+		var height_sgy=$("body").height();
+		var winheight=$(window).height();
+		var sy=winheight-height_sgy+65;
+		console.log(height_sgy,winheight,sy);
+		if(height_sgy<winheight){
+			console.log(23);
+			$("body").height(winheight);
+			$("footer").css({
+				position:"relative",
+				top:`${sy}px`
+			});
+		}
+	}
+   	auto_se();
+	$(window).resize(function(){
+		auto_se();
+	})
 </script> 
 </body>
 </html>
