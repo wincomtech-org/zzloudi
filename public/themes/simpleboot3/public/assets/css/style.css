@@ -400,6 +400,7 @@ body{font-family: 微软雅黑;}
     .main4-list li{width:100%}
     .input1{margin-top:5px;}
     .paysuccess,.pay-fail{width:100%;margin-left:10px;}
+	
 }
 /*古源加*/
 
@@ -528,6 +529,23 @@ body{font-family: 微软雅黑;}
 	background:#44b548;
 	color:#fff;
 }
+
+
+
+@media screen and (max-width:1200px) {
+	.huluwa>.dongfangsw_right{
+		display: none;
+	}
+	.huluwa>.aoteman_left{
+		margin: auto;
+	}
+	#form_order {height: 550px;}
+	.divs_4 { bottom: -8px;padding-left: 365px;}
+	#pro-first{position:absolute;bottom:165px;left:203px;}
+}
+@media screen and (max-width:666px){
+	.divs_4 { bottom: -8px;padding-left: 165px;}
+}
 @media screen and (max-width:620px){
 	.huluwa>.aoteman_left>div>span{
 		display:block;
@@ -536,17 +554,23 @@ body{font-family: 微软雅黑;}
 	.divs_4{
 	display: inline-block;
 	box-sizing: border-box;
-	padding-left: 0;
-}
-} 
-
-@media screen and (max-width:1000px) {
-	.huluwa>.dongfangsw_right{
-		display: none;
+	padding-left: 25px;
+		
 	}
 	.huluwa>.aoteman_left{
-		margin: auto;
+		padding-left: 50px;
 	}
+	#form_order {height: 550px;}
+	.divs_4 { bottom: -13px;}
+	#pro-first{position:absolute;bottom:167px;left:26px;}
+} 
+@media screen and (max-width:400px){
+	.huluwa>.aoteman_left{
+		padding-left: 25px;
+	}
+	#form_order {height: 600px;}
+	#pro-first{position:absolute;bottom:104px;left:13px;}
+	.divs_4 { bottom: 39px;}
 }
 /*古源结束*/
 .shaungxsj_ss{

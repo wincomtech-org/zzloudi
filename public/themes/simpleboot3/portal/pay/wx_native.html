@@ -2,10 +2,10 @@
 <style type="text/css">
 		html,body{padding:0;margin:0;}
 		.body_s_sssy{
+			padding-top: 30px;
 			width:671px;
 			height:378px;
 			margin: auto;
-			border: 1px solid  #959595;
 			border-radius: 10px;
 			
 		}
@@ -13,10 +13,10 @@
 			width:671px;
 			height:78px;
 			background:url(__TMPL__/public/assets/img/weixin.png) no-repeat 200px 25px;
-			border-bottom: 1px solid #959595;
+			
 		}
 		.body_s_sssy>.erweima_ss_y>p{
-			text-align: center;
+/*			text-indent: 50px;*/
 			line-height: 78px;
 			color:#546A2E;
 			font-size:27px;
@@ -26,7 +26,7 @@
 			;
 		}
 		.dingdan_sssy>p{
-			text-indent: 200px;
+/*			text-indent: 50px;*/
 			font-size:20px;
 			padding:15px 0;
 		}
@@ -34,7 +34,7 @@
 			width:150px;
 			height:150px;
 			display: block;
-			margin: auto;
+/*			margin-left:50px;*/
 		}
 	</style> 
 </head>
@@ -47,7 +47,8 @@
 			<p>微信扫码支付</p>
 		</div>
 		<div class="dingdan_sssy">
-			<p>支付订单号：{$info['oid']}</p>
+<!--			<p>支付订单号：{$info['oid']}</p>-->
+			<p>支付订单号：6645555555555555555555555555555555555555555</p>
 			<p>支付金额：￥{$info['money']}</p>
 			<img alt="微信扫码支付" src="{:url('portal/pay/qrcode',['data'=>$info['weixinUrl']])}" style="width:150px;height:150px;"/>
 			<p id="wxmsg"></p>
