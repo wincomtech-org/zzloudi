@@ -65,7 +65,7 @@ var inter=setInterval(weixin,1000);
 function weixin(){
  
 	$.post(query_url,{'out_trade_no':oid},function(data){
-		console.log(data);
+//		console.log(data);
 		if(data.code==1){
 			clearInterval(inter);  
 			$('#wxmsg').html('支付结果:'+data.msg);

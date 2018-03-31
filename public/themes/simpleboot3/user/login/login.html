@@ -38,7 +38,7 @@ $('#form_login').submit(function(){
 	 
 	var password=$.trim($('input[name=password]').val()); 
 	var tel=$.trim($('input[name=tel]').val());
-	 
+	if(!is_mobile(tel)){alert("手机号填写错误");return false}
 	$('.login-sub input').prop('disabled','disabled');
     $('.login-sub input').val('正在登录');
      

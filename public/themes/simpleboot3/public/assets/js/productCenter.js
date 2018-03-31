@@ -24,13 +24,13 @@
 	var arrgy=cArr.slice(0,gus);
 	arrgy=arrgy.slice(1,arrgy.length).concat(arrgy.slice(0,1));
 	var arr1=arrgy;
-	console.log(arr1);
+//	console.log(arr1);
     $("#solutionList>li").click(function () {
 		clearInterval(timer);
 		//console.log(arrgy);
 		index=$(this).index();
         arr1=arrgy.slice(arrgy.length-index).concat(arrgy.slice(0,arrgy.length-index))
-		console.log(arr1);
+//		console.log(arr1);
 		for(var i=0;i<arr1.length;i++){
 			x=arr1[i];
 			

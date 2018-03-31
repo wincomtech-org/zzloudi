@@ -28,14 +28,14 @@ $("#pro-first").click(function(){
 	}
 	
 	//判断手机号是否正确；
-	var gu_s=false;
-	var re2=/^[1][3,4,5,7,8][0-9]{9}$/;
+//	var gu_s=false;
+//	var re2=/^[1][3,4,5,7,8][0-9]{9}$/;
 	shouji=$(".gy_ss_gg").val();
-	if(re2.test(shouji)){gu_s=true}else{
-		alert("手机号码错误！");
-		return;
-	}
-	
+//	if(re2.test(shouji)){gu_s=true}else{
+//		alert("手机号码错误！");
+//		return;
+//	}
+	if(!is_mobile(shouji)){alert("手机号填写错误");return false}
 	//判断qq号码是否正确；
 	var gy_t=false;
 	var re3=/^[1-9]\d{4,10}$/;
@@ -48,18 +48,19 @@ $("#pro-first").click(function(){
 	}
 	
 	//判断邮箱是否正确
-	var br_s=false;
-	var re4=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
+//	var br_s=false;
+//	var re4=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
 	youxiang=$(".gy_suyty").val();
-	if(re4.test(youxiang)){br_s=true}else{
-		alert("邮箱填写错误！");
-		return;
-	}
+//	if(re4.test(youxiang)){br_s=true}else{
+//		alert("邮箱填写错误！");
+//		return;
+//	}
+	if(!is_email(youxiang)){alert("邮箱填写错误");return false}
 	//判断是否选择我已阅读，
 	var ghyuj=$(".gy_sio").is(":checked");
 	if(!ghyuj){alert("请阅读本站服务协议！");return}
 	//验证所有信息是否填写
-	if(xlzt===true&&namr_s===true&&gu_s===true&&gy_t===true&&br_s===true&&ghyuj===true){
+	if(xlzt===true&&namr_s===true&& is_mobile(shouji) ===true&&gy_t===true&& is_email(youxiang) ===true&&ghyuj===true){
 		//执行ajax保存订单
 		order_do1(); 
 		if(ajax_result==1){ 
@@ -81,7 +82,7 @@ $(".bugyalu>input").click(function(){
 	var a=$(this).index()/2;
 	leixing=a;
 	xiangxi=$(this).next().html();
-	console.log(xiangxi);
+//	console.log(xiangxi);
 	$($(".show_ss_1")[a]).css("display","block").siblings().css("display","none");
 	//取消选项框
 	$(".show_ss_1>div>input").attr("checked",false)
@@ -97,7 +98,7 @@ $(".show_ss_1>div>input").click(function(){
 	xiangxi=$(this).next().html()
 	a=a.slice(1,-2);
 	jiage=a;
-	console.log(a,xiangxi);
+//	console.log(a,xiangxi);
 });
 $("#pro-second1").click(function(){
    $("#pro-first").show();
@@ -107,7 +108,7 @@ $("#pro-second1").click(function(){
     $(".pro-tit-list li:nth-child(1)").addClass("pro-tit-cur");
 });
 $("#pro-second2").click(function(){
-	console.log(xiangxi);
+//	console.log(xiangxi);
     var a=$($($(".show_ss_1")[leixing]).children(".gy").children("input")).is(":checked");
 	var b=$($($(".show_ss_1")[leixing]).children(".gu").children("input")).is(":checked");
 	if(a==true || b==true){
@@ -124,7 +125,7 @@ $("#pro-second2").click(function(){
 	}else{
 		alert("请至少选择一个")
 	}
-	console.log(leixing);
-	console.log(a,b);
+//	console.log(leixing);
+//	console.log(a,b);
 });
 

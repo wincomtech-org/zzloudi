@@ -93,34 +93,37 @@
     	//验证所有信息
     	var pattern = /[A-Za-z0-9_\-\u4e00-\u9fa5]+/;
 		//var pwd=/^[A-Za-z]+[0-9]+[A-Za-z0-9]*|[0-9]+[A-Za-z]+[A-Za-z0-9]*$/g;
-		var emil_s=/\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
-		var shouji = /0?(13|14|15|18)[0-9]{9}/;
-		var pwd=/^[A-Za-z0-9]{6,20}$/;
+//		var emil_s=/\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+//		var shouji = /0?(13|14|15|18)[0-9]{9}/;
+//		var pwd=/^[A-Za-z0-9]{6,20}$/;
 		if(!pattern.test(username)){
 			alert("用户名称不正确");
 			return false;
 		}
-		var as=pwd.test(password);
-		console.log(as);
-		if(!as){
-			alert("密码格式不正确");
-			return false;
-		}
+//		var as=pwd.test(password);
+//		console.log(as);
+//		if(!as){
+//			alert("密码格式不正确");
+//			return false;
+//		}
+		if(!is_password(password)){alert("密码格式不正确");return false;}
 		if(password1!==password){
 			$('input[name=password1]').val("");
 			alert("两次密码输入不一致");
 			return false;
 		}
-		var yx_s=emil_s.test(email);
-		if(!yx_s){
-			alert("邮箱格式不正确");
-			return false;
-		}
-		var sj_s=shouji.test(tel);
-		if(!sj_s){
-			alert("手机号码不正确");
-			return false;
-		}
+//		var yx_s=emil_s.test(email);
+//		if(!yx_s){
+//			alert("邮箱格式不正确");
+//			return false;
+//		}
+		if(!is_email(email)){alert("邮箱填写错误");return false}
+//		var sj_s=shouji.test(tel);
+//		if(!sj_s){
+//			alert("手机号码不正确");
+//			return false;
+//		}
+		if(!is_mobile(tel)){alert("手机号填写错误");return false}
     	$('.login-sub input').prop('disabled','disabled');
         $('.login-sub input').val('正在注册');
          
