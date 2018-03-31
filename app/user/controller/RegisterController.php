@@ -13,8 +13,7 @@ namespace app\user\controller;
 use cmf\controller\HomeBaseController;
 use think\Validate;
 use think\Db;
-
-use sms\Msg;
+ 
 
 class RegisterController extends HomeBaseController
 {
@@ -57,15 +56,15 @@ class RegisterController extends HomeBaseController
         $phone=$this->request->param('tel',0);
         $type=$this->request->param('type','reg'); 
         $email=$this->request->param('email','');
-        
+        $tmp1=Db::name('user')->where('user_email',$email)->find();
         $tmp=Db::name('user')->where('mobile',$phone)->find();
         switch ($type){
             //注册
-            case 'reg': 
+            case 'reg':  
                 if(!empty($tmp)){
                     $this->error('该手机号已被使用');
                 } 
-                $tmp1=Db::name('user')->where('user_email',$email)->find();
+                 
                 if(!empty($tmp1)){
                     $this->error('邮箱已被使用');
                 }
@@ -73,12 +72,10 @@ class RegisterController extends HomeBaseController
                 //找回密码
             case 'find':
                 
-                if(empty($tmp)){
-                    $this->error('该手机号不存在');
+                if(empty($tmp1)){
+                    $this->error('该邮箱不存在');
                 }
-                if($tmp['user_email']!=$email){
-                    $this->error('邮箱与手机号不符');
-                }
+                
                 break;
                 //换手机号
             case 'mobile':
@@ -92,6 +89,7 @@ class RegisterController extends HomeBaseController
                     $this->error('密码错误');
                 }
                 break;
+           
             default:
                 $this->error('未知操作');
                 
@@ -118,6 +116,7 @@ class RegisterController extends HomeBaseController
      */
     public function ajaxRegister()
     {
+        
         $time=time();
         $verify=session('verify');
         $data1 = $this->request->post();
@@ -180,10 +179,11 @@ class RegisterController extends HomeBaseController
         if(!empty($tmp)){
             $this->error('该手机号已被使用');
         }
-        $tmp1=Db::name('user')->where('user_email',$data['email'])->find();
+        $tmp1=Db::name('user')->where('user_email',$data['user_email'])->find();
         if(!empty($tmp1)){
             $this->error('邮箱已被使用');
         }
+       
         $result  = $m_user->insertGetId($data);
         if ($result !== false) {
             $data   = Db::name("user")->where('id', $result)->find();

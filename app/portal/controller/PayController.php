@@ -86,7 +86,7 @@ class PayController extends HomeBaseController
                     'wfproduct'     =>  $order['service_name'],
                     'out_trade_no'  => $wx_oid,
                 ); 
-                $this->wxnative($order); 
+                $this->wxnative($order, $wx_config);
                 break;
           case 'wxh5':
               $order = array(
@@ -100,11 +100,11 @@ class PayController extends HomeBaseController
               
           case 'wxjs':
               $order = array(
-              'order_amount'       => $order['money'], 
-              'order_sn'  => $wx_oid,
+              'wfprice'       => $order['money'],
               'wfproduct'     =>  $order['service_name'],
+              'out_trade_no'  => $wx_oid,
               );
-              $this->wxnative($order); 
+              $this->wxnative($order, $wx_config);
               break;
           default:
               break;
@@ -206,12 +206,12 @@ class PayController extends HomeBaseController
     
     //PC访问 扫码支付
     // 生成二维码
-    public function wxnative($order)
+    public function wxnative($order,$config)
     {
         $jiagee = $order['wfprice']; 
          
         //使用统一支付接口
-        $unifiedOrder = new \UnifiedOrder_pub(config('wx_config'));
+        $unifiedOrder = new \UnifiedOrder_pub($config);
         //设置统一支付接口参数
         //设置必填参数
         $unifiedOrder->setParameter("body", $order['wfproduct']); //商品描述

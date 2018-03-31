@@ -1,14 +1,4 @@
-<include file="public@head"/>  
-</head>
-<body>
-<div class="bg">
-    <div class="box">
-        <div class="box-l">
-            <a href="{:url('portal/index/index')}"><img src="{:cmf_get_image_url($company.logo.dsc)}"></a>
-            <p class="">智慧商业的引领者</p>
-            <p>公众号商城微站建设服务平台</p>
-            <p style="font-size:12px;">{$company.copyright.dsc}</p>
-        </div>
+<include file="public@login_head"/>  
         <div class="box-r">
             <div class="login-box login-mt2">
                 <form action="" method="" id="form_register">
@@ -26,11 +16,11 @@
                     </div>
                     <div class="login-in input2">
                         <span>常用邮箱：</span>
-                        <input type="text" name="email" placeholder="请填写常用邮箱地址，用于找回账号">
+                        <input type="text" name="email" placeholder="请填写常用邮箱地址，用于验证账号">
                     </div>
                     <div class="login-in input2">
                         <span>手机号码：</span>
-                        <input type="text" name="tel" placeholder="请填写常用手机号码，用于找回账号" >
+                        <input type="text" name="tel" placeholder="请填写常用手机号码，用于唯一登录" >
                     </div>
                     
                     <div class="login-in input2">
@@ -48,7 +38,9 @@
         </div>
     </div>
 </div>
-<script src="__TMPL__/public/assets/js/jquery-1.12.1.min.js"></script>
+ 
+</body>
+</html>
 <script type="text/javascript">
     $("#yzm").click(function(){
     	if($("#yzm").hasClass("disabled")==true){
@@ -68,6 +60,7 @@
             	 
             	if(data.msg=='success'){ 
             		 $("#yzm").addClass("disabled");
+            		 $("#yzm").html(time+"秒");
                      var t=setInterval(function(){
                          time--; 
                          $("#yzm").html(time+"秒");
@@ -96,17 +89,19 @@
     	var tel=$.trim($('input[name=tel]').val());
     	var code=$.trim($('input[name=code]').val());
     	var email=$.trim($('input[name=email]').val());
+    	var password1=$.trim($('input[name=password1]').val()); 
     	//验证所有信息
     	var pattern = /[A-Za-z0-9_\-\u4e00-\u9fa5]+/;
-		var pwd=/^[A-Za-z]+[0-9]+[A-Za-z0-9]*|[0-9]+[A-Za-z]+[A-Za-z0-9]*$/g;
+		//var pwd=/^[A-Za-z]+[0-9]+[A-Za-z0-9]*|[0-9]+[A-Za-z]+[A-Za-z0-9]*$/g;
 		var emil_s=/\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
 		var shouji = /0?(13|14|15|18)[0-9]{9}/;
-		
+		var pwd=/^[A-Za-z0-9]{6,20}$/;
 		if(!pattern.test(username)){
 			alert("用户名称不正确");
 			return false;
 		}
 		var as=pwd.test(password);
+		console.log(as);
 		if(!as){
 			alert("密码格式不正确");
 			return false;
@@ -144,14 +139,15 @@
     				alert(data.msg);
     			}
             },
-            error: function(){
+            error: function(event, XMLHttpRequest, ajaxOptions, thrownError){
             	$('.login-sub input').prop('disabled',false);
                 $('.login-sub input').val('立即注册');
+               
+                $('body').append(event.responseText);
             	alert('服务器连接失败'); 
             }
         });
     	return false;
     });
 </script>
-</body>
-</html>
+

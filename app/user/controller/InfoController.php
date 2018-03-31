@@ -79,5 +79,15 @@ class InfoController extends UserBaseController
         session("user", null);//只有前台用户退出
         return redirect($this->request->root() . "/");
     }
-
+    /**
+     * 修改密码
+     */
+    public function psw()
+    {
+        
+        
+        $this->assign('html_title','修改密码');
+       $this->error('暂不开放');
+        
+    }
 }
