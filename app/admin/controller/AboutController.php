@@ -92,18 +92,16 @@ class AboutController extends AdminbaseController {
         if(empty($data['id'])){
             $this->error('数据错误');
         }
-        if(in_array($data['type'],['help','team'])){
-            $path=getcwd().'/upload/';
+        $path=getcwd().'/upload/';
+        if(in_array($data['type'],['help','team'])){ 
             if(!is_file($path.$data['pic'])){
                 $this->error('图片不存在');
-            }
-            
+            } 
         }
       
         //help,pro,team有图
         //index,use无图
         if(in_array($data['type'],['help','pro','team']) && is_file($path.$data['pic'])){
-            $path=getcwd().'/upload/';
             
             $size=config('pic_about_'.$data['type']);
             $pic='about/'.$data['id'].'.jpg';
