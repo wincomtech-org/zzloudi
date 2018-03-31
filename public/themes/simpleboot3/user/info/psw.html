@@ -1,0 +1,77 @@
+<include file="public@login_head"/>  
+        <div class="box-r">
+            <div class="login-box login-mt2">
+                <form action="" method="" id="form">
+                   
+                    <div class="login-in input2">
+                        <span>原密码：</span>
+                        <input type="password" name="password0"   minlength="6" maxlength="20" >
+                    </div>
+                    <div class="login-in input2">
+                        <span>设置新密码：</span>
+                        <input type="password" name="password" placeholder="密码6-20位，必须字母+数字组合" minlength="6" maxlength="20" >
+                    </div>
+                    <div class="login-in input2">
+                        <span>确认密码：</span>
+                        <input type="password" name="password1" placeholder="请重新输入密码，须与上方一致" >
+                    </div>
+                    
+                    <div class="login-sub">
+                        <input type="submit" value="重置密码">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ </body>
+</html>
+<script type="text/javascript">
+    
+     
+ // 重置表单提交
+    $('#form').submit(function(){
+    	var password0=$.trim($('input[name=password0]').val()); 
+    	var password=$.trim($('input[name=password]').val()); 
+    	var password1=$.trim($('input[name=password1]').val()); 
+     
+    	//验证所有信息
+    	if(!is_password(password0)){alert("原密码错误");return false;}
+    	if(!is_password(password)){alert("新密码格式不正确");return false;}
+		if(password1!==password){
+			$('input[name=password1]').val("");
+			alert("两次密码输入不一致");
+			return false;
+		}
+		 
+    	$('.login-sub input').prop('disabled','disabled');
+        $('.login-sub input').val('正在重置');
+         
+        $.ajax({
+            type: 'POST',
+            url: "{:url('user/info/ajax_psw')}",
+            dataType: 'json',
+            data: {'old_password':password0,'password':password,'repassword':password1},
+            success: function(data){ 
+            	if(data.code==1){
+    				alert(data.msg);
+    				self.location=data.url;
+    			}else{
+    				$('.login-sub input').prop('disabled',false);
+    				$('.login-sub input').val('立即重置');
+    				alert(data.msg);
+    			}
+            },
+            
+            error: function(event, XMLHttpRequest, ajaxOptions, thrownError){
+            	$('.login-sub input').prop('disabled',false);
+                $('.login-sub input').val('立即重置');
+                //$('body').append(event.responseText);
+            	alert('服务器连接失败'); 
+            }
+        });
+    	return false;
+    });
+</script>
+

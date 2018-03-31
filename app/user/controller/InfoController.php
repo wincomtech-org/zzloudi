@@ -13,6 +13,9 @@ namespace app\user\controller;
 use cmf\controller\UserBaseController;
 use think\Db;
 
+use think\Validate;
+ 
+use app\user\model\UserModel;
 class InfoController extends UserBaseController
 {
     
@@ -87,7 +90,55 @@ class InfoController extends UserBaseController
         
         
         $this->assign('html_title','修改密码');
-       $this->error('暂不开放');
+        return $this->fetch();
         
+    }
+    /**
+     * ajax修改密码
+     */
+    public function ajax_psw()
+    {
+        
+        $validate = new Validate([
+            'old_password' => 'require|min:6|max:20',
+            'password' => 'require|min:6|max:20',
+        ]);
+        $validate->message([
+            'old_password.require' => '原密码格式错误',
+            'old_password.min'     => '原密码格式错误',
+            'old_password.max'     => '原密码格式错误',
+            'password.require' => '新密码格式错误',
+            'password.min'     => '新密码格式错误',
+            'password.max'     => '新密码格式错误',
+            
+        ]);
+        
+        $data = $this->request->post();
+        if (!$validate->check($data)) {
+            $this->error($validate->getError());
+        }
+        
+        
+        $userModel         = new UserModel();
+        
+        $log=$userModel->editPassword($data);
+        
+        //$session_login_http_referer = session('login_http_referer');
+        switch ($log) {
+            case 0:
+                session('user',null);
+               $this->success('密码修改成功',url('user/info/index'));
+                break;
+            case 2:
+                $this->error('原密码错误');
+                break;
+            case 1:
+                $this->error('新密码输入不一致');
+                break;
+            
+            default :
+                $this->error('未受理的请求');
+        }
+       
     }
 }

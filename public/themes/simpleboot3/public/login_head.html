@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <meta name="description" content="{$company.dsc.dsc}">
-    <meta name="keywords" content="{$company.keywords.dsc},{$info.keywords|default=''}">
+    <meta name="keywords" content="{$company.keywords.dsc},{$info.keywords|default='网站关键字'}">
    <title>{$company.title.dsc}{$html_title|default=''}</title>
     <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/common.css">
     <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/style.css">
@@ -16,7 +16,8 @@
     <script src="http://j.vzan.cc/dz/content/newhome/lib/respond/respond.min.js"></script>
     <![endif]-->
  
- 
+<script src="__TMPL__/public/assets/js/jquery-1.12.1.min.js"></script> 
+<script src="__TMPL__/public/assets/js/regexp.js"></script> 
 <script type="text/javascript">
     //全局变量
     var GV = {
@@ -25,5 +26,15 @@
         JS_ROOT: "static/js/"
     };
 </script>
+</head>
+<body>
+<div class="bg">
+    <div class="box">
+       <div class="box-l">
+            <a href="{:url('portal/index/index')}"><img src="{:cmf_get_image_url($company.logo.dsc)}"></a>
+            <p class="">智慧商业的引领者</p>
+            <p>公众号商城微站建设服务平台</p>
+            <p style="font-size:12px;">{$company.copyright.dsc}</p>
+        </div>
  
 	

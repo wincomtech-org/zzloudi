@@ -5,6 +5,7 @@
  
 <include file="public@nav"/> 
 <include file="public@banner"/> 
+
 <div class="main">
     <div class="main1">
         <div class="main_title w1">
@@ -44,18 +45,16 @@
             <div class="mt3"></div>
             <div class="clear"></div>
         </div>
-		
         <ul class="main3_list">
          <volist name="pros" id="vo" >
+          
             <li style="background:url('{:cmf_get_image_url($vo.bg)}') no-repeat center center;">
                 <div class="main3_list_h">
                     <div class="main3_l1">
                         <p class="main3_l1_1">{$vo.title}</p>
-	
-<!--                        <p></p>-->
-						<p>{$vo.content}</p>
+                        {$vo.content}
                     </div>
-                    <div class="main3_l2" <eq name='mod' value='0'>guyuan_ssy</eq>">
+                    <div class="main3_l2 <eq name='mod' value='0'>guyuan_ssy</eq>">
                     <notempty name="vo.pic">
                         <img src="{:cmf_get_image_url($vo.pic)}">
                     </notempty>
