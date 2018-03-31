@@ -66,8 +66,9 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 }
 .head_user>a:nth-child(2){
 	display: block;
-	font-size:10px;
+	font-size:13px;
 	color:#68c06a;
+	margin-top: 8px;
 }
 @media screen and (max-width: 1210px){
     .w12{width:100%;}
