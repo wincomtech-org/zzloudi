@@ -32,6 +32,15 @@ body{font-family: 微软雅黑;}
 .main3_list li:nth-child(2n) .main3_l2{float: left;text-align: center;}
 .main3_list li:nth-child(7) .main3_l1_1{background:url('../img/ico-8.png') no-repeat right center;}
 .main3_list li:nth-child(7) .main3_l1 p{color:#ccc;}
+/*gy*/
+
+.main3_list>li:nth-of-type(even)>.main3_list_h>.main3_l1>p{
+	text-align: left;
+}
+.main3_list>li:nth-of-type(odd)>.main3_list_h>.main3_l2{
+	right:0;
+}
+/*gy*/
 .main4{margin-top:50px;}
 .main4-b{margin-top:50px;width:100%;background:#7a7a7a;padding:80px 0;}
 .main4-list{}
@@ -617,3 +626,9 @@ body{font-family: 微软雅黑;}
 	width:43px;
 	padding-right: 5px;
 }
+
+
+
+
+
+
