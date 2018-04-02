@@ -211,6 +211,16 @@ body{font-family: 微软雅黑;}
 .pro-input>select{
 /*	display: inline-block;*/
 	margin-right: 17px;
+/*		border: solid 1px #000;*/
+/*很关键：将默认的select选择框样式清除*/
+appearance:none;
+-moz-appearance:none;
+-webkit-appearance:none;
+/*将背景改为红色*/
+background:url("../img/down.png") 110px center no-repeat;
+background-size: 25px 25px;
+/*加padding防止文字覆盖*/
+padding:0 14px;
 }
 .pro-input input{width:470px;border:1px solid #ccc;line-height: 30px;font-size: 16px;padding-left:10px;}
 .pro-text1{margin:20px 0;margin-left:200px;}
@@ -594,6 +604,8 @@ body{font-family: 微软雅黑;}
 	.pro-input>select{
 /*	display: inline-block;*/
 	margin-right: 7px;
+		
+	
 }
 	.huluwa>.aoteman_left{
 		margin: auto;
