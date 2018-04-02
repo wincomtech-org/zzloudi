@@ -28,7 +28,7 @@
         <div class="pro-box1 pro-box" id="ass">
             <div class="pro-box1-l">
                 <div class="pro-input">
-                    <span>所在地区</span>
+                    <span><span>*</span>所在地区</span>
                     <select id="city1" class="gy_ss_1">
                         <option value="0">选择省</option>
                         
@@ -43,19 +43,19 @@
                     </select>
                 </div>
                 <div class="pro-input">
-                    <span>申请人姓名</span>
+                    <span><span>*</span>申请人姓名</span>
                     <input v-model="name" class="gy_ss_y" type="text" name="uname" placeholder="">
                 </div>
                 <div class="pro-input">
-                    <span>联系手机</span>
+                    <span><span>*</span>联系手机</span>
                     <input v-model="phone" class="gy_ss_gg" type="text" name="tel" placeholder="">
                 </div>
                 <div class="pro-input">
-                    <span>QQ号码</span>
+                    <span><span>*</span>QQ号码</span>
                     <input v-model="qq" class="gy_t_i" type="text" name="qq" placeholder="">
                 </div>
                 <div class="pro-input">
-                    <span>常用邮箱</span>
+                    <span><span>*</span>常用邮箱</span>
                     <input v-model="email" class="gy_suyty" type="text" name="email" placeholder="">
                 </div>
                 <div class="pro-text1">
@@ -118,12 +118,12 @@
              <div class="huluwa" id="app">
 				<div class="aoteman_left">
 					<div class="divs_1">
-						<span class="guyuan">公众号名称</span>
-						<input class="guyuan_syj1" type="text" name="wx_name" v-model="text" placeholder="请输入公众号名称（2-16字）" minlength="2" maxlength="16">
+						<span class="guyuan">账号名称</span>
+						<input class="guyuan_syj1" type="text" name="wx_name" v-model="text" placeholder="请输入账号名称" minlength="2" maxlength="16">
 					</div>
 					<div class="divs_2">
-						<span>产品介绍</span>
-						<textarea class="guyuan_syj2"  v-model="gy" name="wx_dsc" id="" placeholder="请输入产品简介（4-140字）" minlength="4" maxlength="140" cols="30" rows="10"></textarea>
+						<span>功能介绍</span>
+						<textarea class="guyuan_syj2"  v-model="gy" name="wx_dsc" id="" placeholder="4~120个字，介绍此公众号功能与特色" minlength="4" maxlength="120" cols="30" rows="10"></textarea>
 					</div>
 					<div class="divs_3">
 						<span>功能描述</span>
