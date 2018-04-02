@@ -23,8 +23,7 @@ class IndexController extends HomeBaseController
     } 
     public function index()
     {
-       
-        
+         
         $this->assign('html_flag','index'); 
         
         //banner
@@ -63,11 +62,11 @@ class IndexController extends HomeBaseController
         $this->assign('html_title','产品购买');
         //banner
         $banners=DB::name('banner')->where('type','product')->order('sort asc,id asc')->select();
-        //获取city
-        $m_city=Db::name('city');
+        /*//获取city
+        $m_city=Db::na me('city');
         $city1=$m_city->where('type',1)->select();
         $city2=$m_city->where('type',2)->select();
-        $city3=$m_city->where('type',3)->select();
+        $city3=$m_city->where('type',3)->select(); */
         $cates=Db::name('cate')->where('type','service')->select();
         $m_service=Db::name('service');
         $services=[];
@@ -76,11 +75,12 @@ class IndexController extends HomeBaseController
         }
         
         $this->assign('banners',$banners);
-        $this->assign('city1',$city1);
+    /*     $this->assign('city1',$city1);
         $this->assign('city2',$city2);
-        $this->assign('city3',$city3);
+        $this->assign('city3',$city3); */
         $this->assign('cates',$cates);
         $this->assign('services',$services);
+        
         return $this->fetch();
     }
     /* 订单提交,废弃 */

@@ -13,7 +13,7 @@ namespace cmf\controller;
 use think\Db;
 use app\admin\model\ThemeModel;
 use think\View;
-
+ 
 
 class HomeBaseController extends BaseController
 {
@@ -24,10 +24,10 @@ class HomeBaseController extends BaseController
         hook('home_init');
       
         parent::_initialize();
-         
+       
         //网站通用信息保存在session中
         $com=session('company');
-         
+        
          if(empty($com)){
              //获取网站信息
             $company=DB::name('company')->select(); 
@@ -216,7 +216,7 @@ class HomeBaseController extends BaseController
     {
         $userId = cmf_get_current_user_id();
         if (empty($userId)) {
-            $this->error("用户尚未登录", url("user/login/index"));
+            $this->redirect(url('user/login/login'));
         }
     }
 

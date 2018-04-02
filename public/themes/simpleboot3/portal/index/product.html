@@ -1,4 +1,12 @@
-<include file="public@head"/>    
+<include file="public@head"/>   
+<style>
+#city3 .city3{
+	style:none;
+}
+#city3 .show{
+	style:block;
+}
+</style> 
 </head>
 <body>
 <include file="public@header"/> 
@@ -23,22 +31,15 @@
                     <span>所在地区</span>
                     <select id="city1" class="gy_ss_1">
                         <option value="0">选择省</option>
-                        <foreach name="city1" item="vo">
-                         	<option value="{$vo.id}">{$vo.name}</option>
-                        </foreach>
                         
                     </select>
                     <select id="city2" class="gy_ss_2">
                         <option value="0">选择市</option>
-                       <foreach name="city2" item="vo">
-                         	<option class="city2 city2_{$vo.fid}" value="{$vo.id}">{$vo.name}</option>
-                        </foreach>
+                       
                     </select>
                     <select id="city3" class="gy_ss_3" name="city">
                         <option value="0">选择区</option>
-                        <foreach name="city3" item="vo">
-                         	<option class="city3 city3_{$vo.fid}" value="{$vo.id}">{$vo.name}</option>
-                        </foreach>
+                        
                     </select>
                 </div>
                 <div class="pro-input">
@@ -152,6 +153,7 @@
 </div>
  
 <include file="public@footer"/>
+ <script src="__TMPL__/public/assets/js/city.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script>
 	var vm=new Vue({
@@ -169,26 +171,44 @@
 			qq:"",
 			email:"",
 		}
-	})
+	});
 </script>
 <script>
-$('#city2 .city2').hide();
-$('#city3 .city3').hide();
+ 
+ 
+ var citys1='';
+ var citys2='';
+ var citys3='';
+ var v;
+for(v in city1){ 
+	citys1+='<option value="'+v+'">'+city1[v]+'</option>';
+ }  
+ 
+$('#city1').append(citys1);
 $('#oid').val('');
 $('#city1').change(function(){
 	var fid=this.value;
 	$('#city2').val(0);
 	$('#city3').val(0);
-	$('#city2 .city2').hide();
-	$('#city3 .city3').hide();
-	$('#city2 .city2_'+fid).show(); 
+	$('#city2 .city').remove();
+	$('#city3 .city').remove();
+	citys2='';
+	for(v in city2[fid]){ 
+		citys2+='<option class="city" value="'+v+'">'+city2[fid][v]+'</option>';
+	 }
+	$('#city2').append(citys2);
 });
  
-$('#city2').change(function(){
+$('#city2').change(function(){ 
+	var fid=this.value; 
 	$('#city3').val(0); 
-	$('#city3 .city3').hide(); 
-	var fid=this.value;
-	$('#city3 .city3_'+fid).show(); 
+	$('#city3 .city').remove();
+	citys3='';
+	for(v in city3[fid]){ 
+		citys3+='<option class="city" value="'+v+'">'+city3[fid][v]+'</option>';
+	 }
+	$('#city3').append(citys3);
+	$('#city3').append(citys3);
 });
  
 function order_do1(){ 
