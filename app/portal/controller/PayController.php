@@ -239,7 +239,7 @@ class PayController extends HomeBaseController
         } elseif ($unifiedOrderResult["code_url"] != null) {
             //从统一支付接口获取到code_url
             $code_url = $unifiedOrderResult["code_url"];
-            $this->redirect(url('portal/pay/wx_native',['url'=> urlencode($code_url),'out_trade_no'=>$out_trade_no,'money'=>$jiagee]));
+            $this->redirect(url('portal/pay/wx_native',['out_trade_no'=>$out_trade_no,'money'=>$jiagee,'url'=> urlencode($code_url)]));
             
         }else{
             $this->error("微信下单失败",$jumpurl,10);
