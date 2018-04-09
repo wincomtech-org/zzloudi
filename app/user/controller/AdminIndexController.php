@@ -57,7 +57,7 @@ class AdminIndexController extends AdminBaseController
     public function index()
     {
         $where   = ['user_type'=>2];
-        $where=[];
+       
         $request = input('request.');
 
         if (!empty($request['uid'])) {
@@ -74,7 +74,7 @@ class AdminIndexController extends AdminBaseController
         }
         $usersQuery = Db::name('user');
 
-        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(2);
+        $list = $usersQuery->whereOr($keywordComplex)->where($where)->order("create_time DESC")->paginate(10);
         // 获取分页显示
         $page = $list->appends($request)->render();
         $this->assign('list', $list);

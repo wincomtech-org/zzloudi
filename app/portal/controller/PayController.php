@@ -420,7 +420,10 @@ class PayController extends HomeBaseController
             $data_pay['trade_no']=$pay_data['transaction_id'];
             $data_pay['buyer_id']=$pay_data['openid'];
         }else{
-            return '数据错误';
+            //管理员手动支付
+            $data_pay['money']=$pay_data['total_fee'];
+            $data_pay['trade_no']=$pay_data['trade_no'];
+            $data_pay['buyer_id']=$pay_data['buyer_id'];
         }
        
         //判断用户是否在订单中，不在则添加

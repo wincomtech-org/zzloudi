@@ -10,41 +10,15 @@
 		<form method="post" class="form-horizontal js-ajax-form margin-top-20"
 			action="{:url('editPost')}">
 			<div class="form-group">
-				<label class="col-sm-2 control-label">产品包装<span
+				<label class="col-sm-2 control-label">订单支付限时（秒）<span
 					class="form-required">*</span></label>
 				<div class="col-md-6 col-sm-10">
 				
-					<input type="text" class="form-control" name="packs"
-						value="{$info.packs}" required>
+					<input type="number" step="1"class="form-control" name="order_time"
+						value="{$info.order_time}" required>
 				</div>
 			</div>
- 			<div class="form-group">
-				<label class="col-sm-2 control-label">产品包装单位<span
-					class="form-required">*</span></label>
-				<div class="col-md-6 col-sm-10">
-				
-					<input type="text" class="form-control" name="units"
-						value="{$info.units}" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">memcache服务器<span
-					class="form-required">*</span></label>
-				<div class="col-md-6 col-sm-10">
-				
-					<input type="text" class="form-control" name="mem_host"
-						value="{$info.memcache.host}" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">memcache端口<span
-					class="form-required">*</span></label>
-				<div class="col-md-6 col-sm-10">
-				
-					<input type="text" class="form-control" name="mem_port"
-						value="{$info.memcache.port}" required>
-				</div>
-			</div>
+ 			 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 				 

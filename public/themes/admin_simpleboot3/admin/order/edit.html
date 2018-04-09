@@ -5,11 +5,11 @@
 	<div class="wrap">
 		<ul class="nav nav-tabs">
 			<li class=""><a href="{:url('index')}">所有{$flag}</a></li>
-        
+         <li class=""><a href="{:url('old')}">{$flag}回收站</a></li>
 			<li class="active"><a href="{:url('edit',['id'=>$info.id])}">{$flag}详情</a></li>
 		</ul>
 		<form method="post"
-			class="form-horizontal js-ajax-form margin-top-20"
+			class="form-horizontal js-ajax-form3 margin-top-20"
 			action="{:url('editPost')}">
 			<div class="form-group fleft">
 				<label class="col-sm-2 control-label">单号</label>
@@ -130,13 +130,16 @@
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 				<input type="hidden" name="id" value="{$info.id}"/>
-					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+					<eq name="info.is_delete" value="0">
+						<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+					</eq>
 					<a class="btn btn-default" href="javascript:history.go(-1);">{:lang('BACK')}</a>
 				</div>
 			</div>
 			 <div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 				 <p>状态更改请谨慎操作,只能改为已完成和已退款</p>
+				  <p>回收站内的订单无法修改</p>
 				</div>
 			</div>
 		</form>

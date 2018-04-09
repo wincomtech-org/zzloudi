@@ -4,10 +4,10 @@
 
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="{:url('index')}">所有{$flag}</a></li>
-       <li class=""><a href="{:url('old')}">{$flag}回收站</a></li>
+        <li class=""><a href="{:url('index')}">所有{$flag}</a></li>
+       <li class="active"><a href="{:url('old')}">{$flag}回收站</a></li>
     </ul>
-    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('old')}">
        订单状态:
         <select class="form-control" name="status" style="width: 140px;">
            <option value='0'>全部</option>
@@ -23,26 +23,32 @@
       姓名 (模糊)<input class="form-control" type="text" name="uname" style="width: 200px;" value="{$data.uname}"
                placeholder="姓名">
          <input type="submit" class="btn btn-primary" value="搜索"/>
-        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+        <a class="btn btn-danger" href="{:url('old')}">清空</a>
      </form>
-  	<form method="post" class="js-ajax-form margin-top-20"  >
-        
-         <div class="table-actions">
+    <form method="post" class="js-ajax-form margin-top-20"  >
+           
+        <div class="table-actions">
            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
-                    data-action="{:url('dels')}" data-subcheck="true" data-msg="确认把订单放入回收站吗？">
-               	 批量回收
+                    data-action="{:url('restores')}" data-subcheck="true" data-msg="确认把订单还原？">
+               	 批量还原
+            </button>
+             &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('dels_true')}" data-subcheck="true" data-msg="确认把订单删除？">
+               	 批量删除
             </button>
         </div> 
+        
         <table class="table table-hover table-bordered table-list">
             <thead>
             <tr> 
-	            <th width="15">
+               <th width="15">
 		            <label> 
 		            	<input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
 					</label>
 				</th>
                 <th width="50">ID</th>
-                <th>订单号 </th> 
+                <th>订单号</th> 
                  <th>用户id</th>
                  
                 <th>联系人</th> 
@@ -55,13 +61,13 @@
                 <th>来源域名</th>
                 <th>来源ip</th>
                <th>更新时间</th>
-                <th width="120">{:lang('ACTIONS')}</th>
+                <th width="180">{:lang('ACTIONS')}</th>
             </tr>
             </thead>
             <tbody>
             <foreach name="list" item="vo">
                 <tr>
-                   <td><input type="checkbox" class="js-check"
+                    <td><input type="checkbox" class="js-check"
 							data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
 							value="{$vo.id}"></td>
                     <td>{$vo.id}</td>
@@ -78,10 +84,13 @@
                        <td>{$vo.ip}</td>
                    <td>{$vo.time|date='Y-m-d H:i',###}</td>
                     <td>
-                        <a href="{:url('edit',array('id'=>$vo['id'] ))}">{:lang('EDIT')}</a>
+                        <a href="{:url('edit',array('id'=>$vo['id'] ))}">详情</a>
                          &nbsp;&nbsp;|&nbsp;&nbsp;
-                         <a href="{:url('delete',array('id'=>$vo['id']))}"
-							class="js-ajax-delete" data-msg="确认把订单放入回收站吗？" >回收</a> 
+                         <a href="{:url('restore',array('id'=>$vo['id']))}"
+							class="js-ajax-delete" data-msg="确认把订单还原吗？" >还原</a> 
+							 &nbsp;&nbsp;|&nbsp;&nbsp;
+                         <a href="{:url('delete_true',array('id'=>$vo['id']))}"
+							class="js-ajax-delete" data-msg="确认把订单彻底删除吗？" >彻底删除</a> 
                     </td>
                 </tr>
             </foreach>

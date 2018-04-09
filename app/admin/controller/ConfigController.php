@@ -33,11 +33,10 @@ class ConfigController extends AdminBaseController
      */
     public function index()
     { 
-         $this->error('暂无');
+        
         $info=[
-            'packs'=>implode('-',config('packs')),
-            'units'=>implode('-',config('units')),
-            'memcache'=>config('memcache')
+            
+            'order_time'=>config('order_time')
         ];
         $this->assign('info',$info);
         
@@ -62,9 +61,8 @@ class ConfigController extends AdminBaseController
         $data= $this->request->param();
         
         $info=[
-            'packs'=>explode('-',$data['packs']),
-            'units'=>explode('-',$data['units']),
-            'memcache'=>['host'=>$data['mem_host'],'port'=>$data['mem_port']]
+            'order_time'=>$data['order_time'],
+           
         ];
       
         $result=cmf_set_dynamic_config($info);
