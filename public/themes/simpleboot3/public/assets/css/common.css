@@ -9,6 +9,7 @@ body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,form,input,button,textarea,i,em,table
 /*body{min-width: 320px;}*/
 .lf{ float: left; }
 .rt{ float: right; }
+.rts{ margin-left:230px}
 .clear{ clear: both; }
 a{ text-decoration: none; color: #333; }
 textarea,input,button,select,img{border: none;outline: none;}
@@ -85,7 +86,10 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
     .foot-r{float: left;text-align: left;margin-top:10px;}
     .foot{margin-left:10px;}
 }
-
+@media screen and (max-width:418px){
+	.rts{ margin-left:170px; }
+/*	.login-box input[type="submit"]{margin: 35px 0 35px -20px;}*/
+}
 
 
 

@@ -184,11 +184,11 @@ body{font-family: 微软雅黑;}
 .input2{margin-top:20px;}
 .login-in span{display: inline-block;text-align: right;width:100px;line-height: 50px;}
 .login-in input{width:350px;height:50px;border:1px solid #44b548;border-radius:5px;box-sizing: border-box;color:#999;font-size:16px;padding-left:10px;margin-left:15px;}
-.login-text{}
+.login-text>span{display: block;text-align:center}
 .login-text a{display: inline-block;font-size: 12px;line-height: 30px;letter-spacing: 2px;}
 .login-text a:first-child{margin-left:120px;color:#44b548;}
 .login-sub{text-align: center;}
-.login-box input[type="submit"]{padding:0 10px;font-size:24px;color:#fff;letter-spacing: 4px;line-height: 40px;margin:40px auto;text-align: center;background:#44b548;border-radius: 5px;cursor: pointer;}
+.login-box input[type="submit"]{padding:0 10px;font-size:24px;color:#fff;letter-spacing: 4px;line-height: 40px;    margin: 35px 0 35px 105px;text-align: center;background:#44b548;border-radius: 5px;cursor: pointer;}
 .login-cue{text-align: center;font-size:12px;line-height: 40px;margin-top:40px;letter-spacing: 2px;}
 .login-cue a{color:#ac484b;}
 .login-box input.login-code{width:190px;}
@@ -668,6 +668,11 @@ padding:0 14px;
 	.divs_4 { bottom: -13px;}
 	#pro-first{position:absolute;bottom:167px;left:26px;}
 } 
+
+@media screen and (max-width:418px){
+/*	.rt{ margin-left:170px; }*/
+	.login-box input[type="submit"]{margin: 35px 0 35px -20px;}
+}
 @media screen and (max-width:414px){
 	.huluwa>.aoteman_left{
 		padding-left: 25px;
