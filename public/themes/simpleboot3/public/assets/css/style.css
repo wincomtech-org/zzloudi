@@ -291,8 +291,18 @@ padding:0 14px;
 .pro-box2-r img{margin:0 auto;}
 */
 
-
-
+.pro-box2-r{
+	
+	
+}
+.pro-box2-r>p{
+	width:469px;
+	display: inline-block;
+	color:#a9a9a9;
+	font-size:12px;
+	margin:10px 0;
+	text-indent: 20px;
+}
 
 
 

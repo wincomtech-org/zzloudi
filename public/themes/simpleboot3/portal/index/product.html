@@ -111,7 +111,12 @@
 	                    <a href="javascript:void(0)" class="pro-next" id="pro-second2">下一步</a>
                 </div>
             </div>
-            <div class="pro-box2-r"><img src="__TMPL__/public/assets/img/pro-1.jpg"></div>
+            <div class="pro-box2-r">
+				<p>个人类型：需要提供注册人身份证</p>
+				<p>企业类型：需提供营业执照（非个体商户）企业对公司银行账户信息和注册人身份证</p>
+				<p>服务好介绍：每个月只能给粉丝群发4次消息（1-8篇）</p>
+				<p>订阅号介绍：每天都可以给粉丝群发送一次消息（1-8篇）</p>
+				<img src="__TMPL__/public/assets/img/pro-1.jpg"></div>
             <div class="clear"></div>
         </div>
         <div class="pro-box3 pro-box">
@@ -258,6 +263,13 @@ function order_do2(){
      });
 } 
 	var mingcheng;
+$("#pro-third1").click(function(){
+//	$("#pro-first").show();
+	$(".pro-box2").show();
+    $(".pro-box3").hide();
+    $(".pro-tit-list li").removeClass("pro-tit-cur");
+    $(".pro-tit-list li:nth-child(2)").addClass("pro-tit-cur");
+});
  $('#form_submit').click(function(){
 	var hgy=false;
 	var hyg=false;
