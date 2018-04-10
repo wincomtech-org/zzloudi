@@ -43,25 +43,25 @@
                     </select>
                 </div>
                 <div class="pro-input">
-                    <span><span>*&nbsp;&nbsp;&nbsp;</span>申请人姓名</span>
-                    <input v-model="name" class="gy_ss_y" type="text" name="uname" placeholder="">
+                    <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="name_sy">申请人姓名</label></span>
+                    <input v-model="name" id="name_sy" class="gy_ss_y" type="text" name="uname" placeholder="">
                 </div>
                 <div class="pro-input">
-                    <span><span>*&nbsp;&nbsp;&nbsp;</span>联系手机</span>
-                    <input v-model="phone" class="gy_ss_gg" type="text" name="tel" placeholder="">
+                    <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="phone_sy">联系手机</label></span>
+                    <input v-model="phone" id="phone_sy" class="gy_ss_gg" type="text" name="tel" placeholder="">
                 </div>
                 <div class="pro-input">
-                    <span><span>*&nbsp;&nbsp;&nbsp;</span>QQ号码</span>
-                    <input v-model="qq" class="gy_t_i" type="text" name="qq" placeholder="">
+                    <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="QQ_sssy">QQ号码</label></span>
+                    <input v-model="qq" id="QQ_sssy" class="gy_t_i" type="text" name="qq" placeholder="">
                 </div>
                 <div class="pro-input">
-                    <span><span>*&nbsp;&nbsp;&nbsp;</span>常用邮箱</span>
-                    <input v-model="email" class="gy_suyty" type="text" name="email" placeholder="">
+                    <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="email_sssy">常用邮箱</label></span>
+                    <input v-model="email" id="email_sssy" class="gy_suyty" type="text" name="email" placeholder="">
                 </div>
                 <div class="pro-text1">
                     <p>请正确填写信息，避免无法正常接收服务信息</p>
                     <p>
-                        <input class="gy_sio" type="checkbox">我已阅读并同意和遵守<a href="{:url('portal/about/protocol')}" style="color:#f00;">《本站服务协议》</a>
+                        <input id="gsy1" class="gy_sio" type="checkbox"><label for="gsy1">我已阅读并同意和遵守</label><a href="{:url('portal/about/protocol')}" style="color:#f00;">《本站服务协议》</a>
                     </p>
                    
                 </div>
@@ -123,12 +123,12 @@
              <div class="huluwa" id="app">
 				<div class="aoteman_left">
 					<div class="divs_1">
-						<span class="guyuan">账号名称</span>
-						<input class="guyuan_syj1" type="text" name="wx_name" v-model="text" placeholder="请输入账号名称" minlength="2" maxlength="16">
+						<span class="guyuan"><label for="text_sssgy">账号名称</label></span>
+						<input id="text_sssgy" class="guyuan_syj1" type="text" name="wx_name" v-model="text" placeholder="请输入账号名称" minlength="2" maxlength="16">
 					</div>
 					<div class="divs_2">
-						<span>功能介绍</span>
-						<textarea class="guyuan_syj2"  v-model="gy" name="wx_dsc" id="" placeholder="4~120个字，介绍此公众号功能与特色" minlength="4" maxlength="120" cols="30" rows="10"></textarea>
+						<span><label for="textarea_sssshu">功能介绍</label></span>
+						<textarea id="textarea_sssshu" class="guyuan_syj2"  v-model="gy" name="wx_dsc" placeholder="4~120个字，介绍此公众号功能与特色" minlength="4" maxlength="120" cols="30" rows="10"></textarea>
 					</div>
 					<div class="divs_3">
 						<span>功能描述</span>
