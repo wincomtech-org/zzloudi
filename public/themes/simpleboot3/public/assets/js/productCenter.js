@@ -27,6 +27,7 @@
 //	console.log(arr1);
     $("#solutionList>li").click(function () {
 		clearInterval(timer);
+		console.log(23);
 		//console.log(arrgy);
 		index=$(this).index();
         arr1=arrgy.slice(arrgy.length-index).concat(arrgy.slice(0,arrgy.length-index))
@@ -34,7 +35,7 @@
 		for(var i=0;i<arr1.length;i++){
 			x=arr1[i];
 			
-			$($("#list>ul>li")[i]).attr("class",`${x}`);
+			$($("#list>ul>li")[i]).attr("class",x);
 			
 		}
 		timer=setInterval(nextimg,3000);

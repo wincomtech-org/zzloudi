@@ -724,7 +724,12 @@ label{
 	cursor:pointer !important;
 }
 
-
+/*
+#slider{
+	position: relative;
+	overflow: hidden;
+}
+*/
 
 
 
