@@ -71,10 +71,10 @@
 				<div class="shaungxsj_ss">
 					<div class="div1_ss"></div>
 					<div class="txtsy_ss">
-						<p><span>姓名</span>{{name}}</p>
-						<p><span>手机号</span>{{phone}}</p>
-						<p><span>QQ号</span>{{qq}}</p>
-						<p><span>邮箱</span>{{email}}</p>
+						<p><span>姓名</span>		 <span id="span_text1"></span></p>
+						<p><span>手机号</span>	    <span id="span_text2"></span></p>
+						<p><span>QQ号</span>		 <span id="span_text3"></span></p>
+						<p><span>邮箱</span>	    <span id="span_text4"></span></p>
 					</div>
 				</div>
             </div>
@@ -139,10 +139,10 @@
 				</div>
 				<div class="dongfangsw_right">
 					<div><img src="__TMPL__/public/assets/img/section129f4d4.png" width="100%" alt=""></div>
-					<p class="p1">{{ text }}</p> 
+					<p id="gggysr1" class="p1"></p> 
 					<div>
 						<div style="vertical-align: top" class="parent1"><img src="__TMPL__/public/assets/img/sectionwewew.png" height="35px" alt=""></div>
-						<div class="parent">{{ gy }}</div>
+						<div id="gggysr2" class="parent"></div>
 					</div>
 					<div><img src="__TMPL__/public/assets/img/section229f4d4.png" width="100%" alt=""></div>
 				</div>
@@ -159,24 +159,57 @@
  
 <include file="public@footer"/>
  <script src="__TMPL__/public/assets/js/city.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script>
-	var vm=new Vue({
-		el:"#app",
-		data:{
-			text:"",
-			gy:"",
+//	var vm=new Vue({
+//		el:"#app",
+//		data:{
+//			text:"",
+//			gy:"",
+//		}
+//	});
+//	var vms=new Vue({
+//		el:"#ass",
+//		data:{
+//			name:"",
+//			phone:"",
+//			qq:"",
+//			email:"",
+//		}
+//	});
+	
+	var name_s1=document.getElementById("name_sy");
+  	var span_s1=document.getElementById("span_text1");
+	var name_s2=document.getElementById("phone_sy");
+  	var span_s2=document.getElementById("span_text2");
+	var name_s3=document.getElementById("QQ_sssy");
+  	var span_s3=document.getElementById("span_text3");
+	var name_s4=document.getElementById("email_sssy");
+  	var span_s4=document.getElementById("span_text4");
+	var name_s5=document.getElementById("text_sssgy");
+  	var span_s5=document.getElementById("gggysr1");
+	var name_s6=document.getElementById("textarea_sssshu");
+  	var span_s6=document.getElementById("gggysr2");
+//	console.log(span_s1.innerHTML);
+	function data_text(input_s,p_sg){
+		if(document.all){
+			input_s.onpropertychange=function(){
+				p_sg.innerHTML=input_s.value;
+				console.log(2323);
+			}
 		}
-	});
-	var vms=new Vue({
-		el:"#ass",
-		data:{
-			name:"",
-			phone:"",
-			qq:"",
-			email:"",
-		}
-	});
+	   	else{
+			input_s.oninput=function(){
+				p_sg.innerHTML=input_s.value;
+				console.log(565656);
+			}
+	  }
+	}
+	data_text(name_s1,span_s1);
+	data_text(name_s2,span_s2);
+	data_text(name_s3,span_s3);
+	data_text(name_s4,span_s4);
+	data_text(name_s5,span_s5);
+	data_text(name_s6,span_s6);
 </script>
 <script>
  

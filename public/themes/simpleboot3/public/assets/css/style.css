@@ -241,6 +241,7 @@ padding:0 14px;
 .pro-box-r{float: right;width:460px;text-align: center;}
 #pro-first{position:absolute;bottom:48px;left:209px;}
 /*古源改*/
+/*
 .shaungxsj_ss{
 	height:440px;
 	width:230px;
@@ -260,7 +261,7 @@ padding:0 14px;
 	width:204.6px;
 	margin: auto;
 	background:#fff;
-/*	padding:0 10px;*/
+	padding:0 10px;
 }
 .shaungxsj_ss>.txtsy_ss>p{
 	height:23px;
@@ -275,6 +276,7 @@ padding:0 14px;
 	width:43px;
 	padding-right: 5px;
 }
+*/
 
 /*.pro-box-r img{margin:0 auto;}*/
 /*结束*/
@@ -714,11 +716,15 @@ padding:0 14px;
 	overflow: hidden;
 	border-bottom: 2px solid #f8f8fa;
 }
-.shaungxsj_ss>.txtsy_ss>p>span{
+.shaungxsj_ss>.txtsy_ss>p>span:nth-child(1){
 	display: inline-block;
 	text-align: right;
 	width:43px;
 	padding-right: 5px;
+}
+.shaungxsj_ss>.txtsy_ss>p>span:nth-child(2){
+	display: inline-block;
+	width:150px;
 }
 label{
 	cursor:pointer !important;
