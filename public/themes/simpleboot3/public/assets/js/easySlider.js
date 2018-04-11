@@ -213,42 +213,43 @@
 //		};
 
 
-var second_s=3000;	//几毫秒换张图
-var animate_s=500;	//几毫秒的动画效果
+
 
 $(function(){
-	console.log($(".slides_s>li").width());
-	console.log($(".slides_s>li").height());
-	console.log($(".slides_s>li").length);
+	var second_s=3000;	//几毫秒换张图
+	var animate_s=500;	//几毫秒的动画效果
 	var htm="<li>"+$(".slides_s>li:first-child").html()+"</li>";
+	var width_l=$(".slides_s>li").width();
+	var margin_l=width_l;
 	$(".slides_s").append(htm);
-	$("#slider_s").height($(".slides_s>li").height());
 	$(".slides_s").width($(".slides_s>li").width()*$(".slides_s>li").length);
 	$("#slider_s>.slides_s>li").css("display","block");
-	var width_l=$(".slides_s>li").width();
-	var margin_l=$(".slides_s>li").width();
+	$(window).resize(function(){
+		clearInterval(timer);
+		width_l=$(".slides_s>li").width();
+		margin_l=width_l;
+		$(".slides_s").width($(".slides_s>li").width()*$(".slides_s>li").length);
+		timer=setInterval(autoplay,second_s);
+		
+	})
 	function autoplay(){
-		if(margin_l>$(".slides_s>li").width()*($(".slides_s>li").length-1)){
-			margin_l=$(".slides_s>li").width();
+		if(margin_l>width_l*($(".slides_s>li").length-1)){
+			margin_l=width_l;
 			$(".slides_s").css("marginLeft","0");
 		}
 		
 		$(".slides_s").animate({
 			marginLeft:"-"+margin_l+"px"
 		},animate_s);
-		margin_l+=margin_l;
-		console.log(margin_l);
+		margin_l=margin_l+width_l;
 	}
 	var timer=setInterval(autoplay,second_s);
 	$(".controls_s>li:nth-child(1)").click(function(){
 		clearInterval(timer);
-		
 		margin_l=margin_l-width_l;
-//		console.log(margin_l);
 		if(margin_l==0){
 			$(".slides_s").css("marginLeft","-"+width_l*($(".slides_s>li").length-1)+"px");
 			margin_l=width_l*($(".slides_s>li").length-1);
-			console.log(margin_l);
 		}
 		$(".slides_s").animate({
 			marginLeft:"-"+(margin_l-width_l)+"px"
@@ -257,7 +258,7 @@ $(function(){
 	});
 	$(".controls_s>li:nth-child(2)").click(function(){
 		clearInterval(timer);
-		a=autoplay();
+		autoplay();
 		timer=setInterval(autoplay,second_s);
 	});
 });

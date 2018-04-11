@@ -100,6 +100,7 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 	overflow: hidden;
 }
 #slider_s>.slides_s>li{
+	width:100vw;
 	display:none;
 }
 #slider_s>.slides_s>li:first-child{
