@@ -39,15 +39,17 @@ nav{width:100%;background:#000;height:60px;}
 .mobile-nav-list li a:hover{color:#fff;background:#44b548;}
 .blue{background:#44b548;}
 .banner{width:100%;}
-#slider {width: 100%;margin:0 auto;}
-.controls li {top: 50%;margin-top: -30px}
-.controls li:nth-child(1) {left: 0;}
-.controls li:nth-child(2) {right: 0;}
+/*
+#slider_s {width: 100%;margin:0 auto;}
+.controls_s li {top: 50%;margin-top: -30px}
+.controls_s li:nth-child(1) {left: 0;}
+.controls_s li:nth-child(2) {right: 0;}
+*/
 .pagination li {background-color: #ddd;}
 .pagination li.active {background-color:#333;}
 .pagination li.active>a{color:#fff}
 .responsive {width: 100%;height: auto;}
-.clearfix:after {content: "";display: table;clear: both;}
+.clearfix_s:after {content: "";display: table;clear: both;}
 footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 .foot-l{float: left;text-align: left;}
 .foot-l p,.foot-r p{color:#fff;font-size:16px;line-height: 25px;}
@@ -77,7 +79,7 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
     .nav-push{display: block;}
     .head_login{margin-left:0px;}
     .mobile-nav{z-index: 999;}
-    #slider{margin-top:10px;}
+/*    #slider_s{margin-top:10px;}*/
 }
 @media screen and (max-width:700px){
     .tell{display: none;}
@@ -90,9 +92,46 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 	.rts{ margin-left:170px; }
 /*	.login-box input[type="submit"]{margin: 35px 0 35px -20px;}*/
 }
-
-
-
-
+/*===================*/
+#slider_s{
+	width:100%;
+	height:auto;
+	position:relative;
+	overflow: hidden;
+}
+#slider_s>.slides_s>li{
+	display:none;
+}
+#slider_s>.slides_s>li:first-child{
+	display: block
+}
+#slider_s>.controls_s{
+	width:100%;
+	height:4vw;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	position:absolute;
+	top:0;
+	bottom: 0;
+	margin: auto;
+}
+.slides_s{
+	display: flex;
+	flex-flow: row nowrap;
+	margin-left:0;
+}
+/*.clearfix_s{transition: all 800ms}*/
+#slider_s>.controls_s>li>img{
+	height:4vw;
+}
+@media screen and (max-width:1200px){
+	#slider_s>.controls_s{
+		height:10vw;
+	}
+	#slider_s>.controls_s>li>img{
+		height:10vw;
+	}
+}
 
 
