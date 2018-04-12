@@ -237,7 +237,7 @@ $(function(){
 			margin_l=width_l;
 			$(".slides_s").css("marginLeft","0");
 		}
-		
+//		$(".slides_s").stop();
 		$(".slides_s").animate({
 			marginLeft:"-"+margin_l+"px"
 		},animate_s);
@@ -245,7 +245,9 @@ $(function(){
 	}
 	var timer=setInterval(autoplay,second_s);
 	$(".controls_s>li:nth-child(1)").click(function(){
+		
 		clearInterval(timer);
+		$(".slides_s").stop();
 		margin_l=margin_l-width_l;
 		if(margin_l==0){
 			$(".slides_s").css("marginLeft","-"+width_l*($(".slides_s>li").length-1)+"px");
@@ -257,7 +259,9 @@ $(function(){
 		timer=setInterval(autoplay,second_s);
 	});
 	$(".controls_s>li:nth-child(2)").click(function(){
+		
 		clearInterval(timer);
+		$(".slides_s").stop();
 		autoplay();
 		timer=setInterval(autoplay,second_s);
 	});
