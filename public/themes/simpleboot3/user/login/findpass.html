@@ -1,0 +1,121 @@
+<include file="public@login_head"/>  
+        <div class="box-r">
+            <div class="login-box login-mt2">
+                <form action="" method="" id="form">
+                   
+                    <div class="login-in input2">
+                        <span>验证邮箱：</span>
+                        <input type="text" name="email" placeholder="请填写重置邮箱地址，用于找回账号">
+                    </div>
+                    <div class="login-in input2">
+                        <span><eq name="verify_type" value="1">邮件<else/>短信</eq>验证码：</span>
+                        <input type="text" name="code" placeholder="请输入验证码" class="login-code" required>
+                        <a href="javascript:void(0);" class="code" id="yzm">发送验证码</a>
+                    </div>
+                    <div class="login-in input2">
+                        <span>设置新密码：</span>
+                        <input type="password" name="password" placeholder="密码6-20位，仅支持字母、数字" minlength="6" maxlength="20" >
+                    </div>
+                    <div class="login-in input2">
+                        <span>确认密码：</span>
+                        <input type="password" name="password1" placeholder="请重新输入密码，须与上方一致" >
+                    </div>
+                    
+                    <div class="login-sub">
+                        <input type="submit" value="重置密码">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ </body>
+</html>
+<script type="text/javascript">
+    $("#yzm").click(function(){
+    	if($("#yzm").hasClass("disabled")==true){
+    		return false;
+    	}
+      
+    	var email=$.trim($('input[name=email]').val());
+        var time=60;
+        if(!is_email(email)){alert("邮箱填写错误");return false}
+		 
+        $.ajax({
+            type: 'POST',
+            url: "{:url('user/register/sendmsg')}",
+            dataType: 'json',
+            data:{'email':email,'type':'find'},
+            success: function(data){ 
+            	 
+            	if(data.msg=='success'){ 
+            		 $("#yzm").html(time+"秒");  
+            		 $("#yzm").addClass("disabled");
+                     var t=setInterval(function(){
+                         time--; 
+                         $("#yzm").html(time+"秒");
+                         if(time==0){
+                             clearInterval(t);                   
+                             $("#yzm").html("重新获取");
+                             $("#yzm").removeClass("disabled");
+                         }
+                     },1000);
+            	}else{ 
+            		alert(data.msg);
+            	} 
+            },
+            error: function(event, XMLHttpRequest, ajaxOptions, thrownError){
+            	  
+            	alert('服务器连接失败'); 
+            }
+        });
+        	 
+        
+    });
+     
+ // 重置表单提交
+    $('#form').submit(function(){
+     
+    	var password=$.trim($('input[name=password]').val()); 
+    	var password1=$.trim($('input[name=password1]').val()); 
+    	var code=$.trim($('input[name=code]').val());
+    	var email=$.trim($('input[name=email]').val());
+    	//验证所有信息
+    	 if(!is_email(email)){alert("邮箱填写错误");return false}
+    	 if(!is_password(password)){alert("密码格式不正确");return false;}
+		if(password1!==password){
+			$('input[name=password1]').val("");
+			alert("两次密码输入不一致");
+			return false;
+		}
+		 
+    	$('.login-sub input').prop('disabled','disabled');
+        $('.login-sub input').val('正在重置');
+         
+        $.ajax({
+            type: 'POST',
+            url: "{:url('user/login/ajax_findpsw')}",
+            dataType: 'json',
+            data: {'psw':password,'code':code,'email':email},
+            success: function(data){ 
+            	if(data.code==1){
+    				//返回上一页并刷新
+    				self.location=data.url;
+    			}else{
+    				$('.login-sub input').prop('disabled',false);
+    				$('.login-sub input').val('立即重置');
+    				alert(data.msg);
+    			}
+            },
+            
+            error: function(event, XMLHttpRequest, ajaxOptions, thrownError){
+            	$('.login-sub input').prop('disabled',false);
+                $('.login-sub input').val('立即重置');
+               
+            	alert('服务器连接失败'); 
+            }
+        });
+    	return false;
+    });
+</script>
+
