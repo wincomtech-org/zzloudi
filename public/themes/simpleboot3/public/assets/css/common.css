@@ -84,7 +84,7 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 @media screen and (max-width:700px){
     .tell{display: none;}
     .head_login a{margin-left:10px;}
-    .nav-push{margin-left:100px;}
+    /* .nav-push{margin-left:100px;} */
     .foot-r{float: left;text-align: left;margin-top:10px;}
     .foot{margin-left:10px;}
 }
@@ -135,4 +135,14 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 	}
 }
 
-
+@media screen and (max-width:519px){
+	.head_left{
+		width:100%;
+		padding-left:5px;
+	}
+	.head_user{
+		float: left;
+		margin-left: 16px;
+		margin:5px 0;
+	}
+}

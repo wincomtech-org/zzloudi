@@ -5,7 +5,7 @@ function is_mobile(tel){
 }
 //验证密码格式（必须字母+数字组合）;
 function is_password(str){
-	var reg=/^[a-zA-Z0-9]{6,18}$/;
+	var reg=/^[a-zA-Z0-9]{6,20}$/;
 	return reg.test(str);
 }
 //验证邮箱格式是否正确；

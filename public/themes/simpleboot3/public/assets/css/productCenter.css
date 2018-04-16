@@ -126,7 +126,7 @@
 .solution-list  li{line-height:25px;font-size:14px;}
 .solution-list  li span{display: inline-block;padding:5px 6px;}
 .solution-current-btn { padding: 4px 8px; background-color: #3296fa; color: #fff; border-radius: 5px; }
-/*Ê×Ò³ÂÌÉ«ÑùÊ½*/
+/*ï¿½ï¿½Ò³ï¿½ï¿½É«ï¿½ï¿½Ê½*/
 .green-current-btn { background-color: #63b504; color: #fff; border-radius: 5px; }
 
 .slide-show { width: 85%; position: relative;margin:0 auto ; }
@@ -205,6 +205,11 @@
     .list{top:40%;}
 }
 
+.p_s_t_g{
+    font-size:20px;
+    font-weight: 600;
+    margin:12px 0 12px 8px;
+}
 
 
 

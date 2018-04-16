@@ -29,18 +29,22 @@
             <div class="pro-box1-l">
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span>所在地区</span>
-                    <select id="city1" class="gy_ss_1">
-                        <option value="0">选择省</option>
-                        
-                    </select>
-                    <select id="city2" class="gy_ss_2">
-                        <option value="0">选择市</option>
-                       
-                    </select>
-                    <select id="city3" class="gy_ss_3" name="city">
-                        <option value="0">选择区</option>
-                        
-                    </select>
+                   <div class="super_long">
+						<div class="super_gong">
+							<select id="city1" class="gy_ss_1 margin_L_ss">
+								<option value="0">选择省</option>
+								
+							</select>
+							<select id="city2" class="gy_ss_2 margin_L_ss">
+								<option value="0">选择市</option>
+							   
+							</select>
+							<select id="city3" class="gy_ss_3" name="city">
+								<option value="0">选择区</option>
+								
+							</select>
+						</div>
+				   </div>
                 </div>
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="name_sy">申请人姓名</label></span>
@@ -64,7 +68,51 @@
                         <input id="gsy1" class="gy_sio" type="checkbox"><label for="gsy1">我已阅读并同意和遵守</label><a href="{:url('portal/about/protocol')}" style="color:#f00;">《本站服务协议》</a>
                     </p>
                    
-                </div>
+				</div>
+				<a href="javascript:void(0)" class="pro-next guyuan_sgh" id="pro-first">下一步</a>
+				<div class="online_xs">
+						<p class="gh_k_h">申请须知</p>
+						<p class="hji_o_p">
+							<span class="red_sst_g">提交申请后</span>
+							：
+							<span class="lamo_s">我们会在工作日12小时内联系您,您也可以联系我们客服。遇到的任何问题,我们有专业售后团队给你解决,申请前请您认真阅读服务协议，提交申请后则代表您同意本服务协议。 </span>
+						</p>
+						<p class="hji_o_p">
+							<span class="red_sst_g">基础营销功能</span>
+							：
+							<span class="lamo_s">群发功能、粉丝管理、微信自动回复（文字、语音、图文）、客服功能、自定义导航菜单、微信留言板、微信投票、微信抽奖功能、微信刮刮卡、会员卡、优惠券等活动功能。 </span>
+						</p>
+						<p class="hji_o_p">
+							<span class="red_sst_g">营销推广功能</span>
+							：
+							<span class="lamo_s">微网站、H5活动营销、推广海报。 </span>
+						</p>
+						<p class="hji_o_p">
+							<span class="red_sst_g">营销电商功能</span>
+							：
+							<span class="lamo_s">分销商城、微众筹、一元夺宝、拼团购、秒杀、拍卖等电商交易功能。</span>
+						</p>
+						<p class="hji_o_p">
+							<span class="red_sst_g">行业营销应用</span>
+							：
+							<span class="lamo_s">餐饮外卖、酒店、房地产、美容、健身、旅游、KTV、酒吧、婚庆、花店、汽车、教育、医疗、政务、食品、物业、装修、宠物、家政、租赁。</span>
+						</p class="hji_o_p">
+				</div>
+				<div class="online_ys">
+					<div class="online_cd">
+						<p class="p_s_t_g">联系我们</p>
+						<a href="http://wpa.qq.com/msgrd?v=3&uin=2851670321&site=qq&menu=yes" target="_blank">
+							<img src="__TMPL__/public/assets/img/TB2vfQij88lpuFjSspaXXXJKpXa_!!2702534210.png" alt="">
+						</a>
+						<div class="ddd_siy">
+							<p class="p_s_t_g_gi">工作时间：周一至周六</p>
+							<p class="p_s_t_g_gi">9:00-12:00   14:00-17:30 </p>
+							<p class="p_s_t_g_gi">（有任何问题请在工作时间内联系） </p>
+							<p class="p_s_t_g_gi">客服电话：400-168-6801 </p>
+						</div>
+						
+					</div>
+				</div>
             </div>
             <div class="pro-box-r">
 <!--                <img src="__TMPL__/public/assets/img/pro-1.jpg">-->
@@ -80,7 +128,7 @@
             </div>
             <div class="clear"></div>
         </div>
-		 <a href="javascript:void(0)" class="pro-next" id="pro-first">下一步</a>
+		 
         <div class="pro-box2 pro-box">
             <div class="pro-box2-l">
                 <p>请按照公众号类型选择服务，成功后不可更改</p>
@@ -106,9 +154,9 @@
 						</div>
 					</foreach>
 	 	 		</div>
-	                <div class="">
-	                    <a href="javascript:void(0)" class="pro-prev" id="pro-second1">上一步</a>
-	                    <a href="javascript:void(0)" class="pro-next" id="pro-second2">下一步</a>
+	                <div class="ggggy_jui">
+	                    <a href="javascript:void(0)" class="pro-prev sdf_gyh_s" id="pro-second1">上一步</a>
+	                    <a href="javascript:void(0)" class="pro-next sdf_gyh_s" id="pro-second2">下一步</a>
                 </div>
             </div>
             <div class="pro-box2-r">
@@ -136,6 +184,10 @@
 							文章推送(文字、语音、视频、图文)、粉丝管理、群发功能、微信自动回复、客服功能、自定义导航菜单。微网站、微表单、微投票、抽奖、	刮刮奖、会员卡、优惠券等营销功能。
 						</p>
 					</div>
+					<div class="divs_4" id="ggh_sgy_s">
+						<a href="javascript:void(0);" id="pro-third1">上一步</a>
+						<a href="javascript:void(0);" id="form_submit">确认订单</a>
+					</div>
 				</div>
 				<div class="dongfangsw_right">
 					<div><img src="__TMPL__/public/assets/img/section129f4d4.png" width="100%" alt=""></div>
@@ -147,10 +199,7 @@
 					<div><img src="__TMPL__/public/assets/img/section229f4d4.png" width="100%" alt=""></div>
 				</div>
 	        </div>
-			<div class="divs_4">
-				<a href="javascript:void(0);" id="pro-third1">上一步</a>
-				<a href="javascript:void(0);" id="form_submit">确认订单</a>
-			</div>
+			
 	        <input type="hidden" id="oid" name="oid" value=""/>
 	   	 </div>
 	</form>
