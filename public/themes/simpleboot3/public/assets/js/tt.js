@@ -28,13 +28,7 @@ $("#pro-first").click(function(){
 	}
 	
 	//判断手机号是否正确；
-//	var gu_s=false;
-//	var re2=/^[1][3,4,5,7,8][0-9]{9}$/;
 	shouji=$(".gy_ss_gg").val();
-//	if(re2.test(shouji)){gu_s=true}else{
-//		alert("手机号码错误！");
-//		return;
-//	}
 	if(!is_mobile(shouji)){alert("手机号填写错误");return false}
 	//判断qq号码是否正确；
 	var gy_t=false;
@@ -48,13 +42,7 @@ $("#pro-first").click(function(){
 	}
 	
 	//判断邮箱是否正确
-//	var br_s=false;
-//	var re4=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
 	youxiang=$(".gy_suyty").val();
-//	if(re4.test(youxiang)){br_s=true}else{
-//		alert("邮箱填写错误！");
-//		return;
-//	}
 	if(!is_email(youxiang)){alert("邮箱填写错误");return false}
 	//判断是否选择我已阅读，
 	var ghyuj=$(".gy_sio").is(":checked");
@@ -125,7 +113,5 @@ $("#pro-second2").click(function(){
 	}else{
 		alert("请至少选择一个")
 	}
-//	console.log(leixing);
-//	console.log(a,b);
 });
 
