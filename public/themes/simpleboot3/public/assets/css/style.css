@@ -275,6 +275,7 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
     .bg{padding:60px 0;}
 }
 @media screen and (max-width:700px){
+    .main3_l2{display:none;}
     .w1,.w2,.w3,.wb{width:100%;}
     .mt1,.mt3{display: none;}
     .mt2{float: none;text-align: center;font-size:24px;padding:0;}
@@ -303,6 +304,7 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 /*    .video-list li,.video-list li:nth-child(4n+1){width:260px;margin:10px auto;float: none;}*/
     .main3_l1,.main3_l2{width:100%;}
     .main3_list li,.main3_list_h{height:auto;min-height:500px;}
+    
 }
 @media screen and (max-width:500px){
     .main2_list li{width:300px;float: none;margin:10px auto;}
