@@ -18,12 +18,17 @@
 	            </div>
 	        <else/>
 	            <div class="head_user rt"> 
-	                <a  href="{:url('user/info/index')}">
+	                <a class="user_jhk" href="{:url('user/info/index')}">
 	                    {$Think.session.user.user_login}
 	                </a>
-	                <a href="{:url('user/info/psw')}">
+	                <div class="bbr_r_hj">
+                    <a class="blue_sa" href="{:url('user/info/psw')}">
 						修改密码
 					</a>
+                    <a class="blue_sa" href="#">
+						退出登录
+					</a>
+                    </div>
 	            </div>
             </empty>
             <div class="clear"></div>

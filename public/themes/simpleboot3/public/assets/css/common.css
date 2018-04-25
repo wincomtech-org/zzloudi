@@ -19,8 +19,8 @@ i,em{ font-style: normal; }
 .color1{color:#44b548;}
 .color2{color:#f00;}
 .w12{width:1200px;margin:0 auto;overflow: hidden;}
-.head{padding-top:15px;}
-.tell{background:url(../img/ico-1.png) no-repeat left center;padding-left:35px;text-align: center;}
+.head{padding-top:15px;position:relative}
+.tell{background:url(../img/ico-1.png) no-repeat left bottom;padding:12px 0 0 35px;text-align: center;}
 .tell p{font-size:16px;color:#333;}
 .tell .phone{color:#44b548;}
 .nav-push{margin-left:5px;display: none;}
@@ -55,22 +55,20 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 .foot-r{float: right;text-align: right;}
 /*用户名找回密码处*/
 .head_user{
-	margin-left: 40px;
-	float:right;
-}
-.head_user>a{
-	text-align: right;
+    margin-left:50px;
 }
 .head_user>a:nth-child(1){
-	
-	font-size:20px;
-	display: block;
+	font-size:27px;
 }
-.head_user>a:nth-child(2){
-	display: block;
-	font-size:13px;
+.bbr_r_hj{
+    float:right;
+    padding-top:7px;
+    margin-left:10px;
+}
+.blue_sa{
+	font-size:12px;
 	color:#68c06a;
-	margin-top: 8px;
+    display:block;
 }
 @media screen and (max-width: 1210px){
     .w12{width:100%;}
@@ -83,9 +81,18 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 @media screen and (max-width:730px){
 	nav{display: none;}
 	.nav-push{display: block;}
+     .tell{display: none;}
+    .bbr_r_hj {
+        line-height: 1;
+        padding-top:7px;
+        margin-left: 10px;
+    }
+    .head_user>a:nth-child(1) {
+    font-size: 21px;
+}
 }
 @media screen and (max-width:700px){
-    .tell{display: none;}
+   
 	.head_login a{margin-left:10px;}
     /* .nav-push{margin-left:100px;} */
 	.foot-l,.foot-r{float: right;text-align: right;margin:0 20px 0 0;}
@@ -144,13 +151,19 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
 		width:100%;
 		padding-left:5px;
 	} */
+    .head_login a{
+        margin-top:11px;
+        height:26px;
+        line-height:26px;
+        
+    }
 	.head_user{
 		float: left;
 		margin-left: 16px;
 		margin:5px 0;
 	}
 	.nav-push>img{
-		width:30px;
+		width:33px;
 		margin-top:7px;
 	}
 }
