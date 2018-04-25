@@ -15,6 +15,7 @@ class PayController extends HomeBaseController
         vendor('Alipay.AlipayPay');
         $this->m=Db::name('order');
         parent::_initialize();
+        $this->assign('html_title','支付');
     }
      
     

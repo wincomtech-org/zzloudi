@@ -36,7 +36,7 @@ class RegisterController extends HomeBaseController
      */
     public function register()
     {
-         
+        $this->redirect(url('portal/index/product'));
         $this->assign('verify_type',config('verify'));
         $this->assign('html_title','注册');
         return $this->fetch();
