@@ -59,14 +59,10 @@ class IndexController extends HomeBaseController
     public function product(){
         
         $this->assign('html_flag','product'); 
-        $this->assign('html_title','产品购买');
+        $this->assign('html_title','入驻开通');
         //banner
         $banners=DB::name('banner')->where('type','product')->order('sort asc,id asc')->select();
-        /*//获取city
-        $m_city=Db::na me('city');
-        $city1=$m_city->where('type',1)->select();
-        $city2=$m_city->where('type',2)->select();
-        $city3=$m_city->where('type',3)->select(); */
+        
         $cates=Db::name('cate')->where('type','service')->select();
         $m_service=Db::name('service');
         $services=[];
@@ -75,63 +71,13 @@ class IndexController extends HomeBaseController
         }
         
         $this->assign('banners',$banners);
-    /*     $this->assign('city1',$city1);
-        $this->assign('city2',$city2);
-        $this->assign('city3',$city3); */
+   
         $this->assign('cates',$cates);
         $this->assign('services',$services);
         
         return $this->fetch();
     }
-    /* 订单提交,废弃 */
-    public function order_do0(){
-        $this->error('废弃');
-        $data0=$this->request->param();
-        if(preg_match(config('reg_mobile'), $data0['tel'])!=1){
-            $this->error('手机号码错误');
-        } 
-       /*  ["HTTP_HOST"] => string(10) "zzloudi.cc"
-            ["REDIRECT_STATUS"] => string(3) "200"
-                ["SERVER_NAME"] => string(10) "zzloudi.cc" */
-        $data=[
-            'uname'=>$data0['uname'],
-            'city'=>$data0['city'],
-            'tel'=>$data0['tel'],
-            'qq'=>$data0['qq'],
-            'email'=>$data0['email'], 
-            'service_id'=>$data0['gy_w'],
-            'wx_name'=>$data0['wx_name'],
-            'wx_dsc'=>$data0['wx_dsc'], 
-            'ip'=>get_client_ip(),
-            'web_name'=>$_SERVER['HTTP_HOST'],
-            'status'=>1,
-            'oid'=>'kt'.cmf_get_order_sn(),
-            'insert_time'=>time(),
-            'time'=>time(),
-        ];
-       
-        $uid=session('user.id');
-        $m_user=Db::name('user');
-        //没登录就根据手机和邮箱查找用户，手机优先级高
-        if(empty($uid)){
-            $uid=0;
-            $tmp=$m_user->where('mobile',$data0['tel'])->find();
-            if(!empty($tmp)){
-                $uid=$tmp['id']; 
-            }else{
-                $tmp=$m_user->where('user_email',$data0['email'])->find();
-                if(!empty($tmp)){
-                    $uid=$tmp['id'];
-                }
-            }
-        }
-        $data['uid']=$uid;
-        $service_name=Db::name('service')->where('id',$data['service_id'])->find();
-        $data['service_name']=$service_name['name'];
-        $data['money']=$service_name['price'];
-        $id=Db::name('order')->insertGetId($data);
-        $this->redirect(url('portal/index/order',['id'=>$id]));
-    }
+     
     /* 订单提交1 */
     public function order_do1(){
        

@@ -10,7 +10,7 @@
     <ul class="video-list">
      <foreach name="list" item="vo">
         <li>
-            <a href="{:url('portal/video/detail',['id'=>$vo.id])}">
+            <a href="{:url('detail',['id'=>$vo.id])}">
                 <img src="{:cmf_get_image_url($vo.pic)}">
                 <p class="video-m">{$vo.name}</p>
                 <p class="video-f">

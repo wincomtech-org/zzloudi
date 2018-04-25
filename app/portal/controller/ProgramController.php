@@ -14,6 +14,7 @@ class ProgramController extends HomeBaseController
         
         parent::_initialize();
         $this->assign('html_flag','program');
+        $this->assign('html_title','小程序');
         $this->m=DB::name('program');
        
     } 
