@@ -1,4 +1,4 @@
-body{font-family: 微软雅黑;}
+body{font-family: 微软雅黑;overflow-x: hidden!important;}
 html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
 .main{width: 100%;background:#fff;overflow: hidden;}
 .main1{padding-top:60px;margin:0 auto;width:850px;}
@@ -375,7 +375,6 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 	/* #city1,#city2,#city3{width:90px} */
 	.super_long{width:62%;margin-left:10px;}
 	.pro-text1 {margin-left:32%}
-	body{overflow-x: hidden!important;}
 	.guyuan_sgh{margin-left:32%;}
 }
 @media screen and (max-width:620px){
