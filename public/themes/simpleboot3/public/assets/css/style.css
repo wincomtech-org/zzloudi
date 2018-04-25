@@ -244,7 +244,8 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
     .main4-list li:nth-child(n+5) img{margin-top:0;}
     .main4-list li:nth-child(4),.main4-list li:nth-child(8){border:none;}
     .pro-box1-l,.pro-box2-l,.pro-box3-l,.pro-box4-l,.pro-box5-l{width:100%;margin:0 auto;}
-/*    .pro-box2-r,.pro-box-r{display: none;} .video-list li:nth-child(4n+1){margin-left:58px;}*/
+   .pro-box2-r,.pro-box-r{display: none;} 
+   /* .video-list li:nth-child(4n+1){margin-left:58px;} */
     .program2-list li{width:30%;margin:25px 1%;}
     .about-m-1 li{width:30%;margin:30px 1%;}
     .case-list li{width:30%;margin:40px 1% 0;}
