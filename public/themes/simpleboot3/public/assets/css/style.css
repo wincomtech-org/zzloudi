@@ -71,16 +71,16 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
     flex-flow: row wrap;
     justify-content:flex-start;
     border:1px solid #e4ecf3;
-    padding:15px 0 0 15px;
-    margin-top:5px;
+    padding:1% 0 0 1%;
+    margin-top:1%;
 }
 .video-list>li{
-    padding:20px;
-    width:23.7%;
+    padding:1%;
+    width:24%;
     background:#fff;
     border-radius:5px;
     border:1px solid #e4ecf3;
-    margin:0 15px 15px 0;
+    margin:0 1% 1% 0;
 }
 .video-list>li:hover{
     position:relative;
@@ -94,11 +94,16 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
    color:#c1c1c1;
 }
 .caonima{
-    color:#313131
+    color:#313131;
+    
 }
 /*.video-list li:nth-child(4n+1){margin-left:0px;}*/
-.video-m{font-size:15px;color:#333;line-height: 26px;}
-.video-f span{display: inline-block;line-height: 20px;font-size: 12px;}
+.video-m{font-size:13px;color:#333;line-height: 26px;}
+.video-m:hover{
+    color:#188eee 
+}
+.video-f span{display: inline-block;line-height: 20px;font-size: 12px;padding-left:20px;}
+.get_up{background:url("../img/new_sy.png") no-repeat left center;color:#c1c1c1;font-size:14px!important;}
 /*.video-f:after,.video-list:after{content:"";display: table;clear: both;}*/
 .details-t{margin-top:45px;}
 .details-t a{font-size: 18px;color:#333;line-height: 40px;border-bottom: 2px solid #44b548;text-align: left;display: inline-block;padding:0 5px;}
@@ -236,7 +241,7 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 .program2-list li:nth-child(6) .program-li-t1{background:#d49a27;}
 .program2-list li:nth-child(6) .program-li-t4{color:#d49a27;border:1px solid #d49a27;}
 @media screen and (max-width: 1200px){
-    .video-list>li {width:221px;}
+/*    .video-list>li {width:221px;}*/
     .main2_list li{width:25%;margin-left:0;}
     .main2_list li p{width:100%;}
     .main4-list li{border:none;}
@@ -266,6 +271,7 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 }
 @media screen and (max-width:900px){
     .about-1{background:none;}
+    .video-list>li { width: 32.3%;}
 }
 @media screen and (max-width:800px){
     .pro-title{display: none;}
@@ -318,7 +324,7 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 }
 @media screen and (max-width:492px){
     .video-list>li {
-        width: 45%;
+        width: 49%;
     }
     .video-list{
         justify-content: space-between;
