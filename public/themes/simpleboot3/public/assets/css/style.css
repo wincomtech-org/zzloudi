@@ -102,8 +102,8 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 .video-m:hover{
     color:#188eee 
 }
-.video-f span{display: inline-block;line-height: 20px;font-size: 12px;padding-left:20px;}
-.get_up{background:url("../img/new_sy.png") no-repeat left center;color:#c1c1c1;font-size:14px!important;}
+.video-f span{display: inline-block;line-height: 20px;font-size: 12px;}
+.get_up{color:#c1c1c1;font-size:14px!important;}
 /*.video-f:after,.video-list:after{content:"";display: table;clear: both;}*/
 .details-t{margin-top:45px;}
 .details-t a{font-size: 18px;color:#333;line-height: 40px;border-bottom: 2px solid #44b548;text-align: left;display: inline-block;padding:0 5px;}
