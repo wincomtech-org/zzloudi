@@ -27,7 +27,7 @@ i,em{ font-style: normal; }
 .head_login{margin-left:55px;}
 .head_login a{display: inline-block;width: 67px;height: 36px;border-radius: 5px;font-size: 16px;color:#44b548;line-height: 36px;text-align: center;margin-left:30px;border:1px solid #44b548;}
 .head_login a:hover{background-color: #44b548;color:#fff;}
-nav{width:100%;background:#000;height:60px;}
+nav{width:100%;background:#000;height:auto;}
 .nav li{float:left;}
 .nav li a{display: inline-block;text-align: center;line-height: 60px;padding:0 45px;font-size:16px;color: #fff;}
 .nav li a:hover{background:#44b548;}
