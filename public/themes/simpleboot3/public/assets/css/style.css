@@ -1,5 +1,5 @@
-body{font-family: 微软雅黑;overflow-x: hidden!important;}
-@media screen and (max-width:1024px){body{width:100vw}}
+body{font-family: 微软雅黑;}
+html{overflow-x: hidden}
 html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
 .main{width: 100%;background:#fff;overflow: hidden;}
 .main1{padding-top:60px;margin:0 auto;width:850px;}
