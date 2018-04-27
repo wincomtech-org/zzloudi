@@ -114,4 +114,65 @@ $("#pro-second2").click(function(){
 		alert("请至少选择一个")
 	}
 });
+//==========================================================>>>>>>>>>>>>>
+var htm_jhg='<span class="gh_s"></span><span class="gh_x"></span>';
+var width_ul=$(".show_shjy").width();
+var width_li=$(".show_shjy>a>li").width();
+var li_margin=parseFloat($(".show_shjy>a>li").css("margin-right"));
+var length_s=$(".show_shjy>a>li").length;
+var bar_div=$(".banner_div").width();
+var marginL=width_li+li_margin;
+var animation=500;//过度时长；
+var scend=3000;//轮播间隔；
+var timer_y=setInterval(auto_p_tt,scend);
+if(bar_div>width_ul){
+	clearInterval(timer_y);
+}else{
+    $(".banner_div").append(htm_jhg);
+    $(".gh_s").click(gggt_s);
+    $(".gh_x").click(gggt_x);
+    $(".banner_zixun").mouseenter(function(){
+        clearInterval(timer_y);
+    }).mouseleave(function(){
+        timer_y=setInterval(auto_p_tt,scend);
+    });
+}
+function auto_p_tt(){
+	$(".show_shjy").stop();
+	$(".show_shjy").animate({
+		marginLeft:"-"+marginL+"px",
+	},animation);
+	setTimeout(function(){
+		$(".show_shjy").append($(".show_shjy>a:first-child")).animate({
+			marginLeft:"0"
+		},0).stop();
+	},animation);
+}
+//左点击函数
+function gggt_s(){
+    $(".gh_s").off();
+    $(".show_shjy").prepend($(".show_shjy>a:last-child")).animate({
+        marginLeft:"-"+marginL+"px",
+    },0).stop();
+    $(".show_shjy").animate({
+		marginLeft:"-0px",
+	},animation);
+    setTimeout(function(){
+        $(".gh_s").on("click",gggt_s);
+    },animation);
+}
+//右点击函数；
+function gggt_x(){
+    $(".show_shjy").stop();
+    $(".gh_x").off();
+	auto_p_tt();
+    setTimeout(function(){
+      $(".gh_x").on("click",gggt_x);
+    },animation);
+}
+
+
+
+
+
 
