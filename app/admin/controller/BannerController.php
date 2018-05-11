@@ -93,23 +93,26 @@ class BannerController extends AdminbaseController {
     function editPost(){
         $m=$this->m;
         $data= $this->request->param();
-        
-        $info=$m->where('id',$data['id'])->find();
-        if(empty($info)){
-             $this->error('数据错误');
+        if(empty($data['id'])){
+            $this->error('数据错误');
         }
-        $data['pic']=zz_picid($data['pic'],$info['pic'],'banner',$info['id']);
-        if(empty($data['pic'])){
-            $this->error('请上传图片');
+        $path=getcwd().'/upload/';
+        if(!is_file($path.$data['pic'])){
+            $this->error('图片不存在');
         }
+        $size=config('pic_banner');
+        $pic='banner/'.$data['id'].'.jpg';
+        //文件为新上传
+        if($data['pic']!=$pic){ 
+            zz_set_image($data['pic'], $pic, $size['width'], $size['height'], 6);
+            unlink($path.$data['pic']);
+        }
+        $data['pic']=$pic;
         //处理网址，补加http:// 
         $data['link']=zz_link($data['link']);
         $data['time']=time();
         $row=$m->where('id', $data['id'])->update($data);
         if($row===1){
-            if($info['pic']!=$data['pic'] && is_file('upload/'.$info['pic']) ){
-                unlink('upload/'.$info['pic']);
-            }
             $this->success('修改成功',url('index')); 
         }else{
             $this->error('修改失败');
@@ -132,15 +135,12 @@ class BannerController extends AdminbaseController {
     function delete(){
         $m=$this->m;
          $id = $this->request->param('id', 0, 'intval');
-         $info=$m->where('id',$id)->find();
-         if(empty($info)){
-             $this->error('数据错误');
-         }
         $row=$m->where('id',$id)->delete();
         if($row===1){ 
-            $path='upload/'; 
-            if(is_file($path.$info['pic'])){
-                unlink($path.$info['pic']);
+            $path=getcwd().'/upload/';
+            $data['pic']='banner/'.$id.'.jpg';
+            if(is_file($path.$data['pic'])){
+                unlink($path.$data['pic']);
             } 
             $this->success('删除成功');
         }else{
@@ -184,7 +184,7 @@ class BannerController extends AdminbaseController {
         
         $m=$this->m; 
         $data= $this->request->param();
-        $path='upload/';
+        $path=getcwd().'/upload/';
         if(!is_file($path.$data['pic'])){
             $this->error('图片不存在');
         }
@@ -192,17 +192,20 @@ class BannerController extends AdminbaseController {
         $data['link']=zz_link($data['link']);
         $data['time']=time();
         $insertId=$m->insertGetId($data);
-       
-        $data['pic']=zz_picid($data['pic'],'','banner',$insertId);
-        if(empty($data['pic'])){
-            $result    = $m->where('id',$insertId)->delete(); 
-            $this->error('图片不存在');
+        if($insertId>=1){
+            $size=config('pic_banner');
+            $pic='banner/'.$insertId.'.jpg';
+            zz_set_image($data['pic'], $pic, $size['width'], $size['height'], 6); 
+            $result    = $m->where('id',$insertId)->update(['pic'=>$pic]); 
+            if($result===1){
+                unlink($path.$data['pic']);
+                $this->success('已成功添加',url('index'));
+            }else{
+                $this->error('图片更新失败');
+            }
+        }else{
+            $this->error('添加失败');
         }
-       
-        $result    = $m->where('id',$insertId)->update(['pic'=> $data['pic']]); 
-        
-        $this->success('已成功添加',url('index'));
-           
         exit;
     }
 }

@@ -82,7 +82,7 @@ class LinkController extends AdminBaseController
     {
         $m=Db::name('link');
         $data= $this->request->param();
-        $path='upload/';
+        $path=getcwd().'/upload/';
         if(is_file($path.$data['image'])){
             $data['type']='pic';
         }else{
@@ -94,14 +94,12 @@ class LinkController extends AdminBaseController
         $insertId=$m->insertGetId($data);
         if($insertId>=1){
             if($data['type']=='pic'){
-                $data['image']=zz_picid($data['image'],'','link',$insertId);
-                if(empty($data['image'])){
-                    $result    = $m->where('id',$insertId)->delete();
-                    $this->error('图片不存在');
-                }
-                $result    = $m->where('id',$insertId)->update(['image'=> $data['image']]); 
-                 
-                if($result===1){ 
+                $size=config('pic_link');
+                $pic='link/'.$insertId.'.jpg';
+                zz_set_image($data['image'], $pic, $size['width'], $size['height'], 6);
+                $result    = $m->where('id',$insertId)->update(['image'=>$pic]);
+                if($result===1){
+                    unlink($path.$data['image']);
                     $this->success('已成功添加',url('index'));
                 }else{
                     $this->error('图片更新失败');
@@ -154,12 +152,8 @@ class LinkController extends AdminBaseController
         $data      = $this->request->param();
         //处理网址，补加http://
         $data['url']=zz_link($data['url']);
-        $path='upload/'; 
-        $linkModel = new LinkModel();
-        $info=$linkModel->where('id',$data['id'])->find();
-        if(empty($info)){
-            $this->error('数据错误');
-        }
+        $path=getcwd().'/upload/'; 
+       
         if(is_file($path.$data['image'])){
             $size=config('pic_link');
             $pic='link/'.$data['id'].'.jpg';
@@ -173,14 +167,12 @@ class LinkController extends AdminBaseController
         }else{
             $data['type']='text';
         }
-       
+        $linkModel = new LinkModel();
         $result    = $linkModel->validate(true)->allowField(true)->isUpdate(true)->save($data);
         if ($result === false) {
             $this->error($linkModel->getError());
         }
-        if( $info['image']!=$data['image'] && is_file('upload/'.$info['image']) ){
-            unlink('upload/'.$info['image']);
-        }
+
         $this->success("保存成功！", url("link/index"));
     }
 
@@ -200,13 +192,8 @@ class LinkController extends AdminBaseController
     public function delete()
     {
         $id = $this->request->param('id', 0, 'intval');
-        $m=Db::name('link');
-        $info=$m->where('id',$id)->find();
-        if(empty($info)){
-            $this->error('数据错误');
-        }
         LinkModel::destroy($id);
-        $path='upload/';
+        $path=getcwd().'/upload/';
         $data['pic']='link/'.$id.'.jpg';
         if(is_file($path.$data['pic'])){
             unlink($path.$data['pic']);

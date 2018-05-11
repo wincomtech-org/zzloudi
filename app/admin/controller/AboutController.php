@@ -89,11 +89,10 @@ class AboutController extends AdminbaseController {
     function editPost(){
         $m=$this->m;
         $data= $this->request->param();
-        $info=$m->where('id',$data['id'])->find();
-        if(empty($info)){
+        if(empty($data['id'])){
             $this->error('数据错误');
         }
-        $path='upload/';
+        $path=getcwd().'/upload/';
         if(in_array($data['type'],['help','team'])){ 
             if(!is_file($path.$data['pic'])){
                 $this->error('图片不存在');
@@ -103,24 +102,21 @@ class AboutController extends AdminbaseController {
         //help,pro,team有图
         //index,use无图
         if(in_array($data['type'],['help','pro','team']) && is_file($path.$data['pic'])){
-            $data['pic']=zz_picid($data['pic'],$info['pic'],'about_'.$data['type'],$info['id'],'about');
-           
-        }
-        if(is_file($path.$data['bg'])){
-            $data['bg']=zz_picid($data['bg'],$info['pic'],'about_bg',$info['id'],'about','bg');
             
+            $size=config('pic_about_'.$data['type']);
+            $pic='about/'.$data['id'].'.jpg';
+            //文件为新上传
+            if($data['pic']!=$pic){
+                zz_set_image($data['pic'], $pic, $size['width'], $size['height'], 6);
+                unlink($path.$data['pic']);
+            }
+            $data['pic']=$pic;
         }
         
         $data['time']=time();
         $data['content']=empty($_POST['content'])?'':$_POST['content'];
         $row=$m->where('id', $data['id'])->update($data);
         if($row===1){
-            if($data['pic']!=$info['pic'] && is_file('upload/'.$info['pic'])){
-                unlink('upload/'.$info['pic']);
-            }
-            if($data['bg']!=$info['bg'] && is_file('upload/'.$info['bg'])){
-                unlink('upload/'.$info['bg']);
-            }
             $this->success('修改成功',url('index')); 
         }else{
             $this->error('修改失败');
@@ -163,7 +159,7 @@ class AboutController extends AdminbaseController {
         $m=$this->m;
         $data= $this->request->param();
         if(in_array($data['type'],['help','team'])){
-            $path='upload/';
+            $path=getcwd().'/upload/';
             if(!is_file($path.$data['pic'])){
                 $this->error('图片不存在');
             }
@@ -174,10 +170,17 @@ class AboutController extends AdminbaseController {
         $insertId=$m->insertGetId($data);
         if($insertId>=1){
             if(in_array($data['type'],['help','pro','team']) && is_file($path.$data['pic'])){
-                $data['pic']=zz_picid($data['pic'],'','about_'.$data['type'],$insertId,'about');
-                $data['bg']=zz_picid($data['bg'],'','about_bg',$insertId,'about','bg'); 
                 
-                $result    = $m->where('id',$insertId)->update(['pic'=>$data['pic'],'bg'=>$data['bg']]); 
+                $size=config('pic_about_'.$data['type']);
+               
+                $pic='about/'.$insertId.'.jpg';
+                zz_set_image($data['pic'], $pic, $size['width'], $size['height'], 6);
+                $result    = $m->where('id',$insertId)->update(['pic'=>$pic]);
+                if($result===1){
+                    unlink($path.$data['pic']); 
+                }else{
+                    $this->error('图片更新失败');
+                }
             }
             
             $this->success('已成功添加',url('index'));
@@ -203,18 +206,13 @@ class AboutController extends AdminbaseController {
     function delete(){
         $m=$this->m;
         $id = $this->request->param('id', 0, 'intval');
-        $info=$m->where('id',$id)->find();
-        if(empty($info)){
-            $this->error('数据错误');
-        }
         $row=$m->where('id',$id)->delete();
         if($row===1){
-            $path='upload/'; 
-            if(is_file($path.$info['pic'])){
-                unlink($path.$info['pic']);
-            }
-            if(is_file($path.$info['bg'])){
-                unlink($path.$info['bg']);
+            $path=getcwd().'/upload/';
+            $data['pic']='about/'.$id.'.jpg';
+          
+            if(is_file($path.$data['pic'])){
+                unlink($path.$data['pic']);
             }
             
             $this->success('删除成功');

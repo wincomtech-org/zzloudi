@@ -99,46 +99,29 @@ class CaseController extends AdminbaseController {
     function editPost(){
         $m=$this->m;
         $data= $this->request->param();
-        $info=$m->where('id',$data['id'])->find();
-        if(empty($info)){
+        if(empty($data['id'])){
             $this->error('数据错误');
         }
-        $path='upload/';
+        $path=getcwd().'/upload/';
         if(!is_file($path.$data['pic0'])){
             $this->error('图片不存在');
         }
         $data['content']=empty($_POST['content'])?'':$_POST['content'];
-      
-        $tmp=zz_picids($data['pic0'],['case','case_pic0'],$info['id'],'case');
-        if(empty($tmp['case'])){
-            if(empty($tmp)){
-                $data['pic0']='';
-                $data['pic']='';
-            }else{
-                //未改变
-                $data['pic0']=$info['pic0'];
-                $data['pic']=$info['pic'];
-              
-            }
-        }else{
-            $data['pic0']=$tmp['case_pic0'];
-            $data['pic']=$tmp['case'];
+        $size=config('pic_case');
+        $size0=config('pic_case_pic0');
+        $pic='case/'.$data['id'].'.jpg';
+        $pic0='case/pic0'.$data['id'].'.jpg';
+        //文件为新上传
+        if($data['pic0']!=$pic0){ 
+            zz_set_image($data['pic0'], $pic0, $size0['width'], $size0['height'], 6);
+            zz_set_image($data['pic0'], $pic, $size['width'], $size['height'], 6);
+            unlink($path.$data['pic0']);
         }
-        
+        $data['pic0']=$pic0;
+        $data['pic']=$pic;
         $data['time']=time();
         $row=$m->where('id', $data['id'])->update($data);
         if($row===1){
-            //如果成功要删除原图，未改变的不删除
-           
-            if($info['pic0']!=$data['pic0']){
-                if(is_file($path.$info['pic'])){
-                    unlink($path.$info['pic']);
-                }
-                if(is_file($path.$info['pic0'])){
-                    unlink($path.$info['pic0']);
-                }
-            }
-            
             $this->success('修改成功',url('index')); 
         }else{
             $this->error('修改失败');
@@ -161,18 +144,16 @@ class CaseController extends AdminbaseController {
     function delete(){
         $m=$this->m;
          $id = $this->request->param('id', 0, 'intval');
-         $info=$m->where('id',$id)->find();
-         if(empty($info)){
-             $this->error('数据错误');
-         }
         $row=$m->where('id',$id)->delete();
         if($row===1){ 
-            $path='upload/'; 
-            if(is_file($path.$info['pic'])){
-                unlink($path.$info['pic']);
-            }  
-            if(is_file($path.$info['pic0'])){
-                unlink($path.$info['pic0']);
+            $path=getcwd().'/upload/';
+            $data['pic']='case/'.$id.'.jpg';
+            if(is_file($path.$data['pic'])){
+                unlink($path.$data['pic']);
+            } 
+            $data['pic0']='case/pic0'.$id.'.jpg';
+            if(is_file($path.$data['pic0'])){
+                unlink($path.$data['pic0']);
             } 
             $this->success('删除成功');
         }else{
@@ -216,7 +197,7 @@ class CaseController extends AdminbaseController {
         
         $m=$this->m; 
         $data= $this->request->param();
-        $path='upload/';
+        $path=getcwd().'/upload/';
         if(!is_file($path.$data['pic0'])){
             $this->error('图片不存在');
         }
@@ -224,15 +205,18 @@ class CaseController extends AdminbaseController {
         $data['time']=time();
         $insertId=$m->insertGetId($data);
         if($insertId>=1){
-            $tmp=zz_picids($data['pic0'],['case','case_pic0'],$insertId,'case');
-            if(empty($tmp['case'])){
-                $data['pic0']='';
-                $data['pic']=''; 
-            }else{
-                $data['pic0']=$tmp['case_pic0'];
-                $data['pic']=$tmp['case'];
-            } 
-            $result    = $m->where('id',$insertId)->update(['pic'=>$data['pic'],'pic0'=>$data['pic0']]); 
+            $size=config('pic_case');
+            $size0=config('pic_case_pic0');
+            
+            $pic='case/'.$insertId.'.jpg';
+            $pic0='case/pic0'.$insertId.'.jpg';
+            //文件为新上传
+           
+            zz_set_image($data['pic0'], $pic0, $size0['width'], $size0['height'], 6);
+            zz_set_image($data['pic0'], $pic, $size['width'], $size['height'], 6);
+            unlink($path.$data['pic0']);
+            
+            $result    = $m->where('id',$insertId)->update(['pic'=>$pic,'pic0'=>$pic0]); 
             if($result===1){ 
                 $this->success('已成功添加',url('index'));
             }else{
