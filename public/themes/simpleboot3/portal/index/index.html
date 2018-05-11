@@ -77,84 +77,31 @@
         <div class="banner_zixun">
             <div class="banner_div">
                 <ul class="show_shjy">
-                    <a href="javascript:void(0)"><li>
-                        <img src="__TMPL__/public/assets/img/lthg1.png" alt="">
-                        <p class="px_1">移动营销新模式</p>
-                        <p class="px_2">如何化繁为简</p>
-                    </li></a>
-                    <a href="javascript:void(0)"><li>
-                        <img src="__TMPL__/public/assets/img/lthg2.png" alt="">
-                         <p class="px_1">恭喜用户ID：揪你小jiji 荣获王者</p>
-                        <p class="px_2">新的生活方式</p>
-                    </li></a>
-                    <a href="javascript:void(0)"><li>
-                        <img src="__TMPL__/public/assets/img/lthg3.png" alt="">
-                         <p class="px_1">啦啦啦啦啦啦啦啦</p>
-                        <p class="px_2">王者荣耀S11赛季</p>
-                    </li></a>
-                    <a href="javascript:void(0)"><li>
-                        <img src="__TMPL__/public/assets/img/lthg4.png" alt="">
-                         <p class="px_1">揪你小鸡鸡</p>
-                        <p class="px_2">达到预期目标</p>
-                    </li></a>
-                    <a href="javascript:void(0)"><li>
-                        <img src="__TMPL__/public/assets/img/lthg5.png" alt="">
-                         <p class="px_1">移动营销新模式</p>
-                        <p class="px_2">如何化繁为简</p>
-                    </li></a>
-                    <a href="javascript:void(0)"><li>
-                        <img src="__TMPL__/public/assets/img/lthg6.png" alt="">
-                         <p class="px_1">和尚在撒尿</p>
-                        <p class="px_2">就是一休</p>
-                    </li></a>
+                <foreach name="news_pic" item="vo">
+                    <a href="{:url('portal/news/detail',['id'=>$vo.id])}">
+                    <li>
+                        <img src="{:cmf_get_image_url($vo.pic)}" alt="">
+                        <p class="px_1">{$vo.name}</p>
+                        <p class="px_2">{$vo.dsc}</p>
+                    </li>
+                    </a>
+                  </foreach>
                 </ul>
             </div>
         </div>
         <div class="text_tk">
+        <foreach name="news_txt" item="vo">
             <div>
                 <div class="ghj_tfgby">
-                    <span class="sp_hg">如何化繁为简</span>
-                    <span class="sp_hq">发布于2018年4月23日</span>
+                    <span class="sp_hg"><a href="{:url('portal/news/detail',['id'=>$vo.id])}">{$vo.name}</a></span>
+                    <span class="sp_hq">发布于{$vo.insert_time|date='Y-m-d',###}</span>
                 </div>
                 <p class="gth_iop">
-                    随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的
+                  {$vo.content}
                 </p>
             </div>
-            <div>
-                <div class="ghj_tfgby">
-                    <span class="sp_hg">如何化繁为简</span>
-                    <span class="sp_hq">发布于2018年4月23日</span>
-                </div>
-                <p class="gth_iop">
-                    随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的
-                </p>
-                </p>
-            </div>
-            <div>
-                <div class="ghj_tfgby">
-                    <span class="sp_hg">如何化繁为简</span>
-                    <span class="sp_hq">发布于2018年4月23日</span>
-                </div>
-                <p class="gth_iop">
-                    随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的随着互联网时代的到来，并且伴随着网络上一个巨大
-                    的消费行为和消费观念的影响，而应运而生的网络营
-                    销与传统营销的优势。对网络营销的
-                </p>
-            </div>
+           </foreach>
+           
         </div>
     </div>
     <!-- 行业资讯结束 -->

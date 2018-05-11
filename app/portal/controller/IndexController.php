@@ -44,6 +44,10 @@ class IndexController extends HomeBaseController
         $links['pic']=$m_link->where('type','pic')->order('list_order asc')->select();
         $links['text']=$m_link->where('type','text')->order('list_order asc')->select();
         
+        $m_news=Db::name('news');
+        $news_pic=$m_news->where('pic','neq','')->order('sort asc,insert_time desc')->limit('10')->column('id,name,dsc,insert_time,pic');
+        $news_txt=$m_news->order('sort asc,insert_time desc')->limit('3')->column('id,name,dsc,content,insert_time');
+        $news_txt=zz_get_content($news_txt);
         $this->assign('banners',$banners);
         $this->assign('types',$types);
         
@@ -53,6 +57,8 @@ class IndexController extends HomeBaseController
        
         $this->assign('links',$links);
         
+        $this->assign('news_pic',$news_pic);
+        $this->assign('news_txt',$news_txt);
        
         return $this->fetch();
     }
