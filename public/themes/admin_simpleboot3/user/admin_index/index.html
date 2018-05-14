@@ -25,8 +25,8 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>{:lang('USERNAME')}</th>
-                <th>{:lang('NICENAME')}</th>
+               
+                <th>姓名</th>
                
                 <th>{:lang('EMAIL')}</th>
                 <th>手机</th>
@@ -45,8 +45,7 @@
             <foreach name="list" item="vo">
                 <tr>
                     <td>{$vo.id}</td>
-                    <td>{$vo['user_login']?$vo['user_login']:($vo['mobile']?$vo['mobile']:lang('THIRD_PARTY_USER'))}
-                    </td>
+                   
                     <td>{$vo['user_nickname']?$vo['user_nickname']:lang('NOT_FILLED')}</td>
                   
                     <td>{$vo.user_email}</td>
