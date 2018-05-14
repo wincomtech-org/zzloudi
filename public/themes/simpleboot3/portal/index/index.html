@@ -91,15 +91,17 @@
         </div>
         <div class="text_tk">
         <foreach name="news_txt" item="vo">
+            <a href="{:url('portal/news/detail',['id'=>$vo.id])}">
             <div>
                 <div class="ghj_tfgby">
-                    <span class="sp_hg"><a href="{:url('portal/news/detail',['id'=>$vo.id])}">{$vo.name}</a></span>
+                    <span class="sp_hg">{$vo.name}</span>
                     <span class="sp_hq">发布于{$vo.insert_time|date='Y-m-d',###}</span>
                 </div>
                 <p class="gth_iop">
                   {$vo.content}
                 </p>
             </div>
+            </a>
            </foreach>
            
         </div>

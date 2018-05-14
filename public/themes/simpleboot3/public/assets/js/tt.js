@@ -126,6 +126,11 @@ var animation=500;//过度时长；
 var scend=3000;//轮播间隔；
 var timer_y=setInterval(auto_p_tt,scend);
 if(bar_div>width_ul){
+    $(".show_shjy").css({
+        display:"flex",
+        justifyContent: "center",
+    });
+    $(".show_shjy>a").css("margin","0.8%")
 	clearInterval(timer_y);
 }else{
     $(".banner_div").append(htm_jhg);

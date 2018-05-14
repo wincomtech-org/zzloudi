@@ -1,8 +1,10 @@
+/*
 ul,li,p{margin:0;padding:0;}
 ul{
     list-style: none;
 }
-a{text-decoration: none;color:#3A3A3A}
+*/
+/*a{text-decoration: none;color:#3A3A3A}*/
 .body_text_kpl{
     width:100%;
     height:auto;
@@ -70,6 +72,9 @@ a{text-decoration: none;color:#3A3A3A}
     background:#44b548;
     color:#fff;
     cursor: pointer;
+}
+.p_tittile{
+    font-size:24px;
 }
 .marg_y{
     padding-bottom:10px!important;
