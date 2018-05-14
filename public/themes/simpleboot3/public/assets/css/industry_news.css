@@ -91,6 +91,9 @@ ul{
 .phone_show_s{
     display:none;
 }
+.overt{
+        color:#44b548!important;
+}
 @media screen and (max-width:1200px){
     .industry_news{
         width:100%;
