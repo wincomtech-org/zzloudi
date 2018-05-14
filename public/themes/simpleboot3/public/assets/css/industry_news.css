@@ -74,7 +74,9 @@ ul{
     cursor: pointer;
 }
 .p_tittile{
+    text-indent:30px;
     font-size:24px;
+    padding-bottom:20px;
 }
 .marg_y{
     padding-bottom:10px!important;
