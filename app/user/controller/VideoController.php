@@ -40,8 +40,19 @@ class VideoController extends UserBaseController
         $id=$this->request->param('id',0,'intval'); 
         $m=$this->m; 
         $info=$m->where('id',$id)->find();
+        $index=url('portal/index/index');
         if(empty($info)){
-            $this->redirect(url('portal/index/index'));
+            $this->redirect($index);
+        }
+        $uid=session('user.id');
+        
+        $user=Db::name('user')->where('id',$uid)->find();
+        if(empty($user['user_status'])){
+            session('user',null);
+            $this->error('用户信息错误',$index);
+        }
+        if($user['rate']!=2){
+            $this->error('只有VIP用户才能观看视频',$index);
         }
         
           zz_browse('video',$id);

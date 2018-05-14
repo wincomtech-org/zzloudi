@@ -1,0 +1,26 @@
+<include file="public@head"/>    
+ <link rel="stylesheet" href="__TMPL__/public/assets/css/industry_news.css">  
+</head>
+<body>
+<include file="public@header"/> 
+ 
+<include file="public@nav"/> 
+<div class="industry_news">
+        <div class="nav_new marg_y">
+            <span><a href="/">首页</a>&nbsp;》</span><span><a href="{:url('index')}">行业资讯</a></span>
+        </div>
+        <div class="nav_new_s">
+            <span>{$info.name}</span>
+        </div>
+        <div class="max_show_text">
+            <p>
+         {$info.dsc}
+            </p>
+        </div>
+        <div class="max_show_text">
+            <p>
+         {$info.content}
+            </p>
+        </div>
+    </div>
+ <include file="public@footer" />

@@ -100,29 +100,43 @@ class ProgramController extends AdminbaseController {
     function editPost(){
         $m=$this->m;
         $data= $this->request->param();
-        if(empty($data['id'])){
+        $info=$m->where('id',$data['id'])->find();
+        if(empty($info)){
             $this->error('数据错误');
         }
-        $path=getcwd().'/upload/';
+        $path='upload/';
         if(!is_file($path.$data['pic0'])){
             $this->error('图片不存在');
         }
-        $data['content']=empty($_POST['content'])?'':$_POST['content'];
-        $size=config('pic_program');
-        $size0=config('pic_program_pic0');
-        $pic='program/'.$data['id'].'.jpg';
-        $pic0='program/pic0'.$data['id'].'.jpg';
-        //文件为新上传
-        if($data['pic0']!=$pic0){ 
-            zz_set_image($data['pic0'], $pic0, $size0['width'], $size0['height'], 6);
-            zz_set_image($data['pic0'], $pic, $size['width'], $size['height'], 6);
-            unlink($path.$data['pic0']);
+        $tmp=zz_picids($data['pic0'],['program','program_pic0'],$info['id'],'program');
+        if(empty($tmp['program'])){
+            if(empty($tmp)){
+                $data['pic0']='';
+                $data['pic']='';
+            }else{
+                //未改变
+                $data['pic0']=$info['pic0'];
+                $data['pic']=$info['pic'];
+            }
+        }else{
+            $data['pic0']=$tmp['program_pic0'];
+            $data['pic']=$tmp['program'];
         }
-        $data['pic0']=$pic0;
-        $data['pic']=$pic;
+        $data['content']=empty($_POST['content'])?'':$_POST['content'];
+        
         $data['time']=time();
         $row=$m->where('id', $data['id'])->update($data);
         if($row===1){
+            //如果成功要删除原图，未改变的不删除
+            
+            if($info['pic0']!=$data['pic0']){
+                if(is_file($path.$info['pic'])){
+                    unlink($path.$info['pic']);
+                }
+                if(is_file($path.$info['pic0'])){
+                    unlink($path.$info['pic0']);
+                }
+            }
             $this->success('修改成功',url('index')); 
         }else{
             $this->error('修改失败');
@@ -145,21 +159,23 @@ class ProgramController extends AdminbaseController {
     function delete(){
         $m=$this->m;
          $id = $this->request->param('id', 0, 'intval');
-        $row=$m->where('id',$id)->delete();
-        if($row===1){ 
-            $path=getcwd().'/upload/';
-            $data['pic']='program/'.$id.'.jpg';
-            if(is_file($path.$data['pic'])){
-                unlink($path.$data['pic']);
-            } 
-            $data['pic0']='program/pic0'.$id.'.jpg';
-            if(is_file($path.$data['pic0'])){
-                unlink($path.$data['pic0']);
-            } 
-            $this->success('删除成功');
-        }else{
-            $this->error('删除失败');
-        }
+         $info=$m->where('id',$id)->find();
+         if(empty($info)){
+             $this->error('数据错误');
+         }
+         $row=$m->where('id',$id)->delete();
+         if($row===1){
+             $path='upload/';
+             if(is_file($path.$info['pic'])){
+                 unlink($path.$info['pic']);
+             }
+             if(is_file($path.$info['pic0'])){
+                 unlink($path.$info['pic0']);
+             }
+             $this->success('删除成功');
+         }else{
+             $this->error('删除失败');
+         }
         exit;
     }
    
@@ -198,7 +214,7 @@ class ProgramController extends AdminbaseController {
         
         $m=$this->m; 
         $data= $this->request->param();
-        $path=getcwd().'/upload/';
+        $path='upload/';
         if(!is_file($path.$data['pic0'])){
             $this->error('图片不存在');
         }
@@ -206,19 +222,16 @@ class ProgramController extends AdminbaseController {
         $data['time']=time();
         $insertId=$m->insertGetId($data);
         if($insertId>=1){
-            $size=config('pic_program');
-            $size0=config('pic_program_pic0');
-            
-            $pic='program/'.$insertId.'.jpg';
-            $pic0='program/pic0'.$insertId.'.jpg';
-            //文件为新上传
-           
-            zz_set_image($data['pic0'], $pic0, $size0['width'], $size0['height'], 6);
-            zz_set_image($data['pic0'], $pic, $size['width'], $size['height'], 6);
-            unlink($path.$data['pic0']);
-            
-            $result    = $m->where('id',$insertId)->update(['pic'=>$pic,'pic0'=>$pic0]); 
-            if($result===1){ 
+            $tmp=zz_picids($data['pic0'],['program','program_pic0'],$insertId,'program');
+            if(empty($tmp['program'])){
+                $data['pic0']='';
+                $data['pic']='';
+            }else{
+                $data['pic0']=$tmp['program_pic0'];
+                $data['pic']=$tmp['program'];
+            }
+            $result    = $m->where('id',$insertId)->update(['pic'=>$data['pic'],'pic0'=>$data['pic0']]);
+            if($result===1){
                 $this->success('已成功添加',url('index'));
             }else{
                 $this->error('图片更新失败');

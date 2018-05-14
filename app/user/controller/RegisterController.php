@@ -169,7 +169,7 @@ class RegisterController extends HomeBaseController
         if (!$validate->check($data)) {
             $this->error($validate->getError());
         }
-        if(preg_match(config('reg_mobile'), $data1['tel'])!=1){
+        if(preg_match(config('reg_mobile'), $data['mobile'])!=1){
             $this->error('手机号码错误');
         } 
         $data['user_pass'] = cmf_password($data['user_pass']);
@@ -179,14 +179,14 @@ class RegisterController extends HomeBaseController
         if(!empty($tmp)){
             $this->error('该手机号已被使用');
         }
-        $tmp1=Db::name('user')->where('user_email',$data['user_email'])->find();
+        $tmp1=$m_user->where('user_email',$data['user_email'])->find();
         if(!empty($tmp1)){
             $this->error('邮箱已被使用');
         }
        
         $result  = $m_user->insertGetId($data);
         if ($result !== false) {
-            $data   = Db::name("user")->where('id', $result)->find();
+            $data   = $m_user->where('id', $result)->find();
             cmf_update_current_user($data);
             session('verify',null);
             $this->success("注册成功！",$redirect);

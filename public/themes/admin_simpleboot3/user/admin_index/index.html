@@ -3,7 +3,9 @@
 <body>
 <div class="wrap">
     <ul class="nav nav-tabs">
-        <li class="active"><a>{:lang('USER_INDEXADMIN_INDEX')}</a></li>
+        
+        <li class="active"><a href="{:url('index')}">所有{$flag}</a></li>
+		<li ><a href="{:url('add')}">添加{$flag}</a></li>
     </ul>
     <form class="well form-inline margin-top-20" method="post" action="{:url('user/adminIndex/index')}">
         用户ID：
@@ -25,7 +27,7 @@
                 <th>ID</th>
                 <th>{:lang('USERNAME')}</th>
                 <th>{:lang('NICENAME')}</th>
-                <th>{:lang('AVATAR')}</th>
+               
                 <th>{:lang('EMAIL')}</th>
                 <th>手机</th>
                 <th>{:lang('REGISTRATION_TIME')}</th>
@@ -38,6 +40,7 @@
             <tbody>
             <php>
                 $user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));
+                 $user_rates=array(1=>'普通用户',2=>'Vip用户');
             </php>
             <foreach name="list" item="vo">
                 <tr>
@@ -45,26 +48,38 @@
                     <td>{$vo['user_login']?$vo['user_login']:($vo['mobile']?$vo['mobile']:lang('THIRD_PARTY_USER'))}
                     </td>
                     <td>{$vo['user_nickname']?$vo['user_nickname']:lang('NOT_FILLED')}</td>
-                    <td><img width="25" height="25" src="{:url('user/public/avatar',array('id'=>$vo['id']))}"/></td>
+                  
                     <td>{$vo.user_email}</td>
                     <td>{$vo.mobile}</td>
                     <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
                     <td>{:date('Y-m-d H:i:s',$vo['last_login_time'])}</td>
                     <td>{$vo.last_login_ip}</td>
-                    <td>{$user_statuses[$vo['user_status']]}</td>
+                    <td>{$user_statuses[$vo['user_status']]}-{$user_rates[$vo.rate]}</td>
                     <td>
-                        <neq name="vo.id" value="1">
-                            <empty name="vo.user_status">
-                                <a href="{:url('adminIndex/cancelban',array('id'=>$vo['id']))}"
-                                   class="js-ajax-delete"
-                                   data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
-                                <else/>
-                                <a href="{:url('adminIndex/ban',array('id'=>$vo['id']))}" class="js-ajax-delete"
-                                   data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
-                            </empty>
-                            <else/>
-                            <a style="color: #ccc;">{:lang('BLOCK_USER')}</a>
-                        </neq>
+                        
+                      <empty name="vo.user_status">
+                          <a href="{:url('adminIndex/cancelban',array('id'=>$vo['id']))}"
+                             class="js-ajax-delete"
+                             data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                      <else/>
+                          <a href="{:url('adminIndex/ban',array('id'=>$vo['id']))}" class="js-ajax-delete"
+                             data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                      </empty>
+                      &nbsp;&nbsp;&nbsp; 
+                       <eq name="vo.rate" value='1'>
+                          <a href="{:url('vip',array('id'=>$vo['id'],'vip'=>2))}"
+                             class="js-ajax-delete"
+                             data-msg="设为VIP用户？">设为VIP</a>
+                      <else/>
+                          <a href="{:url('vip',array('id'=>$vo['id'],'vip'=>1))}" class="js-ajax-delete"
+                             data-msg="设为普通用户？">设为普通</a>
+                      </eq>
+                        
+                        &nbsp;&nbsp;&nbsp; 
+                        <a href="{:url('edit',['id'=>$vo.id])}">编辑</a>
+                        
+                         &nbsp;&nbsp;&nbsp; 
+                        <a class="js-ajax-delete" href="{:url('del',['id'=>$vo.id])}">删除用户</a>
                     </td>
                 </tr>
             </foreach>

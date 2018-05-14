@@ -19,7 +19,7 @@
 	        <else/>
 	            <div class="head_user rt"> 
 	                <a class="user_jhk" href="{:url('user/info/index')}">
-	                    {$Think.session.user.user_login}
+	                    {$Think.session.user.user_nickname|default=$Think.session.user.mobile}
 	                </a>
 	                <div class="bbr_r_hj">
                     <a class="blue_sa" href="{:url('user/info/psw')}">

@@ -7,36 +7,30 @@ use cmf\controller\AdminBaseController;
 use think\Db;
  
  
-class BannerController extends AdminbaseController {
+class NewsController extends AdminbaseController {
 
     private $m;
     private $order;
-   private $type_info;
+  
     public function _initialize()
     {
         parent::_initialize(); 
-        $this->order='sort asc,id asc';
-        $this->m=Db::name('Banner');
-        $types=Db::name('type_dsc')->where('tables','banner')->select();
-        $tmp=[];
-        foreach($types as $k=>$v){
-            $tmp[$v['type']]=$v['dsc'].'--'.$v['title'];
-        }
-        
-        $this->assign('types', $tmp);
-        $this->assign('flag','Banner图');
+        $this->order='sort asc,insert_time desc';
+        $this->m=Db::name('news');
+      
+        $this->assign('flag','资讯');
     }
     
     /**
-     * Banner图列表
+     * 资讯列表
      * @adminMenu(
-     *     'name'   => 'Banner图管理',
+     *     'name'   => '资讯管理',
      *     'parent' => '',
      *     'display'=> true,
      *     'hasView'=> true,
      *     'order'  => 10,
      *     'icon'   => '',
-     *     'remark' => 'Banner图管理',
+     *     'remark' => '资讯管理',
      *     'param'  => ''
      * )
      */
@@ -54,15 +48,15 @@ class BannerController extends AdminbaseController {
         return $this->fetch();
     }
     /**
-     * Banner图编辑
+     * 资讯编辑
      * @adminMenu(
-     *     'name'   => 'Banner图编辑',
+     *     'name'   => '资讯编辑',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10,
      *     'icon'   => '',
-     *     'remark' => 'Banner图编辑',
+     *     'remark' => '资讯编辑',
      *     'param'  => ''
      * )
      */
@@ -78,36 +72,32 @@ class BannerController extends AdminbaseController {
         return $this->fetch();
     }
     /**
-     * Banner图编辑1
+     * 资讯编辑1
      * @adminMenu(
-     *     'name'   => 'Banner图编辑1',
+     *     'name'   => '资讯编辑1',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10,
      *     'icon'   => '',
-     *     'remark' => 'Banner图编辑1',
+     *     'remark' => '资讯编辑1',
      *     'param'  => ''
      * )
      */
     function editPost(){
         $m=$this->m;
-        $data= $this->request->param();
-        
+        $data= $this->request->param(); 
         $info=$m->where('id',$data['id'])->find();
         if(empty($info)){
-             $this->error('数据错误');
+            $this->error('数据错误');
         }
-        $data['pic']=zz_picid($data['pic'],$info['pic'],'banner',$info['id']);
-        if(empty($data['pic'])){
-            $this->error('请上传图片');
-        }
-        //处理网址，补加http:// 
-        $data['link']=zz_link($data['link']);
+         
+        $data['pic']=zz_picid($data['pic'],$info['pic'],'news',$info['id']);
+        $data['content']=empty($_POST['content'])?'':$_POST['content'];
         $data['time']=time();
         $row=$m->where('id', $data['id'])->update($data);
         if($row===1){
-            if($info['pic']!=$data['pic'] && is_file('upload/'.$info['pic']) ){
+            if($data['pic']!=$info['pic'] && is_file('upload/'.$info['pic'])){
                 unlink('upload/'.$info['pic']);
             }
             $this->success('修改成功',url('index')); 
@@ -117,15 +107,15 @@ class BannerController extends AdminbaseController {
         
     }
     /**
-     * Banner图删除
+     * 资讯删除
      * @adminMenu(
-     *     'name'   => 'Banner图删除',
+     *     'name'   => '资讯删除',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10,
      *     'icon'   => '',
-     *     'remark' => 'Banner图删除',
+     *     'remark' => '资讯删除',
      *     'param'  => ''
      * )
      */
@@ -138,7 +128,8 @@ class BannerController extends AdminbaseController {
          }
         $row=$m->where('id',$id)->delete();
         if($row===1){ 
-            $path='upload/'; 
+            $path=getcwd().'/upload/';
+          
             if(is_file($path.$info['pic'])){
                 unlink($path.$info['pic']);
             } 
@@ -150,15 +141,15 @@ class BannerController extends AdminbaseController {
     }
    
     /**
-     * Banner图添加
+     * 资讯添加
      * @adminMenu(
-     *     'name'   => 'Banner图添加',
+     *     'name'   => '资讯添加',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10,
      *     'icon'   => '',
-     *     'remark' => 'Banner图添加',
+     *     'remark' => '资讯添加',
      *     'param'  => ''
      * )
      */
@@ -168,15 +159,15 @@ class BannerController extends AdminbaseController {
     }
     
     /**
-     * Banner图添加1
+     * 资讯添加1
      * @adminMenu(
-     *     'name'   => 'Banner图添加1',
+     *     'name'   => '资讯添加1',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10,
      *     'icon'   => '',
-     *     'remark' => 'Banner图添加1',
+     *     'remark' => '资讯添加1',
      *     'param'  => ''
      * )
      */
@@ -184,26 +175,19 @@ class BannerController extends AdminbaseController {
         
         $m=$this->m; 
         $data= $this->request->param();
-        $path='upload/';
-        if(!is_file($path.$data['pic'])){
-            $this->error('图片不存在');
-        }
-        //处理网址，补加http://
-        $data['link']=zz_link($data['link']);
+        
         $data['time']=time();
+        $data['insert_time']=$data['time'];
+        $data['content']=empty($_POST['content'])?'':$_POST['content'];
         $insertId=$m->insertGetId($data);
        
-        $data['pic']=zz_picid($data['pic'],'','banner',$insertId);
-        if(empty($data['pic'])){
-            $result    = $m->where('id',$insertId)->delete(); 
-            $this->error('图片不存在');
+        $pic=zz_picid($data['pic'],'','news',$insertId);
+        if(!empty($pic)){
+            $result    = $m->where('id',$insertId)->update(['pic'=>$pic]); 
         }
-       
-        $result    = $m->where('id',$insertId)->update(['pic'=> $data['pic']]); 
-        
+        $result    = $m->where('id',$insertId)->update(['pic'=>$pic]); 
         $this->success('已成功添加',url('index'));
-           
-        exit;
+            
     }
 }
 

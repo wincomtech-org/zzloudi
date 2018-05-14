@@ -36,10 +36,10 @@ class PayController extends HomeBaseController
             $this->error('订单已支付',$url);
         }
         $time=time();
-         
+        /*  
          if (($time-$order['insert_time'])>(config('order_time'))) {
             $this->error('订单已过期',$url);
-        } 
+        }  */
         // 支付动作
         //"1"支付宝1，微信2
         $mobile=cmf_is_mobile();
