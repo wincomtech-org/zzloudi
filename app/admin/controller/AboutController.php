@@ -115,10 +115,10 @@ class AboutController extends AdminbaseController {
         $data['content']=empty($_POST['content'])?'':$_POST['content'];
         $row=$m->where('id', $data['id'])->update($data);
         if($row===1){
-            if($data['pic']!=$info['pic'] && is_file('upload/'.$info['pic'])){
+            if($data['pic']!=$info['pic'] && is_file($path.$info['pic'])){
                 unlink('upload/'.$info['pic']);
             }
-            if($data['bg']!=$info['bg'] && is_file('upload/'.$info['bg'])){
+            if($data['bg']!=$info['bg'] && is_file($path.$info['bg'])){
                 unlink('upload/'.$info['bg']);
             }
             $this->success('修改成功',url('index')); 
@@ -173,6 +173,7 @@ class AboutController extends AdminbaseController {
         $data['content']=empty($_POST['content'])?'':$_POST['content'];
         $insertId=$m->insertGetId($data);
         if($insertId>=1){
+            $path='upload/';
             if(in_array($data['type'],['help','pro','team']) && is_file($path.$data['pic'])){
                 $data['pic']=zz_picid($data['pic'],'','about_'.$data['type'],$insertId,'about');
                 $data['bg']=zz_picid($data['bg'],'','about_bg',$insertId,'about','bg'); 

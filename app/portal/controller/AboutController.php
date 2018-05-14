@@ -48,7 +48,9 @@ class AboutController extends HomeBaseController
         $this->assign('html_flag','refund');
         //首页关于我们
         $about=DB::name('about')->where('type','refund')->find();
-         
+        $banners=DB::name('banner')->where('type','return')->order('sort asc,id asc')->select();
+      
+        $this->assign('banners',$banners);
         $this->assign('about',$about);
         $this->assign('html_title','退换货流程');
         return $this->fetch();

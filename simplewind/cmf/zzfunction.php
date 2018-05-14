@@ -132,7 +132,7 @@ function zz_picids($pic,$types,$id,$dir='admin/'){
 /* 为网址补加http:// */
 function zz_link($link){
     //处理网址，补加http://
-    $exp='/^(http|ftp|https):\/\/([\w.]+\/?)\S*/';
+    $exp='/^(http|ftp|https):\/\//';
     if(preg_match($exp, $link)==0){
         $link='http://'.$link;
     }
