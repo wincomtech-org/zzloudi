@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans">
+<html lang="zh-cmn-Hans" id="guyua">
 <head>
     <meta charset="utf-8">
 <!--    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">-->
@@ -32,6 +32,10 @@
         WEB_ROOT: "__WEB_ROOT__/",
         JS_ROOT: "static/js/"
     };
+    if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<9){
+        alert("您的浏览器版本过低，请下载IE9及以上版本,或者下载其他浏览器");
+        location.href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B%E8%BD%BD&oq=I%2526gt%253B%25E4%25B8%258B%25E8%25BD%25BD&rsv_pq=beca640000002d35&rsv_t=7515f6iGQUCVOs6z0uk2j5pnfqaBSPz4G7Qj9nWxTTfvy9sx1cLieMlZ1y4&rqlang=cn&rsv_enter=1&inputT=5&rsv_sug3=31&rsv_sug1=29&rsv_sug7=100&rsv_sug2=0&rsv_sug4=4340#ie=utf-8&f=3&rsv_bp=1&rsv_idx=1&tn=baidu&wd=%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B%E8%BD%BD&oq=%25E8%25B0%25B7%25E6%25AD%258C%25E6%25B5%258F%25E8%25A7%2588%25E5%2599%25A8%25E4%25B8%258B%25E8%25BD%25BD&rsv_pq=eb9dd517000046d5&rsv_t=788fhTDq6jonRxDLalwA2bTboSqplb6ipW8pmBdbqAS%2BzT3T45J4GS%2FNYPY&rqlang=cn&rsv_enter=1&inputT=4690&rsv_sug3=25&rsv_sug1=25&rsv_sug7=100&rsv_sug2=0&prefixsug=liulanqi&rsp=1&rsv_sug4=4690";
+    }
 </script>
  
 	

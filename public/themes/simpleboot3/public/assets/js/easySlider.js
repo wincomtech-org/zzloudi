@@ -13,14 +13,6 @@ $(function(){
     function setlong(){
         $(".slides_s").width($(".slides_s>li").width()*$(".slides_s>li").length);
         $("#slider_s>.slides_s>li").css("display","block");
-        $(window).resize(function(){
-            clearInterval(timer);
-            width_l=$(".slides_s>li").width();
-            margin_l=width_l;
-            $(".slides_s").width($(".slides_s>li").width()*$(".slides_s>li").length);
-            timer=setInterval(autoplay,second_s);
-
-        })
         function autoplay(){
             if(margin_l>width_l*($(".slides_s>li").length-1)){
                 margin_l=width_l;

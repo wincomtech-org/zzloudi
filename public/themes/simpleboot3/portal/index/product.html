@@ -30,37 +30,49 @@
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span>所在地区</span>
                    <div class="super_long">
-						<div class="super_gong">
-							<select id="city1" class="gy_ss_1 margin_L_ss">
-								<option value="0">选择省</option>
-								
-							</select>
-							<select id="city2" class="gy_ss_2 margin_L_ss">
-								<option value="0">选择市</option>
-							   
-							</select>
-							<select id="city3" class="gy_ss_3" name="city">
-								<option value="0">选择区</option>
-								
-							</select>
-						</div>
+                       <div id="super_citys">
+                            <div class="provinces">
+                                <input class="input1" type="hidden" value="0" name="city1">
+                                <input class="input2" type="hidden" value="0" name="city1_name">
+                                <div>请选择省份</div>
+                                <ul class="shadow_ul">
+                                    <li><input type="hidden" value="0"><span>请选择省份</span></li>
+                                </ul>
+                            </div>
+                            <div class="city">
+                                <input class="input1" type="hidden" value="0" name="city2">
+                                <input class="input2" type="hidden" value="0" name="city2_name">
+                                <div>请选择城市</div>
+                                <ul>
+                                    <li><input type="hidden" value="0"><span>请选择城市</span></li>
+                                </ul>
+                            </div>
+                            <div class="area">
+                                <input class="input1" type="hidden" value="0" name="city3">
+                                <input class="input2" type="hidden" value="0" name="city3_name">
+                                <div>请选择地区</div>
+                                <ul>
+                                    <li><input type="hidden" value="0"><span>请选择地区</span></li>
+                                </ul>
+                            </div>
+                        </div>
 				   </div>
                 </div>
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="name_sy">申请人姓名</label></span>
-                    <input v-model="name" id="name_sy" class="gy_ss_y" type="text" name="uname" placeholder="">
+                    <input id="name_sy" class="gy_ss_y" type="text" name="uname" placeholder="">
                 </div>
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="phone_sy">联系手机</label></span>
-                    <input v-model="phone" id="phone_sy" class="gy_ss_gg" type="text" name="tel" placeholder="">
+                    <input id="phone_sy" class="gy_ss_gg" type="text" name="tel" placeholder="">
                 </div>
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="QQ_sssy">QQ号码</label></span>
-                    <input v-model="qq" id="QQ_sssy" class="gy_t_i" type="text" name="qq" placeholder="">
+                    <input id="QQ_sssy" class="gy_t_i" type="text" name="qq" placeholder="">
                 </div>
                 <div class="pro-input">
                     <span><span>*&nbsp;&nbsp;&nbsp;</span><label for="email_sssy">常用邮箱</label></span>
-                    <input v-model="email" id="email_sssy" class="gy_suyty" type="text" name="email" placeholder="">
+                    <input id="email_sssy" class="gy_suyty" type="text" name="email" placeholder="">
                 </div>
                 <div class="pro-text1">
                     <p>请正确填写信息，避免无法正常接收服务信息</p>
@@ -96,7 +108,7 @@
 							<span class="red_sst_g">行业营销应用</span>
 							：
 							<span class="lamo_s">餐饮外卖、酒店、房地产、美容、健身、旅游、KTV、酒吧、婚庆、花店、汽车、教育、医疗、政务、食品、物业、装修、宠物、家政、租赁。</span>
-						</p class="hji_o_p">
+						</p>
 				</div>
 				<div class="online_ys">
 					<div class="online_cd">
@@ -241,39 +253,6 @@
 	data_text(name_s6,span_s6);
 </script>
 <script>
- var citys1='';
- var citys2='';
- var citys3='';
- var v;
-for(v in city1){ 
-	citys1+='<option value="'+v+'">'+city1[v]+'</option>';
- }  
-$('#city1').append(citys1);
-$('#oid').val('');
-$('#city1').change(function(){
-	var fid=this.value;
-	$('#city2').val(0);
-	$('#city3').val(0);
-	$('#city2 .city').remove();
-	$('#city3 .city').remove();
-	citys2='';
-	for(v in city2[fid]){ 
-		citys2+='<option class="city" value="'+v+'">'+city2[fid][v]+'</option>';
-	 }
-	$('#city2').append(citys2);
-});
- 
-$('#city2').change(function(){ 
-	var fid=this.value; 
-	$('#city3').val(0); 
-	$('#city3 .city').remove();
-	citys3='';
-	for(v in city3[fid]){ 
-		citys3+='<option class="city" value="'+v+'">'+city3[fid][v]+'</option>';
-	 }
-	$('#city3').append(citys3); 
-});
- 
 function order_do1(){ 
 	ajax_result=0;
      var oid=$('#oid').val();
