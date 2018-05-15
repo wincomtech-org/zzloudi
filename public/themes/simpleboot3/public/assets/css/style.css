@@ -584,6 +584,9 @@ label{cursor:pointer !important;}
         width: 22.2vw;
         margin-right:2.1%;
     }
+    .text_tk>a {
+        width:100%;
+    }
 }
 @media screen and (max-width:768px){
     .show_shjy>a>li {
