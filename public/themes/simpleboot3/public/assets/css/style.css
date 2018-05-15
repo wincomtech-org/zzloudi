@@ -493,7 +493,7 @@ label{cursor:pointer !important;}
     background:#fff;
     list-style: none;
     letter-spacing: normal;
-    margin-right:1.9%;
+    margin-right:1.9741vw;
 
 }
 .show_shjy>a>li>img{
@@ -582,7 +582,7 @@ label{cursor:pointer !important;}
 @media screen and (max-width:1024px){
     .show_shjy>a>li {
         width: 22.2vw;
-        margin-right:2.1%;
+        margin-right:2.73vw;
     }
     .text_tk>a {
         width:100%;
@@ -591,6 +591,7 @@ label{cursor:pointer !important;}
 @media screen and (max-width:768px){
     .show_shjy>a>li {
         width: 29.84vw;
+        margin-right:3.72vw;
     }
      .text_tk>a>div {
         width: 50%;
@@ -598,8 +599,8 @@ label{cursor:pointer !important;}
 }
 @media screen and (max-width:600px){
     .show_shjy>a>li {
-        width: 45.7vw;
-    
+        width: 46.5vw;
+        margin-right:4vw;
     }
 }
 @media screen and (max-width:414px){
