@@ -36,7 +36,7 @@ class LinkController extends AdminBaseController
         $linkModel = new LinkModel();
         $links     = $linkModel->select();
         $this->assign('links', $links);
-        $types=Db::name('type_dsc')->where('table','link')->select();
+        $types=Db::name('type_dsc')->where('tables','link')->select();
         $tmp=[];
         foreach($types as $k=>$v){
             $tmp[$v['type']]=$v['title'];
