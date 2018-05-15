@@ -15,7 +15,7 @@
             <p>娄底智达为各种商业应用场景提供小程序解决方案</p>
         </div>
         <section class="productCenter-container">
-        <div class="productCenter-solution">
+        <div style="display:none"  class="productCenter-solution">
         <div class="solution-list-box">
             <ul id="solutionList" class="solution-list f fc fj">
              <foreach name="list" item="vo" k="key">
@@ -75,4 +75,10 @@
         </ul>
     </div>
 </div>
-<include file="public@footer"/> 
+<include file="public@footer"/>
+<script>
+    $(".productCenter-solution").css("display","block");
+    if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<10){
+        $(".productCenter-solution").html('<div style="width:100%;height:200px;font-size:26px;text-align:center;line-height:200px;background:#FDF9E0;border:2px solid #000;color:red">非常抱歉！该模块暂不支持IE9及以下浏览器展示，请升级到更高版本或者下载现代浏览器（<a style="color:blue;text-decoration:underline" href="https://ie.sogou.com">搜狗</a>&nbsp;/&nbsp;<a  style="color:blue;text-decoration:underline" href="http://www.firefox.com.cn/download/">火狐</a>&nbsp;/&nbsp;<a  style="color:blue;text-decoration:underline" href="http://browser.qq.com">QQ</a>）</div>');
+    }
+</script>
