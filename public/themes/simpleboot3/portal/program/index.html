@@ -15,6 +15,7 @@
             <p>娄底智达为各种商业应用场景提供小程序解决方案</p>
         </div>
         <section class="productCenter-container">
+<!--
         <div style="display:none"  class="productCenter-solution">
         <div class="solution-list-box">
             <ul id="solutionList" class="solution-list f fc fj">
@@ -52,6 +53,35 @@
             <a href="javascript:;" class="next btn">&gt;</a>
         </div>
             </div>
+-->
+            
+            <div class="pre_banner_3d">
+                <div class="contrves">
+                    <ul class="nav_banners">
+                        <foreach name="list" item="vo" k="key">
+                        <li class="<eq name='key' value='0'>blue_nav</eq>">{$vo.name}</li>
+                        </foreach>
+                    </ul>
+                </div>
+                <div class="banner_tree">
+                    <div class="show_phone_s">
+                        <img src="__TMPL__/public/assets/img/phone-box.png" style="width:100%;height: 100%;">
+                    </div>
+                    <div class="left_btn color_font">&lt;</div>
+                    <div class="right_btn color_font">&gt;</div>
+                    <ul class="show_s_ui">
+                        <foreach name="list" item="vo" k="key">
+                            <li class="p{$key}">
+                                <img src="{:cmf_get_image_url($vo.pic)}" alt="">
+                                <div class="list-item-masking f fv fc-h">
+                                    <h2>{$vo.name}</h2>
+                                    <p>{$vo.dsc}</p>
+                                </div>
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div> 
         </section>
     </div>
     <div class="program2 w12">

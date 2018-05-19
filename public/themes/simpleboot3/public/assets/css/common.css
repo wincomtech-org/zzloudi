@@ -18,7 +18,7 @@ textarea,input,button,select,img{border: none;outline: none;}
 i,em{ font-style: normal; }
 .color1{color:#44b548;}
 .color2{color:#f00;}
-.w12{width:1200px;margin:0 auto;overflow: hidden;}
+.w12{width:1200px;margin:50px auto;overflow: hidden;}
 .head{padding-top:15px;position:relative}
 .tell{background:url(../img/ico-1.png) no-repeat left bottom;padding:12px 0 0 35px;text-align: center;}
 .tell p{font-size:16px;color:#333;}
