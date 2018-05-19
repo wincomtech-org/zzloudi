@@ -73,9 +73,9 @@
                         <foreach name="list" item="vo" k="key">
                             <li class="p{$key}">
                                 <img src="{:cmf_get_image_url($vo.pic)}" alt="">
-                                <div class="list-item-masking f fv fc-h">
-                                    <h2>{$vo.name}</h2>
-                                    <p>{$vo.dsc}</p>
+                                <div class="list-item-masking">
+                                    <h2 class="font_h">{$vo.name}</h2>
+                                    <p class="font_p">{$vo.dsc}</p>
                                 </div>
                             </li>
                         </foreach>

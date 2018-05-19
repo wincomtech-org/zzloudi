@@ -371,6 +371,18 @@ body{
 #small_right{
     left:102.5%;
 }
+.font_h{
+    font-size:30px;
+    font-weight: 700;
+    margin:20px;
+    text-align: center;
+}
+.font_p{
+    font-size:14px;
+    font-weight: 600;
+    text-indent: 36px;
+    line-height: 22px;
+}
 @media screen and (max-width:1200px){
     .pre_banner_3d {width:1024px;height:763px;}
     #middel_shows {left: 35.5%;}
