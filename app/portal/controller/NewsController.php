@@ -18,7 +18,7 @@ class NewsController extends HomeBaseController
     { 
         parent::_initialize();
         $this->assign('html_flag','news'); 
-        $this->assign('html_title','行业资讯');
+        $this->assign('html_title','新闻资讯');
     } 
     public function index()
     { 
@@ -43,7 +43,7 @@ class NewsController extends HomeBaseController
              $this->redirect(url('index'));
          }
          $this->assign('info',$info);
-         $this->assign('html_title','资讯文章');
+       
         return $this->fetch();
     }
     
