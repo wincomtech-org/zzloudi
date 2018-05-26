@@ -138,8 +138,10 @@ footer{background-color: #1a1a1a;margin-top:60px;padding-top:40px;}
     float: right
 }
 .slides_s{
+/*
 	display: flex;
 	flex-flow: row nowrap;
+*/
 	margin-left:0;
 }
 /*.clearfix_s{transition: all 800ms}*/

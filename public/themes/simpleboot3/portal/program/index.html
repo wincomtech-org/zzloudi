@@ -15,6 +15,9 @@
             <p>娄底智达为各种商业应用场景提供小程序解决方案</p>
         </div>
         <section class="productCenter-container">
+            
+            
+<!--
         <div style="display:none"  class="productCenter-solution">
         <div class="solution-list-box">
             <ul id="solutionList" class="solution-list f fc fj">
@@ -52,38 +55,81 @@
             <a href="javascript:;" class="next btn">&gt;</a>
         </div>
             </div>
-<<<<<<< HEAD
 -->
-            
             <div class="pre_banner_3d">
-                <div class="contrves">
-                    <ul class="nav_banners">
-                        <foreach name="list" item="vo" k="key">
-                        <li class="<eq name='key' value='0'>blue_nav</eq>">{$vo.name}</li>
-                        </foreach>
-                    </ul>
-                </div>
-                <div class="banner_tree">
-                    <div class="show_phone_s">
-                        <img src="__TMPL__/public/assets/img/phone-box.png" style="width:100%;height: 100%;">
-                    </div>
-                    <div class="left_btn color_font">&lt;</div>
-                    <div class="right_btn color_font">&gt;</div>
-                    <ul class="show_s_ui">
-                        <foreach name="list" item="vo" k="key">
-                            <li class="p{$key}">
-                                <img src="{:cmf_get_image_url($vo.pic)}" alt="">
-                                <div class="list-item-masking">
-                                    <h2 class="font_h">{$vo.name}</h2>
-                                    <p class="font_p">{$vo.dsc}</p>
-                                </div>
-                            </li>
-                        </foreach>
-                    </ul>
-                </div>
-            </div> 
-=======
->>>>>>> parent of d45575d... 小程序案例轮播
+        <div class="contrves">
+            <ul class="nav_banners">
+                <foreach name="list" item="vo" k="key">
+                    <li class="<eq name='key' value='0'>blue_nav</eq>">{$vo.name}</li>
+                </foreach>
+<!--
+                <li class="">券好赚</li>
+                <li>京东购物</li>
+                <li>淘宝购物券</li>
+                <li>腾讯象棋</li>
+                <li>绝地求生</li>
+                <li>微信跳一跳</li>
+                <li>答题红包</li>
+                <li>闯关小游戏</li>
+-->
+            </ul>
+        </div>
+        <div class="banner_tree">
+            <div class="show_phone_s">
+                
+                    <img class="img_phone" src="__TMPL__/public/assets/img/phone-box.png" alt="">
+            </div>
+            <div class="left_btn color_font">&lt;</div>
+            <div class="right_btn color_font">&gt;</div>
+            <ul class="show_s_ui">
+                <foreach name="list" item="vo" k="key">
+                        <li>
+                            <img src="{:cmf_get_image_url($vo.pic)}" alt="">
+                            <div>
+                                <h2 class="h2-s-yhu">{$vo.name}</h2>
+                                <p class="p2-s-yhu">{$vo.dsc}</p> 
+                            </div>
+                        </li>
+                </foreach>
+<!--
+                <li>
+                    <img src="./img/Screenshot_2018-05-14-16-32-47-412_com.tencent.mm.png" alt="">
+                    <div>1</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-14-16-41-40-432_com.tencent.mm.png" alt="">
+                    <div>2</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-16-10-17-29-190_com.tencent.mm.png" alt="">
+                    <div>3</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-16-10-17-51-574_com.tencent.mm.png" alt="">
+                    <div>4</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-16-10-18-05-793_com.tencent.mm.png" alt="">
+                    <div>5</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-16-10-18-18-120_com.tencent.mm.png" alt="">
+                    <div>6</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-16-10-18-26-108_com.tencent.mm.png" alt="">
+                    <div>7</div>
+                </li>
+                <li>
+                    <img src="./img/Screenshot_2018-05-16-10-18-38-082_com.tencent.mm.png" alt="">
+                    <div>8</div>
+                </li>
+-->
+            </ul>
+        </div>
+    </div>
+            
+            
         </section>
     </div>
     <div class="program2 w12">
