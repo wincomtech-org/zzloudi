@@ -43,7 +43,7 @@ class NewsController extends HomeBaseController
              $this->redirect(url('index'));
          }
          $this->assign('info',$info);
-         $this->assign('html_title','资讯文章');
+         $this->assign('html_title',$info['name']);
         return $this->fetch();
     }
     

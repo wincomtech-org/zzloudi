@@ -92,7 +92,7 @@ class CaseController extends HomeBaseController
         }
           zz_browse('case',$id);
         $this->assign('info',$info); 
-       
+        $this->assign('html_title',$info['name']);
         return $this->fetch();
     }
      
