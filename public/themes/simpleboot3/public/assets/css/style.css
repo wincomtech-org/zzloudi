@@ -235,7 +235,8 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 @media screen and (max-width: 1200px){
 /*    .video-list>li {width:221px;}*/
     .main2_list li{width:25%;margin-left:0;}
-    .main2_list li p{width:100%;}
+    
+    .main2_list li p{padding-left: 14px;}
     .main4-list li{border:none;}
     .main4-list li:nth-child(n+5){border:none;}
     .main4-list li:nth-child(n+5) img{margin-top:0;}
@@ -271,13 +272,16 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
     .program2-list li{width:45%;margin:25px 2%;}
     .box-r{width:95%;}
     .bg{padding:60px 0;}
+   .main2_list li p{padding-left: 1px;width: 180px;}
+    .main3{padding-top: 30px;}
 }
 @media screen and (max-width:700px){
     .main3_l2{display:none;}
     .w1,.w2,.w3,.wb{width:100%;}
     .mt1,.mt3{display: none;}
     .mt2{float: none;text-align: center;font-size:24px;padding:0;}
-    .main2_list li{width:50%;margin-top:10px;}
+    .main2_list>li{width:48%;margin-top:10px;height: 310px;}
+     .main2_list>li p{width: 100%;padding: 10px;}
     .main4-list li{width:50%;}
     .pro-input input{width:62%;margin-left:10px;}
     .pro-input>span{width:30%;}
@@ -300,12 +304,20 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 }
 @media screen and (max-width:550px){
 /*    .video-list li,.video-list li:nth-child(4n+1){width:260px;margin:10px auto;float: none;}*/
-    .main3_l1,.main3_l2{width:100%;}
-    .main3_list li,.main3_list_h{height:auto;min-height:500px;}
-    
+    .main3_l1,.main3_l2{width:100%; padding-top: 50px;}
+    .main3_l1 p{padding:0 10px;font-size: 18px;line-height: 30px;}
+    .main3_list li:nth-child(7) .main3_l1 p {
+        color: #333;
+    }
+    .main3_l1{padding: 10px;}
+    .main3_list li,.main3_list_h{height:auto;min-height:280px;background: none !important;}
+
+    .main_arc p{font-size: 14px;}
+    .main2{margin-top: 25px;}
+    .main2_list{margin-top: 26px;}
 }
 @media screen and (max-width:500px){
-    .main2_list li{width:300px;float: none;margin:10px auto;}
+    .main2_list li{width:300px;float: none;margin:10px auto;height: auto;}
     .main2_list li:first-child{margin:10px auto;}
     .program2-list li{width:300px;margin:25px auto;float: none;}
     .login-in input{width:90%;}
@@ -313,6 +325,8 @@ html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0,
 	#yzm{width:50%;display:block;height:50px;margin:15px 0 0 15px;overflow: hidden;}
 	.ggh_kj{padding-left:12px}
     .login-text a:first-child{margin-left:10px;}
+    .main3{padding-top: 15px;}
+
 }
 @media screen and (max-width:492px){
     .video-list>li {

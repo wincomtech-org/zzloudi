@@ -13,7 +13,7 @@
     <meta name="HandheldFriendly" content="true">
     <meta name="keywords" content="{$company.keywords.dsc},{$info.keywords|default=''}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-   	<title>{$company.title.dsc}{$html_title|default=''}</title>
+   	<title>{$html_title|default=$company.title.dsc}</title>
     <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/common.css">
     <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/style.css">
     <link rel="stylesheet" href="__TMPL__/public/assets/css/reset.css">
