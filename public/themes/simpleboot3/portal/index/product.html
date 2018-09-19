@@ -256,6 +256,12 @@
 function order_do1(){ 
 	ajax_result=0;
      var oid=$('#oid').val();
+     var quji=$('.area .input1').val();
+     if(quji==0){
+    	 alert('请选择地区');
+    	 return false;
+     }
+    
 	 $.ajax({
          type: 'POST',
          url: "{:url('portal/index/order_do1')}",
@@ -272,8 +278,7 @@ function order_do1(){
          	} 
          },
          error: function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-        	 
-        	 alert('服务器连接错误'); 
+        	 alert('服务器连接失败，请刷新页面或联系客服');  
          }
      });
 } 
@@ -294,8 +299,7 @@ function order_do2(){
          	} 
          },
          error: function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-        	  
-        	 alert('服务器连接错误'); 
+        	 alert('服务器连接失败，请刷新页面或联系客服');  
          }
      });
 } 
@@ -309,6 +313,7 @@ $("#pro-third1").click(function(){
  $('#form_submit').click(function(){
 	var hgy=false;
 	var hyg=false;
+	 
 	var re5=new RegExp("\\s+");
 	mingcheng=$(".guyuan_syj1").val();
 	var neirong=$(".guyuan_syj2").val();
@@ -396,7 +401,7 @@ $("#pro-third1").click(function(){
             }
             $("#super_citys>.area>ul").html(html3);
         }
-        auto_height()
+        auto_height();
     });
     //区
     $("#super_citys>.area>ul").on("click","li",function(){
@@ -494,8 +499,7 @@ $("#pro-third1").click(function(){
         if(sheng==0){alert("省份不能为空！"); return false}
         if(shi==0){alert("城市不能为空！"); return false}
         if(qu==0){alert("地区不能为空！"); return false}
-        alert("您输入的地区代码为："+sheng+"-"+shi+"-"+qu);
-        alert("您输入的地区名为："+sheng_n+"-"+shi_n+"-"+qu_n);
+      
     });
 });
 
