@@ -12,6 +12,7 @@ namespace app\portal\controller;
 
 use cmf\controller\HomeBaseController;
 use think\Db;
+
 class IndexController extends HomeBaseController
 {
     private $m;
@@ -92,6 +93,7 @@ class IndexController extends HomeBaseController
             $this->error('手机号码错误');
         }
         $data=[];
+       
         $data['uname']=$data0['uname'];
         $data['city']=$data0['city'];
         $data['tel']=$data0['tel'];
